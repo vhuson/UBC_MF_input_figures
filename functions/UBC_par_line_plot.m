@@ -75,7 +75,43 @@ colormap(currAx,flipud(seed_map(seed_colors,256)))
 % 
 % colormap(flipud(turbo(256)))
 
-for cell_n = 1:(numel(ONidx)-numel(OFFidx)) %randperm(numel(ONidx)-numel(OFFidx))
+
+% Balanced cell order mechanism fast slow and medium
+%{
+%Get forward and backward counting cell idx
+order_fwd = 1:(numel(ONidx)-3);
+order_bck = fliplr(order_fwd);
+
+%Get center counting idx
+cntr = ceil(numel(order_fwd)/2);
+order_cntr = nan(size(order_fwd));
+
+if mod(numel(order_fwd),2)
+    order_cntr(1:2:end) = order_bck(cntr:end);
+    order_cntr(2:2:end) = order_fwd(cntr+1:end);
+else
+    order_cntr(1:2:end) = order_fwd(cntr+1:end);
+    order_cntr(2:2:end) = order_bck(cntr+1:end);
+end
+
+%splice all together
+cell_order = nan(size(order_fwd));
+cell_order(1:3:end) = order_fwd(1:numel(cell_order(1:3:end)));
+cell_order(2:3:end) = order_bck(1:numel(cell_order(2:3:end)));
+cell_order(3:3:end) = order_cntr(1:numel(cell_order(3:3:end)));
+
+%flip order to give right prominance
+cell_order = fliplr(cell_order);
+%}
+
+% Random permutation
+rng(2);
+cell_order = randperm(numel(ONidx)-numel(OFFidx));
+
+% Fast at bottom slow on top
+% cell_order = 1:(numel(ONidx)-numel(OFFidx));
+
+for cell_n = cell_order
 
     plot(input_n,curr_par_mat(ONidx(cell_n),:),'-o',...
         'Color',all_colors(cell_n,:),'MarkerFaceColor','w')
