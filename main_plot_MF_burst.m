@@ -131,7 +131,13 @@ fig_opts = struct();
 fig_opts.FontSize = 10;
 standardFig(f_burst,fig_opts);
 
-
+plot_labels = repmat({[]},1,27);
+plot_labels{1} = 'a';
+plot_labels{7} = 'b';
+plot_labels{13} = 'c';
+plot_labels{19} = 'd';
+plot_labels(24:27) = {'e','f','g','h'};
+labelPlots(f_burst,plot_labels,fig_opts);
 
 
 
