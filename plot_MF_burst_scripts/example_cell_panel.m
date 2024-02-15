@@ -5,7 +5,7 @@
 typ_cell_IDs = {'1657','1685','1758'};
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames,typ_cell_IDs,ONidx);
 
-base_width = 0.28;
+base_width = 0.263;
 base_height = 0.027;
 top_margin = 0.98;
 left_margin = 0.08;

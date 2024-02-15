@@ -3,6 +3,7 @@
 pos_bottom = 0.29;
 pos_left = 0.07;
 pos_height = 0.48;
+full_width = 0.790;
 
 
 %Normalize per cell
@@ -32,7 +33,7 @@ all_XLim = {[0.2 1.5],[0.2 1.5], [0.2 1.5], [0.2 1.5], [0.2 2.5]};
 
 
 %Base width standardized to xlim
-base_width = 0.850/sum(cellfun(@diff,all_XLim));
+base_width = full_width/sum(cellfun(@diff,all_XLim));
 
 all_titles = {'1x', '2x 100 Hz', '5x 100 Hz', '10x 100 Hz', '20x 100 Hz'};
 pos_ax = [pos_left-base_width    pos_bottom    1*base_width   pos_height];
