@@ -1,4 +1,9 @@
-%% Make baseline figure
+%% Get files, general means, and ONidx
+
+setup_workspace_alldata
+
+
+%% Gather baseline data
 all_base_freqs      = [1 2.5 5];
 prot_spec_dur = [2 10];
 washin_state = [1 0 0 0 0];
