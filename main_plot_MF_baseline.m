@@ -14,6 +14,9 @@ washin_state = [1 0 0 0 0];
     get_baseline_data(allData,Fs,all_base_freqs,prot_spec_dur,...
     washin_state);
 
+%Get peak and n-spikes info for each separate segment
+%XXXXXXXXX
+
 %Calculate number of spikes at SS
 [base_n_spikes_ss,base_amplitude_ss,base_async_ss,base_ratio_ss] = get_baseline_n_spikes(...
     all_ss_segments,all_baseline,Fs,min_trace_leng);
@@ -22,8 +25,13 @@ washin_state = [1 0 0 0 0];
 [base_n_spikes_peak] = get_baseline_n_spikes(...
     mean_peak_segments,all_baseline,Fs,min_trace_leng);
 
+
+
+
 %% Other figures
 stacked_constant_input_figure
+
+heatmap_constant_input_figure
 
 
 %% Example cells
