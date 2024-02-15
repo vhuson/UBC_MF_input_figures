@@ -120,17 +120,23 @@ example_summary_figure
 f_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
     'Color','w');
 
+
+%Run panel scripts
 example_cell_panel
 
 heatmap_panel
 
-
 summary_lineplots_panel
 
+
+%Tweak figure
 fig_opts = struct();
 fig_opts.FontSize = 10;
 standardFig(f_burst,fig_opts);
 
+
+
+%Add labels
 plot_labels = repmat({[]},1,27);
 plot_labels{1} = 'a';
 plot_labels{7} = 'b';
