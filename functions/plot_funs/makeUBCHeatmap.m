@@ -7,6 +7,7 @@ base_opts.XTickLabel = false;
 base_opts.YTick = false;
 base_opts.YLabel = 'Cell (#)';
 base_opts.XLabel = 'Time (s)';
+base_opts.colormap = "gray";
 
 if nargin < 4 
     opts = base_opts;
@@ -53,6 +54,6 @@ set(ax,'TickDir','out','FontName','Arial','FontSize',8.0,'LineWidth',1)
 box off
 standardAx(ax);
 % title('Firing rate')
-colormap(ax,"gray");
+colormap(ax,opts.colormap);
 end
 

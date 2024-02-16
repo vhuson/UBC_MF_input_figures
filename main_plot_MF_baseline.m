@@ -23,6 +23,7 @@ washin_state = [1 0 0 0 0];
 [base_n_spikes_ss,base_amplitude_ss,base_async_ss,base_ratio_ss] = get_baseline_n_spikes(...
     all_ss_segments,all_baseline,Fs,min_trace_leng);
 
+
 %Calculate number of spikes at peak
 [base_n_spikes_peak] = get_baseline_n_spikes(...
     mean_peak_segments,all_baseline,Fs,min_trace_leng);
@@ -38,6 +39,8 @@ heatmap_constant_input_figure
 heatmap_parameter_constant_input_figure
 
 par_overtime_constant_input_figure
+
+par_constant_input_line_figure
 
 %% Example cells
 %19, 29 51

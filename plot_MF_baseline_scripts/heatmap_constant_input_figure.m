@@ -11,7 +11,7 @@ norm_on(norm_on < 1) = 1;
 % norm_on = all_Amp;
 
 %Don't normalize
-% norm_on = max([all_full_traces{:}],[],'all');
+norm_on = max([all_full_traces{:}],[],'all')*0.3;
 
 
 %Different normalization for OFFs??
@@ -34,7 +34,6 @@ pos_ax = [0.05-base_width    pos_bottom    1*base_width   pos_height];
 opts = struct();
 opts.XTick = 0:5:10;
 opts.XTickLabel = arrayfun(@num2str,opts.XTick,'UniformOutput',false);
-
 
 ax_hm = {};
 for ax_idx = 1:3

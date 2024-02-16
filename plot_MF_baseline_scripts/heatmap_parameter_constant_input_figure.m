@@ -8,10 +8,10 @@ for ii = 1:numel(constant_input_pars)
     % array_constant_input_par{ii} = [constant_input_pars(ii).peaks{:}]';
 
     % plot n_spikes constant window
-    % array_constant_input_par{ii} = [constant_input_pars(ii).n_spikes_min{:}]';
+    array_constant_input_par{ii} = [constant_input_pars(ii).n_spikes_min{:}]';
 
     % plot average rate
-    array_constant_input_par{ii} = [constant_input_pars(ii).avg_rate{:}]';
+    % array_constant_input_par{ii} = [constant_input_pars(ii).avg_rate{:}]';
 end
 
 
