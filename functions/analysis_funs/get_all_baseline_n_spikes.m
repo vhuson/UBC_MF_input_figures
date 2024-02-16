@@ -12,6 +12,7 @@ min_samples = min(seg_samples);
 all_trace_segments = cell(size(all_full_traces));
 
 all_peaks         = cell(size(all_full_traces));
+all_avg_rate      = cell(size(all_full_traces));
 all_async_full    = cell(size(all_full_traces));
 all_async_min     = cell(size(all_full_traces));
 all_n_spikes_full = cell(size(all_full_traces));
@@ -36,6 +37,7 @@ for ii = 1:numel(all_full_traces)
     freq_trace_segments = cell(size(curr_traces,1),1);
 
     freq_peaks         = cell(size(curr_traces,1),1);
+    freq_avg_rate      = cell(size(curr_traces,1),1);
     freq_async_full    = cell(size(curr_traces,1),1);
     freq_async_min     = cell(size(curr_traces,1),1);
     freq_n_spikes_full = cell(size(curr_traces,1),1);
@@ -57,6 +59,9 @@ for ii = 1:numel(all_full_traces)
 
         %Get parameters full and minimal
         curr_peaks = max(curr_trace_segments(:,1:min_samples),[],2);
+
+        curr_avg_rate = mean(curr_trace_segments,2);
+
 
         curr_async_full = mean(curr_trace_segments(:,end-100:end),2);
         curr_async_min = mean(curr_trace_segments(:,min_samples-100:min_samples),2);
@@ -82,6 +87,7 @@ for ii = 1:numel(all_full_traces)
         freq_trace_segments{jj} = curr_trace_segments;
 
         freq_peaks{jj} = curr_peaks;
+        freq_avg_rate{jj} = curr_avg_rate;
         freq_async_full{jj} = curr_async_full;
         freq_async_min{jj} = curr_async_min;
         freq_n_spikes_full{jj} = curr_n_spikes_full;
@@ -103,6 +109,7 @@ for ii = 1:numel(all_full_traces)
     all_trace_segments{ii} = freq_trace_segments;
 
     all_peaks{ii} = freq_peaks;
+    all_avg_rate{ii} = freq_avg_rate;
     all_async_full{ii} = freq_async_full;
     all_async_min{ii} = freq_async_min;
     all_n_spikes_full{ii} = freq_n_spikes_full;
@@ -121,7 +128,7 @@ for ii = 1:numel(all_full_traces)
 end
 
 %Package in output structures
-raw_pars = struct('peaks',all_peaks,...
+raw_pars = struct('peaks',all_peaks,'avg_rate',all_avg_rate,...
     'async_full',all_async_full,'async_min',all_async_min,...
     'n_spikes_full',all_n_spikes_full,'n_spikes_min',all_n_spikes_min);
 
