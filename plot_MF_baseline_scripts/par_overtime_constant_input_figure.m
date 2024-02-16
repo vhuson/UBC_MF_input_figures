@@ -7,12 +7,12 @@ array_constant_input_par = {};
 
 for ii = 1:numel(constant_input_pars)
     % plot peaks
-    % array_constant_input_par{ii} = [constant_input_pars(ii).peaks{:}]';
-    % curr_ylabel = 'Response peak (norm.)';
+    array_constant_input_par{ii} = [constant_input_pars(ii).peaks{:}]';
+    curr_ylabel = 'Response peak (norm.)';
 
     % plot n_spikes constant window
-    array_constant_input_par{ii} = [constant_input_pars(ii).n_spikes_min{:}]';
-    curr_ylabel = 'Response spikes (norm.)';
+    % array_constant_input_par{ii} = [constant_input_pars(ii).n_spikes_min{:}]';
+    % curr_ylabel = 'Response spikes (norm.)';
 
     % plot average rate
     % array_constant_input_par{ii} = [constant_input_pars(ii).avg_rate{:}]';
@@ -34,13 +34,18 @@ ax_base_par = {};
 
 %Normalize per cell
 norm_on = max([array_constant_input_par{:}],[],2);
-norm_on(norm_on < 0.5) = 0.5;
+norm_on(norm_on < 5) = 5;
 
 opts = struct();
-opts.norm_on = norm_on;
+% opts.norm_on = norm_on;
 opts.XLim = [0.7 10.3];
 opts.YLabel = curr_ylabel;
 opts.XLabel = "Input spike (#)";
+opts.YScale = 'log';
+
+
+opts.avg = false;
+
 
 base_input_freqs = [1 2.5 5];
 

@@ -6,9 +6,12 @@ base_opts.norm_on = false;
 base_opts.norm_off = [];
 base_opts.norm_OFFidx = [];
 
+base_opts.avg = true;
+
 base_opts.XLim = false;
 base_opts.YLabel = '';
 base_opts.XLabel = '';
+base_opts.YScale = 'linear';
 
 if nargin < 5
     opts = base_opts;
@@ -34,13 +37,16 @@ if ~islogical(opts.norm_on)
     norm_off = opts.norm_off;
     norm_OFFidx = opts.norm_OFFidx;
 
-    [norm_traces] = norm_UBC(curr_par_array,norm_on,norm_off,norm_OFFidx);
-    norm_traces = norm_traces(ONidx,:);
+    [norm_array] = norm_UBC(curr_par_array,norm_on,norm_off,norm_OFFidx);
+    norm_array = norm_array(ONidx,:);
+    data_array = norm_array;
+else
+    data_array = curr_par_array(ONidx,:);
 end
 
 
 
-x_vector = 1:size(norm_traces,2);
+x_vector = 1:size(data_array,2);
 
 
 % Random permutation
@@ -50,12 +56,17 @@ cell_order = randperm(numel(ONidx));
 
 hold(curr_ax,"on")
 for ii = cell_order
-        plot(x_vector,norm_traces(ii,:),'Color',all_colors(ii,:))
+        plot(x_vector,data_array(ii,:),'Color',all_colors(ii,:))
 end
-plot(x_vector,mean(norm_traces),'-ko',...
-    'MarkerFaceColor','w','LineWidth',1.5)
+
+if opts.avg
+    plot(x_vector,mean(data_array),'-ko',...
+        'MarkerFaceColor','w','LineWidth',1.5)
+end
 
 hold(curr_ax,"off")
+
+curr_ax.YScale = opts.YScale;
 
 if islogical(opts.XLim)
     xlim([x_vector(1) x_vector(end)])
