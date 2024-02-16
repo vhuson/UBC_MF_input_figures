@@ -35,6 +35,9 @@ stacked_constant_input_figure
 
 heatmap_constant_input_figure
 
+heatmap_parameter_constant_input_figure
+
+par_overtime_constant_input_figure
 
 %% Example cells
 %19, 29 51
