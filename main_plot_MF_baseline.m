@@ -15,7 +15,9 @@ washin_state = [1 0 0 0 0];
     washin_state);
 
 %Get peak and n-spikes info for each separate segment
-%XXXXXXXXX
+[constant_input_pars, constant_input_pars_base_corr] = get_all_baseline_n_spikes(...
+    all_full_traces,all_baseline,Fs,all_base_freqs);
+
 
 %Calculate number of spikes at SS
 [base_n_spikes_ss,base_amplitude_ss,base_async_ss,base_ratio_ss] = get_baseline_n_spikes(...
