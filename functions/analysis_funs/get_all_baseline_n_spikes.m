@@ -73,7 +73,7 @@ for ii = 1:numel(all_full_traces)
             cnt = 1;
             for kk = col_hits(first_encounters_idx)
                 curr_corr_trace_segments(kk,1:first_spikes(cnt)) = 0;
-                C(kk,end-(last_spikes(cnt)-1):end) = 0;
+                curr_corr_trace_segments(kk,end-(last_spikes(cnt)-1):end) = 0;
                 cnt = cnt+1;
             end
         end
