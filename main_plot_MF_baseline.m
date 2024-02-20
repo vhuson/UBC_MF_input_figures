@@ -43,6 +43,7 @@ examples_constant_input_panel
 heatmap_constant_input_panel
 
 %Summary panels
+summaries_constant_input_panel
 
 %Tweak figure
 fig_opts = struct();
@@ -60,7 +61,7 @@ par_overtime_constant_input_figure
 
 par_constant_input_line_figure
 
-examples_constant_input_figure.m
+examples_constant_input_figure
 
 %% Summaries
 f1 = figure('Color','w','Position',[257.5818 320 1.0909e+03 299.7636]);
