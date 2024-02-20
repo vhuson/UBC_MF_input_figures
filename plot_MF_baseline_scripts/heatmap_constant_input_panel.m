@@ -95,3 +95,6 @@ for ax_idx = 1:3
 
     makeUBCHeatmap(ax_hm_avg{ax_idx}, norm_avg_traces, Fs, opts);
 end
+
+cellfun(@(x) move_tick_labels(x,2),ax_hm);
+cellfun(@(x) move_tick_labels(x,1.2),ax_hm_avg);

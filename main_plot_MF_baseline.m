@@ -42,6 +42,13 @@ examples_constant_input_panel
 %Heatmap
 heatmap_constant_input_panel
 
+
+
+%Tweak figure
+fig_opts = struct();
+fig_opts.FontSize = 10;
+standardFig(f_base,fig_opts);
+
 %% Other figures
 stacked_constant_input_figure
 
