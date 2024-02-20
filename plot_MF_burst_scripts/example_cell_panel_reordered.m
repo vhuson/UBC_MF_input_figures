@@ -2,7 +2,8 @@
 %     'Color','w');
 
 %Get right cell idxes
-typ_cell_IDs = {'1657','1685','1758'};
+% typ_cell_IDs = {'1657','1685','1758'};
+typ_cell_IDs = {'1657','1766','1758'};
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames,typ_cell_IDs,ONidx);
 
 

@@ -15,9 +15,13 @@ washin_state = [1 0 0 0 0];
     washin_state);
 
 %Get peak and n-spikes info for each separate segment
-[constant_input_pars, constant_input_pars_base_corr] = get_all_baseline_n_spikes(...
+[constant_input_pars, constant_input_pars_base_corr, constant_input_other] ...
+    = get_all_baseline_n_spikes(...
     all_full_traces,all_baseline,Fs,all_base_freqs);
 
+mean_segments = cellfun(@(x) {cellfun(@(y) {mean(y)},x)},...
+    {constant_input_other.corr_trace_segments});
+mean_segments = cellfun(@(x) {vertcat(x{:})},mean_segments);
 
 %Calculate number of spikes at SS
 [base_n_spikes_ss,base_amplitude_ss,base_async_ss,base_ratio_ss] = get_baseline_n_spikes(...
@@ -28,7 +32,12 @@ washin_state = [1 0 0 0 0];
 [base_n_spikes_peak] = get_baseline_n_spikes(...
     mean_peak_segments,all_baseline,Fs,min_trace_leng);
 
+%% Main figure
+f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
+% Example traces and spike triggered average traces
+examples_constant_input_panel
 
 
 %% Other figures
