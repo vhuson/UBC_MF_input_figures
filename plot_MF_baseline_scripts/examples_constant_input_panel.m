@@ -36,7 +36,8 @@ for ii = 1:numel(mean_segments)
     nan_mean_segments{ii}(48,:) = mean_segments{ii}(48,:);
 end
 
-all_colors = repmat([0 0 0],3,1);
+% all_colors = repmat([0 0 0],3,1);
+all_colors = bbpr(3);
 lim_x = [0 11];
 lim_x_ss = [8.95 10.95];
 % lim_x_avg = [[0 1];[0 0.4];[0 0.2]];
@@ -70,7 +71,7 @@ for ii = 1:numel(typ_cell_num)
         pos_ax(1) = left_margin + (base_width + base_hspace) * (jj-1);
         pos_ax(3) = base_width;
         [ax_burst_typ{ii}{jj}] = plot_burst_traces_overlay(full_baseline_incl_traces(jj),Fs,...
-            ONidx,curr_cell,all_colors(1,:),0,...
+            ONidx,curr_cell,all_colors(jj,:),0,...
             [],lim_x,f_base,pos_ax,opts);
 
 
@@ -85,7 +86,7 @@ for ii = 1:numel(typ_cell_num)
         %     [],lim_x_ss,f_base,pos_ax,opts);
 
         [ax_burst_typ_avg{ii}{jj}] = plot_burst_traces_overlay(nan_mean_segments(jj),Fs,...
-            ONidx,curr_cell,all_colors(1,:),0,...
+            ONidx,curr_cell,all_colors(jj,:),0,...
             [],lim_x_avg(jj,:),f_base,pos_ax,opts);
 
         if ii == 1
