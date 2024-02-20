@@ -7,6 +7,7 @@ base_opts.XTickLabel = false;
 base_opts.YTick = false;
 base_opts.YLabel = 'Cell (#)';
 base_opts.XLabel = 'Time (s)';
+base_opts.XTickLabelRotation = 0;
 base_opts.colormap = "gray";
 
 if nargin < 4 
@@ -50,7 +51,8 @@ xticks(Fs*x_tick)
 xticklabels(x_tick_labels)
 
 % yticks([1 numel(ONidx)-numel(OFFidx) numel(ONidx)]);
-set(ax,'TickDir','out','FontName','Arial','FontSize',8.0,'LineWidth',1)
+set(ax,'TickDir','out','FontName','Arial','FontSize',8.0,'LineWidth',1,...
+    'XTickLabelRotation',opts.XTickLabelRotation)
 box off
 standardAx(ax);
 % title('Firing rate')

@@ -11,9 +11,10 @@ typ_cell_IDs = {'1657','1685','1766','1758','1678'};
 
 base_width = 0.22;
 base_w_unit = base_width/5;
-base_height = 0.03;
+base_height = 0.025;
 top_margin = 0.96;
 left_margin = 0.08;
+left_margin_avg = 0.789;
 base_space = 0.02;
 base_hspace = 0.01;
 
@@ -30,6 +31,9 @@ nan_mean_segments = mean_segments;
 for ii = 1:numel(mean_segments)
     nan_idx_mean_segments = mean_segments{ii} == 0;
     nan_mean_segments{ii}(nan_idx_mean_segments) = NaN;
+
+    %Specifically maintain zeros in cell 51
+    nan_mean_segments{ii}(48,:) = mean_segments{ii}(48,:);
 end
 
 all_colors = repmat([0 0 0],3,1);
@@ -70,8 +74,9 @@ for ii = 1:numel(typ_cell_num)
             [],lim_x,f_base,pos_ax,opts);
 
 
-        pos_ax(1) = left_margin + (base_width + base_hspace*1.3) * numel(full_baseline_incl_traces)...
-                                + sum(base_w_avg(1:(jj-1))) + base_hspace * (jj-1);
+        % pos_ax(1) = left_margin + (base_width + base_hspace*1.3) * numel(full_baseline_incl_traces)...
+        %                         + sum(base_w_avg(1:(jj-1))) + base_hspace * (jj-1);
+        pos_ax(1) = left_margin_avg + (base_w_avg(jj) + base_hspace)  * (jj-1);
         
         pos_ax(3) = base_w_avg(jj);
 

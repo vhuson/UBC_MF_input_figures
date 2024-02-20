@@ -39,6 +39,8 @@ f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
 % Example traces and spike triggered average traces
 examples_constant_input_panel
 
+%Heatmap
+heatmap_constant_input_panel
 
 %% Other figures
 stacked_constant_input_figure
