@@ -43,7 +43,8 @@ f_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
 
 
 %Run panel scripts
-example_cell_panel
+% example_cell_panel
+example_cell_panel_reordered
 
 heatmap_panel
 
@@ -60,10 +61,10 @@ standardFig(f_burst,fig_opts);
 %Add labels
 plot_labels = repmat({[]},1,27);
 plot_labels{1} = 'a';
-plot_labels{7} = 'b';
-plot_labels{13} = 'c';
-plot_labels{19} = 'd';
-plot_labels(24:27) = {'e','f','g','h'};
+% plot_labels{6} = 'b';
+% plot_labels{11} = 'c';
+plot_labels{16} = 'd';
+plot_labels(21:24) = {'e','f','g','h'};
 labelPlots(f_burst,plot_labels,fig_opts);
 
 

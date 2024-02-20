@@ -66,7 +66,7 @@ for ax_idx = 1:5
         opts.XLabel = 'Time (s)';
     end
     makeUBCHeatmap(ax_hm{ax_idx}, norm_traces, Fs, opts);
-    ax_hm{ax_idx}.Title.String = all_titles{ax_idx};
+    % ax_hm{ax_idx}.Title.String = all_titles{ax_idx};
     
     hold(ax_hm{ax_idx},'on')
     line(ax_hm{ax_idx},repmat(ax_hm{ax_idx}.XTick(1),1,2),...
