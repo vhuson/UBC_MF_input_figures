@@ -63,8 +63,8 @@ plot_labels = repmat({[]},1,27);
 plot_labels{1} = 'a';
 % plot_labels{6} = 'b';
 % plot_labels{11} = 'c';
-plot_labels{16} = 'd';
-plot_labels(21:24) = {'e','f','g','h'};
+plot_labels{16} = 'b';
+plot_labels(21:24) = {'c','d','e','f'};
 labelPlots(f_burst,plot_labels,fig_opts);
 
 
