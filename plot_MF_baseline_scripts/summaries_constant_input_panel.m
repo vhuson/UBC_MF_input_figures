@@ -42,6 +42,9 @@ opts.min_val = 0.1;
     ONidx,[],base_n_spikes_ss_uncorr,f_base,pos_ax,opts);
 
 
+fix_powered_ylabels(ax_base_par{p_idx})
+
+
 p_idx = 2;
 
 pos_ax = [left_margin+(base_width+panel_gap)*(p_idx-1),...
@@ -56,6 +59,7 @@ opts.YLabel = "Peak firing rate (spk/s)";
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
     ONidx,[],base_peak_ss_uncorr,f_base,pos_ax,opts);
 
+fix_powered_ylabels(ax_base_par{p_idx})
 
 
 p_idx = 3;
@@ -71,7 +75,7 @@ base_async_ss_uncorr = [{all_baseline} base_async_ss_uncorr];
 opts.YLabel = "Steady state (spk/s)";
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
     ONidx,[],base_async_ss_uncorr,f_base,pos_ax,opts);
-
+fix_powered_ylabels(ax_base_par{p_idx})
 
 
 
@@ -91,7 +95,7 @@ opts_ratio.min_val = 0.01;
 
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
     ONidx,[],base_ratio_ss_uncorr(2:end),f_base,pos_ax,opts_ratio);
-
+fix_powered_ylabels(ax_base_par{p_idx})
 
 for ii =1:numel(ax_base_par)
     ax_base_par{ii}.XTickLabelRotation = 0;
