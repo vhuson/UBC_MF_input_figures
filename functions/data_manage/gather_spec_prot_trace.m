@@ -1,6 +1,6 @@
 function [mean_match_traces,all_match_traces,all_idx,all_times] = ...
         gather_spec_prot_trace(allData,Fs,...
-                    prot_spec_freq,prot_spec_dur,washin_state,pretime)
+                    prot_spec_freq,prot_spec_dur,washin_state,pretime,opts)
 
 %gather_spec_prot_trace Retrieve trace segments matching to spec_prot from
 %all data
@@ -9,7 +9,7 @@ function [mean_match_traces,all_match_traces,all_idx,all_times] = ...
 % 
 % prot_spec_freq = [0 100 0];
 % prot_spec_dur = [2 0.05 9.95];
-
+base_opts.ignore_first_dur = true;
 
 if nargin < 5
     %No washin_state given, ignore filtering
@@ -20,7 +20,26 @@ if nargin < 6
     pretime = 0;
 end
 
-match_dur = sum(prot_spec_dur(2:end));
+if nargin < 7
+    opts = base_opts;
+else
+    opts = merge_structs(base_opts,opts);
+end
+
+if opts.ignore_first_dur
+    %First duration is a wild card usually tied to 0 frequency
+    match_dur = sum(prot_spec_dur(2:end));
+else
+    %Take first duration as part of the protocol we want
+    match_dur = sum(prot_spec_dur);
+    
+    if prot_spec_freq(1) > 0
+    %First response is probably skipped add it to pretime and remove from
+    %match dur
+        pretime = pretime + 1/prot_spec_freq(1);
+        match_dur = match_dur - 1/prot_spec_freq(1);
+    end
+end
 
 if pretime > 0
     match_dur = match_dur + pretime;

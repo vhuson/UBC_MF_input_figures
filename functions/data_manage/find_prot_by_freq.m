@@ -1,4 +1,5 @@
-function [split_idx, match_prots_times] = find_prot_by_freq(prot_spec_freq,prot_spec_dur,spks_prot,freqs_prot,Fs)
+function [split_idx, match_prots_times] = find_prot_by_freq(prot_spec_freq,...
+    prot_spec_dur,spks_prot,freqs_prot,Fs)
 %UNTITLED Summary of this function goes here
 
 

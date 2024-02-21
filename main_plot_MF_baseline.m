@@ -10,7 +10,7 @@ washin_state = [1 0 0 0 0];
 
 %Retrieve all data
 [all_full_traces,all_peak_segments,all_ss_segments,...
-    mean_peak_segments, min_trace_leng,pre_prot_baseline_traces] = ...
+    mean_peak_segments, min_trace_leng,pre_prot_baseline_traces,all_tail_traces] = ...
     get_baseline_data(allData,Fs,all_base_freqs,prot_spec_dur,...
     washin_state);
 
@@ -19,6 +19,7 @@ washin_state = [1 0 0 0 0];
     = get_all_baseline_n_spikes(...
     all_full_traces,all_baseline,Fs,all_base_freqs);
 
+%Get spike triggered average segments
 mean_segments = cellfun(@(x) {cellfun(@(y) {mean(y)},x)},...
     {constant_input_other.corr_trace_segments});
 mean_segments = cellfun(@(x) {vertcat(x{:})},mean_segments);
@@ -29,8 +30,11 @@ mean_segments = cellfun(@(x) {vertcat(x{:})},mean_segments);
 
 
 %Calculate number of spikes at peak
-[base_n_spikes_peak] = get_baseline_n_spikes(...
+[base_n_spikes_peak, base_amplitude_peak, base_async_peak] = get_baseline_n_spikes(...
     mean_peak_segments,all_baseline,Fs,min_trace_leng);
+
+%Calculate async 1s after train
+base_async_end1s = cellfun(@(x) {mean(x(:,Fs-50:Fs+50),2)},all_tail_traces);
 
 %% Main figure
 f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
@@ -71,6 +75,8 @@ par_overtime_constant_input_figure
 par_constant_input_line_figure
 
 examples_constant_input_figure
+
+steadystate_1s_constant_input_line_figure
 
 %% Summaries
 f1 = figure('Color','w','Position',[257.5818 320 1.0909e+03 299.7636]);
