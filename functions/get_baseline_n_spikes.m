@@ -1,4 +1,4 @@
-function [base_n_spikes,base_amplitude,base_async,base_ratio] = get_baseline_n_spikes(...
+function [base_n_spikes,base_amplitude,base_async,base_ratio,base_async_min_leng] = get_baseline_n_spikes(...
     base_data,baseline_rates,Fs,min_trace_leng)
 %UNTITLED2 Summary of this function goes here
 %   Detailed explanation goes here
@@ -16,16 +16,19 @@ end
 base_n_spikes = cell(size(base_data));
 base_amplitude = cell(size(base_data));
 base_async = cell(size(base_data));
+base_async_min_leng = cell(size(base_data));
 base_ratio = cell(size(base_data));
 for ii = 1:numel(base_data)
     curr_peak = max(base_data{ii}(:,1:min_trace_leng),[],2);
     curr_async = mean(base_data{ii}(:,end-100),2);
+    curr_async_min_len = mean(base_data{ii}(:,min_trace_leng-100:min_trace_leng),2);
     curr_n_spikes = sum(base_data{ii}(:,1:min_trace_leng),2)./Fs;
     curr_baseline = baseline_rates.*(min_trace_leng/Fs);
 
     base_n_spikes{ii} = curr_n_spikes-curr_baseline;
     base_amplitude{ii} = curr_peak - baseline_rates;
     base_async{ii} = curr_async - baseline_rates;
+    base_async_min_leng{ii} = curr_async_min_len - baseline_rates;
 
     min_peak = base_amplitude{ii};
     min_peak(min_peak< 10) = 0;
