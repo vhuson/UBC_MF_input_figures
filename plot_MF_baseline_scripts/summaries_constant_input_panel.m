@@ -11,10 +11,21 @@ graph_height = 0.14;
 num_panels = 4;
 base_width = (total_width - (panel_gap*(num_panels-1))) / num_panels;
 
-% UBC line plot for steady state n_spikes including baseline (0 Hz)
+
 
 ax_base_par = {};
 
+%Use peak response as point 0
+use_peak = false;
+
+%add baseline firing = 1, don't add = 2;
+point_0 = 1;
+
+input_n = [1 2 3 4];
+XTickLabel = {'0' '1' '2.5' '5'};
+
+
+% UBC line plot for steady state n_spikes including baseline (0 Hz)
 p_idx = 2;
 
 pos_ax = [left_margin+(base_width+panel_gap)*(p_idx-1),...
@@ -27,11 +38,12 @@ base_n_spikes_ss_uncorr = cellfun(@(x) {x+all_baseline_n_spikes},base_n_spikes_s
 
 base_n_spikes_ss_uncorr = [{all_baseline_n_spikes} base_n_spikes_ss_uncorr];
 
-%add baseline firing = 1, don't add = 2;
-point_0 = 1;
+if use_peak
+    base_n_spikes_peak_uncorr = {base_n_spikes_peak{1} + all_baseline_n_spikes};
+    base_n_spikes_ss_uncorr(1) = base_n_spikes_peak_uncorr;
+    XTickLabel{1} = 'First';
+end
 
-input_n = [1 2 3 4];
-XTickLabel = {'0' '1' '2.5' '5'};
 
 opts = struct();
 opts.input_n = input_n(point_0:end);
@@ -42,6 +54,8 @@ opts.XLabel = "Constant input (Hz)";
 opts.YLabel = "Response spikes (n)";
 opts.XTickLabel = XTickLabel(point_0:end);
 opts.min_val = 0.1;
+
+
 
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
     ONidx,[],base_n_spikes_ss_uncorr(point_0:end),f_base,pos_ax,opts);
@@ -63,6 +77,11 @@ base_peak_ss_uncorr = cellfun(@(x) {x+all_baseline},base_amplitude_ss);
 
 base_peak_ss_uncorr = [{all_baseline} base_peak_ss_uncorr];
 
+if use_peak
+    base_peak_peak_uncorr = {base_amplitude_peak{1} + all_baseline};
+    base_peak_ss_uncorr(1) = base_peak_peak_uncorr;
+end
+
 opts.YLabel = "Peak firing rate (spk/s)";
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
     ONidx,[],base_peak_ss_uncorr(point_0:end),f_base,pos_ax,opts);
@@ -81,8 +100,12 @@ pos_ax = [left_margin+(base_width+panel_gap)*(p_idx-1),...
 
 % Get steady state data
 base_async_ss_uncorr = cellfun(@(x) {x+all_baseline},base_async_ss);
-
 base_async_ss_uncorr = [{all_baseline} base_async_ss_uncorr];
+
+if use_peak
+    base_async_peak_uncorr = {base_async_peak{1} + all_baseline};
+    base_async_ss_uncorr(1) = base_async_peak_uncorr;
+end
 
 opts.YLabel = "Steady state (spk/s)";
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
@@ -105,6 +128,10 @@ pos_ax = [left_margin+(base_width+panel_gap)*(p_idx-1),...
 base_ratio_ss_uncorr = cellfun(@(x,y) {x./y},base_async_ss_uncorr,base_peak_ss_uncorr);
 
 point_0 = 2;
+
+if use_peak
+    point_0 = 1;
+end
 
 opts_ratio = opts;
 opts_ratio.YLabel = "Steady state (ratio)";
