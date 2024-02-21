@@ -121,7 +121,8 @@ for ii = 1:numel(typ_cell_num)
         scale_opts.xlabel = 'ms';
         scale_opts.xscale_factor = 1000;
         scale_opts.ylabel = 'spk/s';
+        add_scale_bar(ax_burst_typ_avg{ii}{end},[0.1,0],scale_opts);
     end
-    add_scale_bar(ax_burst_typ_avg{ii}{end},[0.1,0],scale_opts);
+    
 
 end
