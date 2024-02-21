@@ -28,7 +28,7 @@ base_n_spikes_ss_uncorr = cellfun(@(x) {x+all_baseline_n_spikes},base_n_spikes_s
 base_n_spikes_ss_uncorr = [{all_baseline_n_spikes} base_n_spikes_ss_uncorr];
 
 %add baseline firing = 1, don't add = 2;
-point_0 = 2;
+point_0 = 1;
 
 input_n = [1 2 3 4];
 XTickLabel = {'0' '1' '2.5' '5'};

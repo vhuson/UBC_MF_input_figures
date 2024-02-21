@@ -50,6 +50,15 @@ fig_opts = struct();
 fig_opts.FontSize = 10;
 standardFig(f_base,fig_opts);
 
+%Add labels
+plot_labels = repmat({[]},1,40);
+plot_labels{1} = 'a';
+plot_labels{2} = 'b';
+plot_labels{31} = 'c';
+plot_labels{32} = 'd';
+plot_labels(37:40) = {'f','e','g','h'};
+labelPlots(f_base,plot_labels,fig_opts);
+
 %% Other figures
 stacked_constant_input_figure
 
