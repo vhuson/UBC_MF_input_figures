@@ -15,7 +15,7 @@ base_width = (total_width - (panel_gap*(num_panels-1))) / num_panels;
 
 ax_base_par = {};
 
-p_idx = 1;
+p_idx = 2;
 
 pos_ax = [left_margin+(base_width+panel_gap)*(p_idx-1),...
         bottom_edge, base_width, graph_height];
@@ -27,25 +27,33 @@ base_n_spikes_ss_uncorr = cellfun(@(x) {x+all_baseline_n_spikes},base_n_spikes_s
 
 base_n_spikes_ss_uncorr = [{all_baseline_n_spikes} base_n_spikes_ss_uncorr];
 
+%add baseline firing = 1, don't add = 2;
+point_0 = 2;
+
+input_n = [1 2 3 4];
+XTickLabel = {'0' '1' '2.5' '5'};
 
 opts = struct();
-opts.input_n = [1 2 3 4];
+opts.input_n = input_n(point_0:end);
 % opts.input_n = [0 1 2.5 5];
 opts.YScale = 'log';
 % opts.XScale = 'log';
 opts.XLabel = "Constant input (Hz)";
 opts.YLabel = "Response spikes (n)";
-opts.XTickLabel = {'0' '1' '2.5' '5'};
+opts.XTickLabel = XTickLabel(point_0:end);
 opts.min_val = 0.1;
 
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
-    ONidx,[],base_n_spikes_ss_uncorr,f_base,pos_ax,opts);
+    ONidx,[],base_n_spikes_ss_uncorr(point_0:end),f_base,pos_ax,opts);
 
+%Offset XLim a little bit
+ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
+    - diff(ax_base_par{p_idx}.XLim) * 0.05;
 
 fix_powered_ylabels(ax_base_par{p_idx})
 
 
-p_idx = 2;
+p_idx = 1;
 
 pos_ax = [left_margin+(base_width+panel_gap)*(p_idx-1),...
         bottom_edge, base_width, graph_height];
@@ -57,7 +65,11 @@ base_peak_ss_uncorr = [{all_baseline} base_peak_ss_uncorr];
 
 opts.YLabel = "Peak firing rate (spk/s)";
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
-    ONidx,[],base_peak_ss_uncorr,f_base,pos_ax,opts);
+    ONidx,[],base_peak_ss_uncorr(point_0:end),f_base,pos_ax,opts);
+
+%Offset XLim a little bit
+ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
+    - diff(ax_base_par{p_idx}.XLim) * 0.05;
 
 fix_powered_ylabels(ax_base_par{p_idx})
 
@@ -74,7 +86,12 @@ base_async_ss_uncorr = [{all_baseline} base_async_ss_uncorr];
 
 opts.YLabel = "Steady state (spk/s)";
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
-    ONidx,[],base_async_ss_uncorr,f_base,pos_ax,opts);
+    ONidx,[],base_async_ss_uncorr(point_0:end),f_base,pos_ax,opts);
+
+%Offset XLim a little bit
+ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
+    - diff(ax_base_par{p_idx}.XLim) * 0.05;
+
 fix_powered_ylabels(ax_base_par{p_idx})
 
 
@@ -87,14 +104,22 @@ pos_ax = [left_margin+(base_width+panel_gap)*(p_idx-1),...
 % Get ratio data
 base_ratio_ss_uncorr = cellfun(@(x,y) {x./y},base_async_ss_uncorr,base_peak_ss_uncorr);
 
+point_0 = 2;
+
 opts_ratio = opts;
 opts_ratio.YLabel = "Steady state (ratio)";
-opts_ratio.input_n = opts.input_n(2:end);
-opts_ratio.XTickLabel = opts.XTickLabel(2:end);
+opts_ratio.input_n = input_n(point_0:end);
+opts_ratio.XTickLabel = XTickLabel(point_0:end);
 opts_ratio.min_val = 0.01;
 
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
-    ONidx,[],base_ratio_ss_uncorr(2:end),f_base,pos_ax,opts_ratio);
+    ONidx,[],base_ratio_ss_uncorr(point_0:end),f_base,pos_ax,opts_ratio);
+
+%Offset XLim a little bit
+ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
+    - diff(ax_base_par{p_idx}.XLim) * 0.05;
+
+
 fix_powered_ylabels(ax_base_par{p_idx})
 
 for ii =1:numel(ax_base_par)
