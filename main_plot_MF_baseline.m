@@ -81,6 +81,8 @@ steadystate_1s_constant_input_line_figure
 
 superimposed_avgsegment_constant_input_figure
 
+stacked_avgsegment_constant_input_figure
+
 %% Summaries
 f1 = figure('Color','w','Position',[257.5818 320 1.0909e+03 299.7636]);
 
