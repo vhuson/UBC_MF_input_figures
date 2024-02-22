@@ -2,8 +2,8 @@
 %     'Color','w');
 
 % Which cells to plot
-typ_cell_IDs = {'1686','1694','1774'};
-[typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
+% typ_cell_IDs = {'1686','1694','1774'};
+% [typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
 % curr_cells = [5, 9, 18];
 
 plot_amp = true;
@@ -42,7 +42,7 @@ opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[]);
 for ii = 1:numel(curr_cells)
     curr_cell = curr_cells(ii);
     lim_x = all_lim_x{ii};
-    if ii == 2
+    if ii == round(numel(curr_cells)/2)
         if plot_amp
             opts.YLabel = "Peak (\Deltaspk/s)";
         else
@@ -50,7 +50,7 @@ for ii = 1:numel(curr_cells)
         end
     end
 
-    if ii == 3
+    if ii == numel(curr_cells)
         opts.XTickLabel = xtick_labels;
     end
     opts.YRulerVis = "on";
