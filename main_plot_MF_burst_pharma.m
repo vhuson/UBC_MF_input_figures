@@ -80,6 +80,15 @@ f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
 
 example_cell_bpharma_panel
 
+example_line_bpharma_panel
+
+
+%Tweak figure
+fig_opts = struct();
+fig_opts.FontSize = 10;
+standardFig(f_burst_pharma,fig_opts);
+
+
 %% pharma plot typ cell1
 
 f_burst_pharma = figure('Position', [488 1.8000 936.8000 857.8909],...

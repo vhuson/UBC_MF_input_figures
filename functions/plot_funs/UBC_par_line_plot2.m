@@ -7,6 +7,7 @@ base_opts.XScale = 'linear';
 base_opts.XLabel = 'Input spikes (n)';
 base_opts.XTickLabel = false;
 base_opts.YLabel = '';
+base_opts.YRulerVis = "on";
 base_opts.bar = false;
 base_opts.min_val = -Inf;
 base_opts.input_n = [1, 2, 5, 10, 20];
@@ -137,6 +138,8 @@ ylabel(opts.YLabel)
 
 set(currAx,'YScale',opts.YScale)
 set(currAx,'XScale',opts.XScale)
+
+currAx.YRuler.Visible = opts.YRulerVis;
 
 
 standardAx(currAx);
