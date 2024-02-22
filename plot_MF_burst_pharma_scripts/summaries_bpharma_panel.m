@@ -6,10 +6,10 @@
 num_cols = 5;
 
 left_edge = 0.08;
-bottom_edge = 0.44;
-bottom_edge2 = 0.28;
+bottom_edge = 0.46;
+bottom_edge2 = 0.32;
 total_width = 0.845;
-total_height = 0.14;
+total_height = 0.12;
 base_gap = 0.03;
 
 base_width = (total_width - base_gap * (num_cols-1)) / num_cols;
