@@ -92,4 +92,4 @@ for ii = 1:numel(curr_cells)
     same_ylim(ax_pharm_typline(ii,:))
 end
 
-cellfun(@(x) set(x,'XTickLabelRotation',0),ax_pharm_typline(3,:))
+cellfun(@(x) set(x,'XTickLabelRotation',0),ax_pharm_typline(end,:))
