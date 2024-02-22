@@ -7,6 +7,7 @@ base_opts.XScale = 'linear';
 base_opts.XLabel = 'Input spikes (n)';
 base_opts.XTickLabel = false;
 base_opts.YLabel = '';
+base_opts.YTickLabel = false;
 base_opts.YRulerVis = "on";
 base_opts.bar = false;
 base_opts.min_val = -Inf;
@@ -128,6 +129,10 @@ currAx.XTick = input_n;
 
 if ~islogical(opts.XTickLabel)
     xticklabels(opts.XTickLabel);
+end
+
+if ~islogical(opts.YTickLabel)
+    yticklabels(opts.YTickLabel);
 end
 
 xlabel(opts.XLabel)
