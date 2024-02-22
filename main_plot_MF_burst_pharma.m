@@ -5,6 +5,10 @@ setup_workspace_alldata
 
 %% Gather burst pharma data
 
+%First need to gather baseline data for all washin states
+washin_states = {[1 0 0 0 0],[0 1 0 0 0],[0 1 1 0 0],[0 1 1 1 0]};
+[washin_base_rates] = get_washin_baselines(allData,washin_states,Fs);
+
 all_burst_durs      = [0.01 0.02 0.05 0.10 0.2];
 all_burst_tails     = [2.9    3    10   10   10];
 washin_state = [0 1 1 0 0];
@@ -26,7 +30,7 @@ washin_state = [1 0 0 0 0];
 %Get UBC parameters 1
 [all_pharma_slow_amp1,all_pharma_slow_HD1,all_pharma_pause1,...
     all_pharma_n_spikes1] = get_allburst_parameters(...
-    all_mean_pharma_bursts1,all_baseline(washin_fltr),Fs);
+    all_mean_pharma_bursts1,washin_base_rates{1}(washin_fltr),Fs);
 
 %Get UBC parameters
 
@@ -41,7 +45,7 @@ washin_state = [0 1 0 0 0];
 %Get UBC parameters 2
 [all_pharma_slow_amp2,all_pharma_slow_HD2,all_pharma_pause2,...
     all_pharma_n_spikes2] = get_allburst_parameters(...
-    all_mean_pharma_bursts2,all_baseline(washin_fltr),Fs);
+    all_mean_pharma_bursts2,washin_base_rates{2}(washin_fltr),Fs);
 
 
 
@@ -55,7 +59,7 @@ washin_state = [0 1 1 0 0];
 %Get UBC parameters 3
 [all_pharma_slow_amp3,all_pharma_slow_HD3,all_pharma_pause3,...
     all_pharma_n_spikes3] = get_allburst_parameters(...
-    all_mean_pharma_bursts3,all_baseline(washin_fltr),Fs);
+    all_mean_pharma_bursts3,washin_base_rates{3}(washin_fltr),Fs);
 
 
 washin_state = [0 1 1 1 0];
@@ -68,10 +72,30 @@ washin_state = [0 1 1 1 0];
 %Get UBC parameters 4
 [all_pharma_slow_amp4,all_pharma_slow_HD4,all_pharma_pause4,...
     all_pharma_n_spikes4] = get_allburst_parameters(...
-    all_mean_pharma_bursts4,all_baseline(washin_fltr),Fs);
+    all_mean_pharma_bursts4,washin_base_rates{4}(washin_fltr),Fs);
 
 % Just pharma onidx
 [fltr_ONidx] = get_fltr_ONidx(ONidx,find(washin_fltr));
+
+
+%Use baseline for NaNs
+%!!!!!!!!!!!!!! NEEDS PHARMACOLOGY BASELINES TO DO PROPERLY
+% for jj = 1:numel(all_mean_pharma_bursts1)
+%     for ii = 1:size(all_mean_pharma_bursts1{jj},1)
+%         curr_trace = all_mean_pharma_bursts1{jj}(ii,:);
+% 
+%         %Fill with zeros
+%         curr_trace(isnan(curr_trace)) = 0;
+% 
+%         %Fill up to first spike with baseline
+%         first_nozero = find(curr_trace ~= 0,1,"first");
+%         curr_trace(1:first_nozero) = all_baseline(ii);
+% 
+%         %Put back into array
+%         all_mean_pharma_bursts1{jj}(ii,:) = curr_trace;
+% 
+%     end
+% end
 
 %% Main figure
 f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
@@ -98,6 +122,11 @@ plot_labels{26} = 'b';
 plot_labels{51} = 'c';
 plot_labels{56} = 'd';
 labelPlots(f_burst_pharma,plot_labels,fig_opts);
+
+%% Supplement heatmap figure
+
+f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
 
 %% Other figures
