@@ -54,7 +54,7 @@ opts.input_n = input_n(point_0:end);
 opts.YScale = 'log';
 % opts.XScale = 'log';
 opts.XLabel = "";
-opts.YLabel = "Response spikes (n)";
+opts.YLabel = "#Spikes";
 opts.XTickLabel = XTickLabel(point_0:end);
 opts.min_val = 0.1;
 
@@ -88,7 +88,7 @@ if use_peak
     base_peak_ss_uncorr(1) = base_peak_peak_uncorr;
 end
 
-opts.YLabel = "Peak firing rate (spk/s)";
+opts.YLabel = "Peak rate (spk/s)";
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
     ONidx,[],base_peak_ss_uncorr(point_0:end),f_base,pos_ax,opts);
 
@@ -105,10 +105,7 @@ fix_powered_ylabels(ax_base_par{p_idx})
 % pos_ax = [left_margin+(base_width+panel_gap)*(p_idx-1),...
 %         bottom_edge, base_width, graph_height];
 % 
-% % Get steady state data
-% base_async_ss_uncorr = cellfun(@(x) {x+all_baseline},base_async_ss);
-% base_async_ss_uncorr = [{all_baseline} base_async_ss_uncorr];
-% 
+
 % if use_peak
 %     base_async_peak_uncorr = {base_async_peak{1} + all_baseline};
 %     base_async_ss_uncorr(1) = base_async_peak_uncorr;
@@ -131,6 +128,10 @@ fix_powered_ylabels(ax_base_par{p_idx})
 p_idx = 3;
 
 pos_ax = [all_left_edges(p_idx), all_bottom_edge(p_idx), base_width, graph_height];
+
+% % Get steady state data
+base_async_ss_uncorr = cellfun(@(x) {x+all_baseline},base_async_ss);
+base_async_ss_uncorr = [{all_baseline} base_async_ss_uncorr];
 
 % Get ratio data
 base_ratio_ss_uncorr = cellfun(@(x,y) {x./y},base_async_ss_uncorr,base_peak_ss_uncorr);
