@@ -1,6 +1,6 @@
 %% Example cells panel
-% f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
-%     'Color','w');
+f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
 
 %19, 29 37 51 60
@@ -9,12 +9,12 @@ typ_cell_IDs = {'1657','1685','1766','1758','1678'};
 
 
 
-base_width = 0.22;
+base_width = 0.18;
 base_w_unit = base_width/5;
-base_height = 0.025;
+base_height = 0.045;
 top_margin = 0.96;
 left_margin = 0.08;
-left_margin_avg = 0.789;
+left_margin_avg = 0.689;
 base_space = 0.02;
 base_hspace = 0.01;
 
@@ -42,7 +42,7 @@ lim_x = [0 11];
 lim_x_ss = [8.95 10.95];
 % lim_x_avg = [[0 1];[0 0.4];[0 0.2]];
 lim_x_avg = [[0 0.2];[0 0.2];[0 0.2]];
-base_w_avg = lim_x_avg(:,2).*base_width;
+base_w_avg = lim_x_avg(:,2).*base_width*2.5;
 
 y_scalebar_size = [20 20 20 20 20];
 
