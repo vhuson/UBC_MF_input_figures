@@ -1,6 +1,6 @@
 %% Example cells panel
-% f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
-%     'Color','w');
+f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
 
 %19, 29 37 51 60
@@ -26,14 +26,17 @@ pos_ax = [left_margin-base_width-base_hspace,...
 [full_baseline_incl_traces] = concat_inst_freqs(all_full_traces,...
     pre_prot_baseline_traces,Fs);
 
-%Remove zeros from mean segments
-nan_mean_segments = mean_segments;
-for ii = 1:numel(mean_segments)
-    nan_idx_mean_segments = mean_segments{ii} == 0;
-    nan_mean_segments{ii}(nan_idx_mean_segments) = NaN;
+%Remove zeros from mean segments 
+% nan_mean_segments = mean_segments;
+nan_mean_segments = all_ss_segments;
+for ii = 1:numel(nan_mean_segments)
+    nan_idx_mean_segments = nan_mean_segments{ii} == 0;
 
+    if ~all(nan_idx_mean_segments)
+        nan_mean_segments{ii}(nan_idx_mean_segments) = NaN;
+    end
     %Specifically maintain zeros in cell 51
-    nan_mean_segments{ii}(48,:) = mean_segments{ii}(48,:);
+    nan_mean_segments{ii}(48,:) = all_ss_segments{ii}(48,:);
 end
 
 % all_colors = repmat([0 0 0],3,1);
