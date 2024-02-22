@@ -91,6 +91,15 @@ fig_opts.FontSize = 10;
 standardFig(f_burst_pharma,fig_opts);
 
 
+%Add labels
+plot_labels = repmat({[]},1,56);
+plot_labels{1} = 'a';
+plot_labels{26} = 'b';
+plot_labels{51} = 'c';
+plot_labels{56} = 'd';
+labelPlots(f_burst_pharma,plot_labels,fig_opts);
+
+
 %% Other figures
 example_cellslines_bpharma_figure
 
