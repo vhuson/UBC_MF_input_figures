@@ -3,10 +3,10 @@
 
 
 left_edge = 0.7427;
-bottom_edge = 0.1;
+bottom_edge = 0.06;
 total_width = 0.23;
 panel_gap = 0.04;
-total_height = 0.47;
+total_height = 0.51;
 
 num_panels = 3;
 base_width = total_width;

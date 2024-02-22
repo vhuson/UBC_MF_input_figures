@@ -2,8 +2,8 @@
 %     'Color','w');
 
 
-pos_bottom = 0.1;
-pos_height = 0.47;
+pos_bottom = 0.06;
+pos_height = 0.51;
 pos_left = 0.07;
 full_width = 0.560;
 base_space = 0.01;

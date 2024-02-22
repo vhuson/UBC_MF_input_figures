@@ -1,6 +1,6 @@
 %% Example cells panel
-f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
+% f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
 
 
 %19, 29 37 51 60
