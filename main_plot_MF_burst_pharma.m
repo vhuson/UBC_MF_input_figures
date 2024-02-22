@@ -1,4 +1,9 @@
-%% Make burst pharma figure
+%% Get files, general means, and ONidx
+
+setup_workspace_alldata
+
+
+%% Gather burst pharma data
 
 all_burst_durs      = [0.01 0.02 0.05 0.10 0.2];
 all_burst_tails     = [2.9    3    10   10   10];
@@ -64,13 +69,24 @@ washin_state = [0 1 1 1 0];
 [all_pharma_slow_amp4,all_pharma_slow_HD4,all_pharma_pause4,...
     all_pharma_n_spikes4] = get_allburst_parameters(...
     all_mean_pharma_bursts4,all_baseline(washin_fltr),Fs);
+
+% Just pharma onidx
+[fltr_ONidx] = get_fltr_ONidx(ONidx,find(washin_fltr));
+
+%% Main figure
+f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
+
+
+example_cell_bpharma_panel
+
 %% pharma plot typ cell1
 
 f_burst_pharma = figure('Position', [488 1.8000 936.8000 857.8909],...
     'Color','w');
 
 
-[fltr_ONidx] = get_fltr_ONidx(ONidx,find(washin_fltr));
+
 
 select_cells = fltr_ONidx;
 
