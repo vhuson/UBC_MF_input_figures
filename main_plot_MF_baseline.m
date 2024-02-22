@@ -45,10 +45,12 @@ f_base = figure('Position', [488 1.8000 680.3150 857.9636],...
 examples_constant_input_panel
 
 %Heatmap
-heatmap_constant_input_panel
+% heatmap_constant_input_panel
+heatmap_noavg_constant_input_panel
 
 %Summary panels
-summaries_constant_input_panel
+% summaries_constant_input_panel
+summaries_reordered_constant_input_panel
 
 %Tweak figure
 fig_opts = struct();
@@ -58,10 +60,9 @@ standardFig(f_base,fig_opts);
 %Add labels
 plot_labels = repmat({[]},1,40);
 plot_labels{1} = 'a';
-plot_labels{2} = 'b';
-plot_labels{31} = 'c';
-plot_labels{32} = 'd';
-plot_labels(37:40) = {'f','e','g','h'};
+plot_labels{2} = 'c';
+plot_labels{31} = 'b';
+plot_labels(34:36) = {'e','d','f'};
 labelPlots(f_base,plot_labels,fig_opts);
 
 %% Other figures
