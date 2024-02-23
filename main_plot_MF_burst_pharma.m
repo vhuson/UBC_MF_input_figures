@@ -79,23 +79,34 @@ washin_state = [0 1 1 1 0];
 
 
 %Use baseline for NaNs
-%!!!!!!!!!!!!!! NEEDS PHARMACOLOGY BASELINES TO DO PROPERLY
-% for jj = 1:numel(all_mean_pharma_bursts1)
-%     for ii = 1:size(all_mean_pharma_bursts1{jj},1)
-%         curr_trace = all_mean_pharma_bursts1{jj}(ii,:);
-% 
-%         %Fill with zeros
-%         curr_trace(isnan(curr_trace)) = 0;
-% 
-%         %Fill up to first spike with baseline
-%         first_nozero = find(curr_trace ~= 0,1,"first");
-%         curr_trace(1:first_nozero) = all_baseline(ii);
-% 
-%         %Put back into array
-%         all_mean_pharma_bursts1{jj}(ii,:) = curr_trace;
-% 
-%     end
-% end
+all_mean_pharma_bursts_all = {all_mean_pharma_bursts1,...
+                              all_mean_pharma_bursts2,...
+                              all_mean_pharma_bursts3,...
+                              all_mean_pharma_bursts4};
+
+for jj = 1:numel(all_mean_pharma_bursts_all)
+    curr_mean_pharma_bursts = all_mean_pharma_bursts_all{jj};
+    curr_baseline = washin_base_rates{jj}(washin_fltr);
+    for ii = 1:size(curr_mean_pharma_bursts{1},1)
+        curr_trace = curr_mean_pharma_bursts{1}(ii,:);
+
+        %Fill with zeros
+        curr_trace(isnan(curr_trace)) = 0;
+
+        %Fill up to first spike with baseline
+        first_nozero = find(curr_trace ~= 0,1,"first");
+        curr_trace(1:first_nozero) = curr_baseline(ii);
+
+        %Put back into array
+        curr_mean_pharma_bursts{1}(ii,:) = curr_trace;
+
+    end
+    all_mean_pharma_bursts_all{jj} = curr_mean_pharma_bursts;
+end
+all_mean_pharma_bursts1 = all_mean_pharma_bursts_all{1};
+all_mean_pharma_bursts2 = all_mean_pharma_bursts_all{2};
+all_mean_pharma_bursts3 = all_mean_pharma_bursts_all{3};
+all_mean_pharma_bursts4 = all_mean_pharma_bursts_all{4};
 
 %% Main figure
 f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
