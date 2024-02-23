@@ -136,8 +136,25 @@ labelPlots(f_burst_pharma,plot_labels,fig_opts);
 
 %% Supplement heatmap figure
 
-f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
+f_burst_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...
     'Color','w');
+
+
+all_heatmaps_bpharma_figure
+
+
+
+%Tweak figure
+fig_opts = struct();
+fig_opts.FontSize = 10;
+standardFig(f_burst_pharma_hmsupp,fig_opts);
+
+plot_labels = repmat({[]},1,20);
+plot_labels{1} = 'a';
+plot_labels{6} = 'b';
+plot_labels{11} = 'c';
+plot_labels{16} = 'd';
+labelPlots(f_burst_pharma_hmsupp,plot_labels,fig_opts);
 
 
 %% Other figures
