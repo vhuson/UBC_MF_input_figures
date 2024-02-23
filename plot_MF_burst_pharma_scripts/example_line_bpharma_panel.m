@@ -3,9 +3,10 @@
 % example_cell_bpharma_panel
 
 % Which cells to plot
-% typ_cell_IDs = {'1686','1694','1774'};
-% [typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
-% curr_cells = [5, 9, 18];
+% curr_cells = [5, 9, 13, 18, 24];
+typ_cell_IDs = {'1686','1694','1776','1774','1709'};
+[typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
+
 
 plot_amp = true;
 
@@ -41,7 +42,12 @@ all_titles = {'1x' '2x' '5x' '10x' '20x'};
 ax_pharm_typline = {};
 
 opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[],'XTick',[]);
+opts.markerfacecolor = {'w',[0.7 0.7 0.7],'w',[0.7 0.7 0.7]};
 
+
+% Set marker colors
+%Use pharmacology colors
+%{
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
@@ -51,6 +57,20 @@ opts.markeredgecolor = {all_colors_pharma(1,:),...
                         all_colors_pharma(2,:),...
                         all_colors_pharma(3,:),...
                         all_colors_pharma(4,:)};
+%}
+
+%Use cell marker color
+%
+cell_marker_color = true;
+seed_colors = [1 0 0;
+                1 0.5 0.2;
+                0.4 1 0.4;
+                0.2 0.5 1;
+                0 0 1];
+
+all_colors = seed_map(seed_colors,numel(fltr_ONidx));
+
+%}
 
 for ii = 1:numel(curr_cells)
     curr_cell = curr_cells(ii);
@@ -67,6 +87,13 @@ for ii = 1:numel(curr_cells)
     %     opts.XTickLabel = xtick_labels;
     % end
     opts.YRulerVis = "on";
+
+    %Set color based on cell
+    if cell_marker_color
+        opts.markeredgecolor = repmat({all_colors(curr_cell,:)},1,4);
+        % opts.line_color = all_colors(curr_cell,:);
+    end
+
     for input_idx = 1:5
         %Set right ax pos
         pos_ax = [all_left_edge(input_idx) all_bottom_edge(ii)...
@@ -109,8 +136,13 @@ for ii = 1:numel(curr_cells)
     same_ylim(ax_pharm_typline(ii,:))
 end
 
+dummy_opts = struct();
+dummy_opts.markerfacecolor = {'w',[0.7 0.7 0.7],'w',[0.7 0.7 0.7]};
+dummy_ax = UBC_par_marker_plot([1 1 1 1],f_burst_pharma,[2 2 0.2 0.2],...
+    dummy_opts);
+
 legend_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
-legend(flipud(ax_pharm_typline{1,3}.Children(1:end-1)),legend_labels,...
+legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Orientation','horizontal',...
     'Box', 'off',...
     'NumColumns',2,...

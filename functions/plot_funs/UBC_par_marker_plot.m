@@ -16,6 +16,8 @@ base_opts.xtick_symbols = {"o","^","square","diamond"};
 base_opts.marker_sizes = [6, 6, 7, 6];
 
 base_opts.markeredgecolor = {'k' 'k' 'k' 'k'};
+base_opts.markerfacecolor = {'w' 'w' 'w' 'w'};
+base_opts.line_color = 'k';
 
 if nargin < 4
     opts = base_opts;
@@ -30,12 +32,12 @@ markeredgecolor = opts.markeredgecolor;
 curr_ax = axes(curr_fig,'Position',pos_ax);
 hold(curr_ax,'on');
 %Line
-plot(opts.input_n,curr_par,'k','LineWidth',1);
+plot(opts.input_n,curr_par,'Color',opts.line_color,'LineWidth',1);
 %Markers
 for idx = opts.input_n
     plot(opts.input_n(idx),curr_par(idx),...
         xtick_symbols{idx},...
-        'MarkerEdgeColor',markeredgecolor{idx},'MarkerFaceColor','w',...
+        'MarkerEdgeColor',markeredgecolor{idx},'MarkerFaceColor',opts.markerfacecolor{idx},...
         'MarkerSize',marker_sizes(idx))
 end
 hold(curr_ax,'off');
