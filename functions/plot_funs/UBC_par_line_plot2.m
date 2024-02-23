@@ -1,4 +1,4 @@
-function [currAx] = UBC_par_line_plot2(...
+function [currAx,cb1] = UBC_par_line_plot2(...
     ONidx,OFFidx,burst_par,f1,ax_position,opts)
 
 base_opts.norm = false;
@@ -129,6 +129,7 @@ for cell_n = cell_order
 end
 hold off
 
+cb1 = [];
 if bar_bol
     cb1 = colorbar;
     cb1.Ticks = [0 1];
