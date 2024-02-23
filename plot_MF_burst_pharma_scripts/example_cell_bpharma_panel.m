@@ -1,16 +1,14 @@
 %% Typical examples script
 % 
-% f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
-%     'Color','w');
+f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
-
-typ_cell_IDs = {'1686','1694','1774'};
+% curr_cells = [5, 9, 13, 18, 24];
+typ_cell_IDs = {'1686','1694','1776','1774','1709'};
 [typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
 
 
-% curr_cells = [5, 9, 18];
 
-curr_cells = [5, 9, 13, 18, 24];
 
 
 % all_lim_x = {[-0.21 0.7], [-0.6 2], [-1.5 5]};
@@ -22,9 +20,9 @@ num_rows = numel(curr_cells);
 num_cols = 5; %Number of burst types
 
 left_edge = 0.08;
-top_edge = 0.96;
-total_height = 0.3;
-total_width = 0.4;
+top_edge = 0.92;
+total_height = 0.35;
+total_width = 0.5;
 height_space = 0.015;
 base_space = 0.01;
 
@@ -126,23 +124,18 @@ scale_opts.origin = [1 14];
 % scale_opts.ylabel = 'spk/s';
 add_scale_bar(ax_pharm_typ{ii,end},[1 0],scale_opts);
 
+legend_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+legend(ax_pharm_typ{1,3},legend_labels,...
+    'Orientation','horizontal',...
+    'Box', 'off',...
+    'NumColumns',2,...
+    'Units','normalized',...
+    'Position', [0.1452 0.9435 0.3319 0.0459])
+% legend_labels = {'1: Baseline','2: −mGluR2','3: −AMPAR','4: −mGluR1'};
 
-legend(ax_pharm_typ{end,end},repmat({'     '},1,4),...
-    'Box', 'off','Orientation', 'horizontal',...
-    'Units','pixels',...
-    'Position', [49.2636 538.1648 402.9905 21.4545])
-legend_labels = {'1: Baseline','2: −mGluR2','3: −AMPAR','4: −mGluR1'};
 
-% legend_positions = {[-7 -66.4772 0],...
-%         [-4.5333 -66.4772 0],...
-%         [-2.0666 -66.4772 0],...
-%         [0.4 -66.4772 0]};
-% 
-% legend_positions = {[-2.5 -0.4432 0],...
-%         [-1.4 -0.4432 0],...
-%         [-0.3 -0.4432 0],...
-%         [0.8 -0.4432 0]};
-
+%Separate text labels for legend
+%{
 legend_positions = {[-186.6364 -33.0378 0],...
         [-104.0764 -33.0378 0],...
         [-21.5164 -33.0378 0],...
@@ -156,4 +149,6 @@ for ii = 1:numel(legend_labels)
         'Position',legend_positions{ii})
 
 end
+%}
+
 

@@ -1,5 +1,6 @@
 % f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
 %     'Color','w');
+% example_cell_bpharma_panel
 
 % Which cells to plot
 % typ_cell_IDs = {'1686','1694','1774'};
@@ -12,10 +13,10 @@ plot_amp = true;
 num_rows = numel(curr_cells);
 num_cols = 5; %Number of burst types
 
-left_edge = 0.55;
-top_edge = 0.96;
-total_height = 0.3;
-total_width = 0.375;
+left_edge = 0.65;
+top_edge = 0.92;
+total_height = 0.35;
+total_width = 0.3;
 height_space = 0.015;
 base_space = 0.015;
 
@@ -31,13 +32,25 @@ all_bottom_edge = fliplr(all_bottom_edge);
 
 %Specify graph options
 select_cells = fltr_ONidx;
-% xtick_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+legend_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+xtick_symbols = {"o","^","square","diamond"};
+
 xtick_labels = {'1','2','3','4'};
 all_titles = {'1x' '2x' '5x' '10x' '20x'};
 
 ax_pharm_typline = {};
 
-opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[]);
+opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[],'XTick',[]);
+
+seed_colors_pharma = [0 0 0;
+                1 0.6 0;
+                0.8 0 0;
+                0   0   1];
+all_colors_pharma = seed_map(seed_colors_pharma,4);
+opts.markeredgecolor = {all_colors_pharma(1,:),...
+                        all_colors_pharma(2,:),...
+                        all_colors_pharma(3,:),...
+                        all_colors_pharma(4,:)};
 
 for ii = 1:numel(curr_cells)
     curr_cell = curr_cells(ii);
@@ -50,9 +63,9 @@ for ii = 1:numel(curr_cells)
         end
     end
 
-    if ii == numel(curr_cells)
-        opts.XTickLabel = xtick_labels;
-    end
+    % if ii == numel(curr_cells)
+    %     opts.XTickLabel = xtick_labels;
+    % end
     opts.YRulerVis = "on";
     for input_idx = 1:5
         %Set right ax pos
@@ -74,13 +87,17 @@ for ii = 1:numel(curr_cells)
                 all_pharma_n_spikes3{input_idx}(select_cells(curr_cell)),...
                 all_pharma_n_spikes4{input_idx}(select_cells(curr_cell))};
         end
+        
+        %Make plot with different markers
+        [ax_pharm_typline{ii,input_idx}] = UBC_par_marker_plot(...
+            [all_pharma_line_par{:}],f_burst_pharma,pos_ax,opts);
 
-
-        [ax_pharm_typline{ii,input_idx}] = UBC_par_line_plot2(...
-            1,[],all_pharma_line_par,f_burst_pharma,pos_ax,...
-            opts);
-
-        ax_pharm_typline{ii,input_idx}.Children.Color = 'k';
+        
+        % [ax_pharm_typline{ii,input_idx}] = UBC_par_line_plot2(...
+        %     1,[],all_pharma_line_par,f_burst_pharma,pos_ax,...
+        %     opts);
+        % 
+        % ax_pharm_typline{ii,input_idx}.Children.Color = 'k';
 
         opts.YLabel = "";
         opts.YRulerVis = "off";
@@ -92,4 +109,11 @@ for ii = 1:numel(curr_cells)
     same_ylim(ax_pharm_typline(ii,:))
 end
 
-cellfun(@(x) set(x,'XTickLabelRotation',0),ax_pharm_typline(end,:))
+legend_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+legend(flipud(ax_pharm_typline{1,3}.Children(1:end-1)),legend_labels,...
+    'Orientation','horizontal',...
+    'Box', 'off',...
+    'NumColumns',2,...
+    'Units','normalized',...
+    'Position', [0.6327 0.9435 0.3319 0.0459])
+
