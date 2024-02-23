@@ -40,6 +40,14 @@ all_mean_pharma_bursts_all = {all_mean_pharma_bursts1,...
 
 %Normalize per cell based on-mGluR2
 norm_on = max(all_mean_pharma_bursts_all{2}{5},[],2);
+
+%Normalize per cell per protocol based on-mGluR2
+per_prot_norm = false;
+all_norm_on = cell(1,5);
+for ii = 1:5
+    all_norm_on{ii} = max(all_mean_pharma_bursts_all{2}{ii},[],2);
+end
+
 %Same normalization for OFFs
 norm_off = [];
 norm_OFFidx = [];
@@ -81,6 +89,10 @@ for ii = 1:num_rows
         curr_mean_pharma_prot = curr_mean_pharma_bursts{jj};
         
         %Normalize data
+        if per_prot_norm
+            norm_on = all_norm_on{jj};
+        end
+
         [norm_traces] = norm_UBC(curr_mean_pharma_prot,norm_on,norm_off,norm_OFFidx);
         norm_traces = norm_traces(fltr_ONidx,:);
 
