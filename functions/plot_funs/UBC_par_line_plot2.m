@@ -13,6 +13,10 @@ base_opts.bar = false;
 base_opts.min_val = -Inf;
 base_opts.input_n = [1, 2, 5, 10, 20];
 
+base_opts.XTick = base_opts.input_n;
+base_opts.base_style = '-o';
+base_opts.xtick_symbols = false;
+base_opts.marker_sizes = [6, 6, 7, 6];
 
 
 if nargin < 4
@@ -107,8 +111,19 @@ cell_order = randperm(numel(ONidx)-numel(OFFidx));
 
 for cell_n = cell_order
 
-    plot(input_n,curr_par_mat(ONidx(cell_n),:),'-o',...
+    plot(input_n,curr_par_mat(ONidx(cell_n),:),opts.base_style,...
         'Color',all_colors(cell_n,:),'MarkerFaceColor','w')
+    
+    %Plot separate symbols
+    if ~islogical(opts.xtick_symbols)
+        for idx = opts.input_n
+            plot(opts.input_n(idx),curr_par_mat(ONidx(cell_n),idx),...
+                opts.xtick_symbols{idx},...
+                'MarkerEdgeColor',all_colors(cell_n,:),'MarkerFaceColor','w',...
+                'MarkerSize',opts.marker_sizes(idx))
+        end
+
+    end
     % ax1.YLim(1) = 0;
     % pause
 end
@@ -127,6 +142,8 @@ if bar_bol
 end
 currAx.XTick = input_n;
 
+
+currAx.XTick = opts.XTick;
 if ~islogical(opts.XTickLabel)
     xticklabels(opts.XTickLabel);
 end
