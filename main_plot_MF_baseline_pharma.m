@@ -2,16 +2,19 @@
 
 setup_workspace_alldata
 
+%Dirty fix for problem in cell 1774 "56"
+allData{56}.spks_prot{2}{17}(14) = [];
+
 %% Make baseline pharma figure
-
-all_base_freqs      = [1 2.5 5];
-prot_spec_dur = [2 10];
-washin_state = [0 1 1 0 0];
-
 
 %First need to gather baseline data for all washin states
 washin_states = {[1 0 0 0 0],[0 1 0 0 0],[0 1 1 0 0],[0 1 1 1 0]};
 [washin_base_rates] = get_washin_baselines(allData,washin_states,Fs);
+
+
+all_base_freqs      = [1 2.5 5];
+prot_spec_dur = [2 10];
+washin_state = [0 1 1 0 0];
 
 
 
@@ -122,6 +125,32 @@ standardFig(f_base_pharma,fig_opts);
 % plot_labels{52} = 'c';
 % plot_labels{57} = 'd';
 % labelPlots(f_base_pharma,plot_labels);
+
+
+%% Supplement heatmap figure
+
+f_base_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
+
+
+
+all_heatmaps_ci_pharma_figure
+
+
+
+%Tweak figure
+fig_opts = struct();
+fig_opts.FontSize = 10;
+standardFig(f_base_pharma_hmsupp,fig_opts);
+
+plot_labels = repmat({[]},1,20);
+plot_labels{1} = 'a';
+plot_labels{4} = 'b';
+plot_labels{7} = 'c';
+plot_labels{10} = 'd';
+labelPlots(f_base_pharma_hmsupp,plot_labels);
+
+
 
 %% Other figures
 stacked_traces_parheatmap_figure
