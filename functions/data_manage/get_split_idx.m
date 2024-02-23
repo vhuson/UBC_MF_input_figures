@@ -1,6 +1,8 @@
 function [idx_split] = get_split_idx(curr_file_names,idx_overall)
 %UNTITLED3 Summary of this function goes here
 %   Detailed explanation goes here
+idx_split = [];
+
 prot2_file_idx = ~contains(curr_file_names,'100Hz');
 
 prot1_file_names = curr_file_names(~prot2_file_idx);

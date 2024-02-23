@@ -15,10 +15,12 @@ for ii = 1:numel(allData)
     %Get previous idx
     curr_overall_idx = get_overall_idx(ii_file_names,split_idx{ii});
     prev_idx = get_split_idx(ii_file_names,curr_overall_idx-1);
+    
+    if ~isempty(prev_idx)
+        curr_trace = ii_freqs{prev_idx(1)}{prev_idx(2)};
 
-    curr_trace = ii_freqs{prev_idx(1)}{prev_idx(2)};
-
-    baseline_traces{ii} = curr_trace(end-segment_end_idx:end);
+        baseline_traces{ii} = curr_trace(end-segment_end_idx:end);
+    end
 
 end
 
