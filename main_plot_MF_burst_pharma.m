@@ -113,26 +113,27 @@ f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
     'Color','w');
 
 
+
 example_cell_bpharma_panel
 
 example_line_bpharma_panel
 
 summaries_bpharma_panel
 
-
 %Tweak figure
 fig_opts = struct();
 fig_opts.FontSize = 10;
 standardFig(f_burst_pharma,fig_opts);
 
+washin_graphic_panel
 
 %Add labels
-plot_labels = repmat({[]},1,56);
+plot_labels = repmat({[]},1,58);
 plot_labels{1} = 'a';
 plot_labels{26} = 'b';
-plot_labels{51} = 'c';
-plot_labels{56} = 'd';
-labelPlots(f_burst_pharma,plot_labels,fig_opts);
+plot_labels{52} = 'c';
+plot_labels{57} = 'd';
+labelPlots(f_burst_pharma,plot_labels);
 
 %% Supplement heatmap figure
 
