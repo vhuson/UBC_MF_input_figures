@@ -4,7 +4,7 @@
 %     'Color','w');
 
 
-all_XLim = {[0 10],[0 10],[0 10]};
+all_XLim = {[0 11],[0 11],[0 11]};
 diff_lim_x = cellfun(@diff, all_XLim);
 
 
@@ -29,13 +29,22 @@ all_bottom_edges = (graph_height + base_gap) .* (0:num_rows-1) + bottom_edge;
 all_bottom_edges = fliplr(all_bottom_edges);
 
 
-
 %Gather all data
 all_mean_pharma_ci_all = {all_full_pharma_base1,...
                               all_full_pharma_base2,...
                               all_full_pharma_base3,...
                               all_full_pharma_base4};
 
+all_preprot_pharma_ci_all = {all_preprot_base_pharma_base1,...
+                                all_preprot_base_pharma_base2,...
+                                all_preprot_base_pharma_base3,...
+                                all_preprot_base_pharma_base4};
+
+%Concatenate and fill zeros
+for ii = 1:numel(all_mean_pharma_ci_all)
+    [all_mean_pharma_ci_all{ii}] = concat_inst_freqs(all_mean_pharma_ci_all{ii},...
+        all_preprot_pharma_ci_all{ii},Fs);
+end
 
 
 %Normalize per cell based on-mGluR2 1 Hz
@@ -69,7 +78,7 @@ seed_colors_pharma = [0 0 0;
 all_colors_pharma = seed_map(seed_colors_pharma,4);
 
 opts = struct();
-opts.XTick = 0:5:20;
+opts.XTick = 1:5:21;
 opts.XTickLabel = '';
 
 
@@ -83,7 +92,7 @@ for ii = 1:num_rows
                     all_row_labels{ii},'\newline\color{black}Cell (#)'];
     opts.YTick = false;
     if ii == num_rows
-        opts.XTickLabel = arrayfun(@num2str,opts.XTick,'UniformOutput',false);
+        opts.XTickLabel = arrayfun(@num2str,opts.XTick-1,'UniformOutput',false);
     end
 
     %Loop over stim protocols
