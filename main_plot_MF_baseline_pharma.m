@@ -112,6 +112,10 @@ f_base_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
     'Color','w');
 
 
+example_cell_ci_pharma_panel
+
+all_heatmaps_ci_pharma_panel
+
 %Tweak figure
 fig_opts = struct();
 fig_opts.FontSize = 10;

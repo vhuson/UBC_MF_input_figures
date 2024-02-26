@@ -51,6 +51,13 @@ else
 
     y1 = opts.origin(2);
     y2 = y1 + scale_barxy(2);
+
+    %Check if within limits, if not adjust to fit exactly
+    ax1.XLim(1) = min([ax1.XLim(1), x1]);
+    ax1.XLim(2) = max([ax1.XLim(2), x2]);
+
+    ax1.YLim(1) = min([ax1.YLim(1), y1]);
+    ax1.YLim(2) = max([ax1.YLim(2), y2]);
 end
 
 
