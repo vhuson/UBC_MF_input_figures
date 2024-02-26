@@ -29,26 +29,43 @@ curr_cell = curr_selection(curr_idx);
 
 %Check trace arrays and make sure its not only NaN and zeros (because this
 %is not plot in matlab for unclear reasons)
-for ii = 1:numel(trace_array)
-    curr_trace = trace_array{ii}(curr_cell,:);
-    nan_data = isnan(curr_trace);
-    if any(nan_data)
-        nonan_data = curr_trace(~nan_data);
-        if all(nonan_data == 0)
-            trace_array{ii}(curr_cell,~nan_data) = 0.05;
-        end
+% for ii = 1:numel(trace_array)
+%     curr_trace = trace_array{ii}(curr_cell,:);
+%     nan_data = isnan(curr_trace);
+%     if any(nan_data)
+%         nonan_data = curr_trace(~nan_data);
+%         if all(nonan_data == 0)
+%             trace_array{ii}(curr_cell,~nan_data) = 0.05;
+%         end
+% 
+%     end
+% 
+% end
 
-    end
-
+% Destroy 0 traces
+if all(trace_array{1}(curr_cell,:) == 0)
+    yData = [0 0];
+    xData = [1 numel(trace_array{1}(curr_cell,:))] /Fs;
+else
+    yData = trace_array{1}(curr_cell,:);
+    xData = (1:numel(trace_array{1}(curr_cell,:)))/Fs;
 end
 
-plot((1:numel(trace_array{1}(curr_cell,:)))/Fs-zerod_x(1),...
-    trace_array{1}(curr_cell,:),'Color',all_colors(1,:))
+plot(xData-zerod_x(1),...
+    yData,'Color',all_colors(1,:))
 
 hold on
 for jj = 2:numel(trace_array)
-plot((1:numel(trace_array{jj}(curr_cell,:)))/Fs-zerod_x(jj),...
-    trace_array{jj}(curr_cell,:),'Color',all_colors(jj,:))
+    % Destroy 0 traces
+    if all(trace_array{jj}(curr_cell,:) == 0)
+        yData = [0 0];
+        xData = [1 numel(trace_array{jj}(curr_cell,:))] /Fs;
+    else
+        yData = trace_array{jj}(curr_cell,:);
+        xData = (1:numel(trace_array{jj}(curr_cell,:)))/Fs;
+    end
+    plot(xData-zerod_x(jj),...
+        yData,'Color',all_colors(jj,:))
 end
 hold off
 % title(['Cell #',num2str(curr_idx)])
