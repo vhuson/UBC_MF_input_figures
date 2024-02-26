@@ -133,9 +133,9 @@ for ii = 1:num_rows
         
 
         %Add titles
-        if ii == 1
-            title(ax_pharm_hm{ii,jj},all_titles{jj})
-        end
+        % if ii == 1
+        %     title(ax_pharm_hm{ii,jj},all_titles{jj})
+        % end
 
     end
 end

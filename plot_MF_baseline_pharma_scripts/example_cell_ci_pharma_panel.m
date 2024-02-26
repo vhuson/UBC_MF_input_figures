@@ -116,7 +116,7 @@ for ii = 1:numel(curr_cells)
                 title(ax_basep_typ{row_idx,kk},all_titles{kk})
             end
         end
-        same_ylim(ax_basep_typ(row_idx,:));
+        
 
         %Add washin label
         curr_label = ['\color[rgb]{',num2str(all_colors_pharma(jj,:)),'}',...
@@ -125,8 +125,9 @@ for ii = 1:numel(curr_cells)
             'Units','normalized',...
             'Position',[0 1 0],'VerticalAlignment','bottom',...
             'HorizontalAlignment','left');
-
+        curr_t.Units = 'data';
         
+        same_ylim(ax_basep_typ(row_idx,:));
         
         if jj == 2
             text(ax_basep_typ{row_idx,1},0,0,['Cell\newline#',num2str(curr_cell)],'Units','normalized',...
