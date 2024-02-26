@@ -2,11 +2,10 @@
 %     'Color','w');
 
 %Get right cell idxes
-typ_cell_IDs = {'1686','1694','1776','1774','1709'};
+typ_cell_IDs = {'1701','1672'};
 [typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
 
-curr_cells = [1, 20];
-% typ_cell_idxs = fltr_ONidx(curr_cells);
+% curr_cells = [1, 20];
 
 %Xlim 
 all_XLim = {[-1 10],[-1 10],[-1 10]};
@@ -21,7 +20,7 @@ left_edge = 0.1;
 bottom_edge = 0.62;
 top_edge = 0.96;
 ax_space = 0.012;
-ax_space_v = 0.025;
+ax_space_v = 0.020;
 cell_space = 0.03;
 total_width = 0.55;
 
@@ -109,8 +108,12 @@ for ii = 1:numel(curr_cells)
             plot(ax_basep_typ{row_idx,kk},[ax_basep_typ{row_idx,kk}.XLim],[0 0],...
                 'Color',[0.7 0.7 0.7],'LineStyle','--')
             hold(ax_basep_typ{row_idx,kk},'off')
+
             axis tight
-            
+            ax_basep_typ{row_idx,kk}.XLim = lim_x;
+
+            ax_basep_typ{row_idx,kk}.Children = [ax_basep_typ{row_idx,kk}.Children(2:end),...
+                                            ax_basep_typ{row_idx,kk}.Children(1)];
             %Add title
             if row_idx == 1
                 title(ax_basep_typ{row_idx,kk},all_titles{kk})
@@ -127,6 +130,13 @@ for ii = 1:numel(curr_cells)
             'HorizontalAlignment','left');
         curr_t.Units = 'data';
         
+        if curr_cell == 20
+            %Set smaller ylim
+            ax_basep_typ{row_idx,kk}.YLim(2) = min([ax_basep_typ{row_idx,kk}.YLim(2),...
+                30]);
+
+        end
+
         same_ylim(ax_basep_typ(row_idx,:));
         
         if jj == 2
