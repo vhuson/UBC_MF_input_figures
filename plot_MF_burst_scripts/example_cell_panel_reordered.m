@@ -34,7 +34,8 @@ base_width = (total_width-ax_space*(numel(all_XLim)-1))...
 %Offset to stim begin
 zerod_x = -[0.5 0.5 0.5 0.5 0.5]; %Also not really used
 
-all_colors = bbpr(5);
+% all_colors = bbpr(5);
+all_colors = zeros(5,3);
 
 input_dur = [0.0100    0.0200    0.0500    0.1000    0.2000];
 
@@ -70,12 +71,21 @@ for ii = 1:numel(typ_cell_num)
             bottom_edge+base_height, diff(curr_xlim)*base_width, base_height];
         %Update left edge for next plot
         left_edge = left_edge + pos_ax(3) + ax_space;
-     
+
 
         [curr_ax] = plot_burst_examples_v2(all_mean_bursts(ax_idx),...
             Fs,all_baseline,ONidx,curr_cell,all_colors(ax_idx,:),...
             curr_xlim,zerod_x(ax_idx),input_dur(ax_idx),trace_label,opts,...
             f_burst,pos_ax,base_height,base_space);
+
+        %Add 0 line
+        hold(curr_ax{1},'on')
+        plot(curr_ax{1},[curr_ax{1}.XLim],[0 0],...
+            'Color',[0.7 0.7 0.7],'LineStyle','--')
+        hold(curr_ax{1},'off')
+        curr_ax{1}.Children = [curr_ax{1}.Children(2:end);...
+                                            curr_ax{1}.Children(1)];
+
 
         ax_burst_typ{ii,ax_idx} = curr_ax{1};
         if ii == 1
@@ -96,6 +106,6 @@ end
 scale_opts = struct();
 scale_opts.xlabel = 'ms';
 scale_opts.xscale_factor = 1000;
-scale_opts.origin = [1.5 10];
+scale_opts.origin = [1.5 15];
 add_scale_bar(ax_burst_typ{end,end},[0.2,0],scale_opts)
 
