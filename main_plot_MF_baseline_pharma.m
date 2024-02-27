@@ -36,7 +36,7 @@ washin_state = [1 0 0 0 0];
     washin_state);
 
 %Calculate number of spikes at SS
-[base_n_spikes_ss_pharma1] = get_baseline_n_spikes(...
+[base_n_spikes_ss_pharma1,base_amplitude_ss_pharma1,base_async_ss_pharma1] = get_baseline_n_spikes(...
     all_ss_pharma_base1,washin_base_rates{1}(washin_fltr),Fs,min_trace_leng_pharma_base1);
 
 %Calculate number of spikes at peak
@@ -53,7 +53,7 @@ washin_state = [0 1 0 0 0];
     washin_state);
 
 %Calculate number of spikes at SS
-[base_n_spikes_ss_pharma2] = get_baseline_n_spikes(...
+[base_n_spikes_ss_pharma2,base_amplitude_ss_pharma2,base_async_ss_pharma2] = get_baseline_n_spikes(...
     all_ss_pharma_base2,washin_base_rates{2}(washin_fltr),Fs,min_trace_leng_pharma_base2);
 
 %Calculate number of spikes at peak
@@ -72,7 +72,7 @@ washin_state = [0 1 1 0 0];
     washin_state);
 
 %Calculate number of spikes at SS
-[base_n_spikes_ss_pharma3] = get_baseline_n_spikes(...
+[base_n_spikes_ss_pharma3,base_amplitude_ss_pharma3,base_async_ss_pharma3] = get_baseline_n_spikes(...
     all_ss_pharma_base3,washin_base_rates{3}(washin_fltr),Fs,...
     min_trace_leng_pharma_base3);
 
@@ -92,7 +92,7 @@ washin_state = [0 1 1 1 0];
     washin_state);
 
 %Calculate number of spikes at SS
-[base_n_spikes_ss_pharma4] = get_baseline_n_spikes(...
+[base_n_spikes_ss_pharma4,base_amplitude_ss_pharma4,base_async_ss_pharma4] = get_baseline_n_spikes(...
     all_ss_pharma_base4,washin_base_rates{4}(washin_fltr),Fs,...
     min_trace_leng_pharma_base4);
 
@@ -117,6 +117,8 @@ example_cell_ci_pharma_panel
 average_example_cell_ci_pharma_panel
 
 all_heatmaps_ci_pharma_panel
+
+summary_basepharma_panel
 
 %Tweak figure
 fig_opts = struct();
