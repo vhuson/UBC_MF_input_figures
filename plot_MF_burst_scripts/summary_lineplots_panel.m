@@ -11,6 +11,7 @@ graph_height = 0.14;
 ax_burst_par = {};
 
 summary_off = OFFidx(end-1:end);
+% summary_off = [];
 
 %Panel 1
 p_idx = 1;
@@ -44,9 +45,10 @@ fix_powered_ylabels(ax_burst_par{p_idx})
 %Panel 4
 p_idx = 4;
 pos_ax(1) = sum(pos_ax([1,3]))+base_space;
-pos_ax(3) = base_width + bar_width;
-[ax_burst_par{p_idx}] = UBC_par_line_plot(...
+pos_ax(3) = base_width; % + bar_width;
+[ax_burst_par{p_idx}, cb1] = UBC_par_line_plot(...
     ONidx,[],all_burst_pause,[0 1 1],-Inf,f_burst,pos_ax);
+cb1.Position = [0.9313 0.1078 0.0166 0.0713];
 ylabel('Pause (s)')
 ax_burst_par{p_idx}.YLim(1) = 0.001;
 fix_powered_ylabels(ax_burst_par{p_idx})
