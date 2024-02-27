@@ -4,6 +4,7 @@ function [ax_stack_1] = plot_stacked_traces(...
 %   Detailed explanation goes here
 base_opts.plot_color = false;
 base_opts.Visible = 'on';
+base_opts.XLim = false;
 if nargin < 3
     select_cells = 1:size(curr_data_array,1);
 end
@@ -67,6 +68,11 @@ for ii = 1:disp_num
     end
     plot(((1:numel(curr_trace)))/Fs,curr_trace,'Color',curr_color);
     hold off
+    
+    %Set xlim
+    if ~islogical(opts.XLim)
+        xlim(opts.XLim)        
+    end
 
     ax_stack_1{ii}.YLim(1) = 0;
 
