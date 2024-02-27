@@ -12,6 +12,14 @@ file_match = 'TRAIN5';
 [all_mean_trains_5,all_full_trains_5,all_idx_5] = get_mean_by_filecode(...
     allData,file_match,washin);
 
+
+train_fltr_10 = ~cellfun(@isempty,all_mean_trains);
+train_fltr_5 = ~cellfun(@isempty,all_mean_trains_5);
+
+[fltr_ONidx_t10] = get_fltr_ONidx(ONidx,find(train_fltr_10));
+[fltr_ONidx_t5] = get_fltr_ONidx(ONidx,find(train_fltr_5));
+
+
 % Gather all mean burst data
 all_burst_durs      = [0.01 0.02 0.05 0.10 0.2];
 all_burst_tails     = [2.9    3    10   10   10];
@@ -43,6 +51,49 @@ for ii = 1:size(all_mean_bursts{1},1)
     all_mean_bursts{1}(ii,:) = curr_trace;
     
 end
+
+
+%Protocol templates
+%burst
+input_burst = zeros(1,210000);
+input_burst(0.5*Fs:0.7*Fs) = 100;
+
+%Train5
+input_train_5 = zeros(1,800001);
+input_train_5(5*Fs:33*Fs) = 5;
+input_train_5(8*Fs:9*Fs) = 10;
+input_train_5(12*Fs:13*Fs) = 20;
+input_train_5(16*Fs:17*Fs) = 30;
+input_train_5(20*Fs:21*Fs) = 40;
+input_train_5(24*Fs:25*Fs) = 50;
+input_train_5(28*Fs:29*Fs) = 60;
+input_train_5(32*Fs:33*Fs) = 20;
+input_train_5(36*Fs:37*Fs) = 20;
+
+%Train10
+input_train_10 = zeros(1,800001);
+input_train_10(5*Fs:33*Fs) = 10;
+input_train_10(8*Fs:9*Fs) = 20;
+input_train_10(12*Fs:13*Fs) = 30;
+input_train_10(16*Fs:17*Fs) = 40;
+input_train_10(20*Fs:21*Fs) = 50;
+input_train_10(24*Fs:25*Fs) = 60;
+input_train_10(28*Fs:29*Fs) = 80;
+input_train_10(32*Fs:33*Fs) = 40;
+input_train_10(36*Fs:37*Fs) = 20;
+
+%% Main figure
+f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
+
+train5_examples_panel
+
+train5_heatmap_panel
+
+%Tweak figure
+fig_opts = struct();
+fig_opts.FontSize = 10;
+standardFig(f_train,fig_opts);
 
 %% Plot trains stacked
 
@@ -89,19 +140,19 @@ all_mean_trains_array = cellfun(@(x) {medfilt1(x,Fs*0.01)},all_mean_trains_array
 all_mean_trains_array = vertcat(all_mean_trains_array{:});
 
 
-all_mean_trains_5 = all_mean_trains_5(train_fltr);
+all_mean_trains_5_array = all_mean_trains_5(train_fltr);
 
-all_mean_trains_5 = cellfun(@(x) {medfilt1(x,Fs*0.01)},all_mean_trains_5);
+all_mean_trains_5_array = cellfun(@(x) {medfilt1(x,Fs*0.01)},all_mean_trains_5_array);
 
 
-all_mean_trains_5 = vertcat(all_mean_trains_5{:});
+all_mean_trains_5_array = vertcat(all_mean_trains_5_array{:});
 
 
 
 
 all_mean_trains_10 = all_mean_trains_array;
 if plot_5
-    all_mean_trains_array = all_mean_trains_5;
+    all_mean_trains_array = all_mean_trains_5_array;
 end
 
 [select_cells] = get_fltr_ONidx(ONidx,find(train_fltr));
