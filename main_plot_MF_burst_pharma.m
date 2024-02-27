@@ -120,8 +120,8 @@ example_cell_bpharma_panel
 example_line_bpharma_v2_panel
 example_line_bpharma_nspikes_panel
 
-% summaries_bpharma_panel
-summaries_bpharma_singlerow_panel
+summaries_bpharma_panel
+% summaries_bpharma_singlerow_panel
 
 %Tweak figure
 fig_opts = struct();
@@ -136,7 +136,7 @@ plot_labels{1} = 'a';
 plot_labels{26} = 'b';
 plot_labels{52} = 'c';
 plot_labels{77} = 'd';
-plot_labels{82} = 'e';
+% plot_labels{82} = 'e';
 labelPlots(f_burst_pharma,plot_labels);
 
 %% Supplement heatmap figure
