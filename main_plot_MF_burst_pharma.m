@@ -136,7 +136,7 @@ plot_labels{1} = 'a';
 plot_labels{26} = 'b';
 plot_labels{52} = 'c';
 plot_labels{77} = 'd';
-plot_labels{82} = 'd';
+plot_labels{82} = 'e';
 labelPlots(f_burst_pharma,plot_labels);
 
 %% Supplement heatmap figure

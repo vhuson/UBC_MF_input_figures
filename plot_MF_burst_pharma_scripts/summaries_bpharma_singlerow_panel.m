@@ -13,7 +13,7 @@ bottom_edge = 0.5034;
 % bottom_edge2 = 0.32;
 total_width = 0.8180;
 total_height = 0.09;
-base_gap = 0.01;
+base_gap = 0.02;
 par_gap = 0.08;
 
 bottom_edge2 = bottom_edge;
