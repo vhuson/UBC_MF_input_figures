@@ -1,7 +1,7 @@
 %% Typical examples script
-% 
-f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
+% % 
+% f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
 
 % curr_cells = [5, 9, 13, 18, 24];
 typ_cell_IDs = {'1686','1694','1776','1774','1709'};
@@ -21,8 +21,8 @@ num_cols = 5; %Number of burst types
 
 left_edge = 0.08;
 top_edge = 0.92;
-total_height = 0.35;
-total_width = 0.5;
+total_height = 0.28;
+total_width = 0.3489;
 height_space = 0.015;
 base_space = 0.01;
 

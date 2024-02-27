@@ -116,7 +116,9 @@ f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
 
 example_cell_bpharma_panel
 
-example_line_bpharma_panel
+% example_line_bpharma_panel
+example_line_bpharma_v2_panel
+example_line_bpharma_nspikes_panel
 
 summaries_bpharma_panel
 
