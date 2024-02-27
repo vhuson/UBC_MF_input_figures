@@ -5,7 +5,7 @@ setup_workspace_alldata
 %Dirty fix for problem in cell 1774 "56"
 allData{56}.spks_prot{2}{17}(14) = [];
 
-%% Make baseline pharma figure
+%% Gather baseline pharma data
 
 %First need to gather baseline data for all washin states
 washin_states = {[1 0 0 0 0],[0 1 0 0 0],[0 1 1 0 0],[0 1 1 1 0]};
@@ -127,12 +127,16 @@ standardFig(f_base_pharma,fig_opts);
 
 
 %Add labels
-% plot_labels = repmat({[]},1,58);
-% plot_labels{1} = 'a';
-% plot_labels{26} = 'b';
-% plot_labels{52} = 'c';
-% plot_labels{57} = 'd';
-% labelPlots(f_base_pharma,plot_labels);
+plot_labels = repmat({[]},1,63);
+plot_labels{1} = 'a';
+plot_labels{13} = 'b';
+plot_labels{25} = 'c';
+plot_labels{37} = 'd';
+plot_labels{49} = 'e';
+plot_labels{61} = 'f';
+plot_labels{62} = 'g';
+plot_labels{63} = 'h';
+labelPlots(f_base_pharma,plot_labels);
 
 
 %% Supplement heatmap figure
