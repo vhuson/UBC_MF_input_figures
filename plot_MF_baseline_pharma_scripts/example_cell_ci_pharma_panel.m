@@ -112,7 +112,7 @@ for ii = 1:numel(curr_cells)
             axis tight
             ax_basep_typ{row_idx,kk}.XLim = lim_x;
 
-            ax_basep_typ{row_idx,kk}.Children = [ax_basep_typ{row_idx,kk}.Children(2:end),...
+            ax_basep_typ{row_idx,kk}.Children = [ax_basep_typ{row_idx,kk}.Children(2:end);...
                                             ax_basep_typ{row_idx,kk}.Children(1)];
             %Add title
             if row_idx == 1

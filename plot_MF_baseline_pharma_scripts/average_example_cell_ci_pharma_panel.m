@@ -119,7 +119,7 @@ for ii = 1:numel(curr_cells)
             ax_basep_avgtyp{row_idx,kk}.XLim = lim_x;
 
 
-            ax_basep_avgtyp{row_idx,kk}.Children = [ax_basep_avgtyp{row_idx,kk}.Children(2:end),...
+            ax_basep_avgtyp{row_idx,kk}.Children = [ax_basep_avgtyp{row_idx,kk}.Children(2:end);...
                                             ax_basep_avgtyp{row_idx,kk}.Children(1)];
 
             %Add title
