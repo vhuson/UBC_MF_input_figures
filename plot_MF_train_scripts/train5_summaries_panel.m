@@ -1,12 +1,12 @@
-f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
+% f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
 
 %Define axis position
 num_cols = 3;
 num_rows = 1;
 
 left_margin = 0.1;
-bottom_margin = 0.08;
+bottom_margin = 0.1707;
 base_width = 0.18;
 base_space = 0.14;
 
@@ -60,8 +60,8 @@ all_min_vals = [1 -Inf -Inf];
 
 
 %Train plot pars
-% plot_steps = 1:6;
-plot_steps = [2, 7, 8];
+plot_steps = 1:6;
+% plot_steps = [2, 7, 8];
 step_size = [10, 20, 30, 40, 50, 60, 20, 20];
 
 
@@ -72,8 +72,8 @@ summary_off = [];
     
 
 opts = struct();
-% opts.input_n = step_size(plot_steps);
-opts.input_n = [1 2 3];
+opts.input_n = step_size(plot_steps);
+% opts.input_n = [1 2 3];
 opts.YScale = 'log';
 % opts.XScale = 'log';
 opts.XLabel = "Input step (spk/s)";
@@ -94,8 +94,10 @@ for p_idx = 1:num_cols
     opts.YLabel = all_ylabels{p_idx};
     opts.min_val = all_min_vals(p_idx);
 
-
-    [ax_train_par{p_idx}] = UBC_par_line_plot2(...
+    if p_idx == num_cols
+        opts.bar = true;
+    end
+    [ax_train_par{p_idx},cb1] = UBC_par_line_plot2(...
         summary_on,summary_off,all_plot_par{p_idx}(plot_steps),f_train,pos_ax,opts);
     xlim([opts.input_n(1) opts.input_n(end)])
 
@@ -106,3 +108,5 @@ for p_idx = 1:num_cols
     opts.YScale = 'linear';
 end
 fix_powered_ylabels(ax_train_par{1})
+
+cb1.Position = [0.9393 0.2107 0.0176 0.0621];

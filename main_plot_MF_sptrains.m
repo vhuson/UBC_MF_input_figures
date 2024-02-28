@@ -97,10 +97,24 @@ train5_examples_panel
 
 train5_heatmap_panel
 
+train5_summaries_panel
+
+
 %Tweak figure
 fig_opts = struct();
 fig_opts.FontSize = 10;
 standardFig(f_train,fig_opts);
+
+%Add labels
+plot_labels = repmat({[]},1,17);
+plot_labels{1} = 'a';
+plot_labels{7} = 'b';
+plot_labels{13} = 'c';
+plot_labels{14} = 'd';
+plot_labels{15} = 'e';
+plot_labels{16} = 'f';
+plot_labels{17} = 'g';
+labelPlots(f_train,plot_labels);
 
 %% Plot trains stacked
 

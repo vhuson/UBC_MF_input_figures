@@ -3,12 +3,15 @@
 
 
 %Set axis position
-pos_bottom = 0.06;
-pos_height = 0.6155;
+pos_bottom = 0.38;
+pos_top = 0.565;
+pos_height = pos_top - pos_bottom;
 pos_left = 0.1;
-full_width = 0.7864;
+full_width = 0.55;
 base_space = 0.01;
 
+pos_left2 = 0.6722;
+base_width2 = 0.2921;
 
 %Gather data
 curr_traces = all_mean_trains_5(train_fltr_5);
@@ -66,6 +69,17 @@ norm_traces = norm_traces(select_cells,:);
 ax_sp_hm{ax_idx} = axes(f_train,'Position',pos_ax);
 
 makeUBCHeatmap(ax_sp_hm{ax_idx}, norm_traces, Fs, opts);
+
+%plot zoom in
+opts.XLim = [27.5 31];
+opts.XTick = [28:31];
+opts.YTick = [];
+opts.YLabel = '';
+%setup axes and plot
+pos_ax2 = [pos_left2   pos_bottom    base_width2    pos_height];
+ax_sp_hm{2} = axes(f_train,'Position',pos_ax2);
+
+makeUBCHeatmap(ax_sp_hm{2}, norm_traces, Fs, opts);
     
 
 
