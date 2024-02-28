@@ -12,11 +12,11 @@ diff_lim_x = cellfun(@diff, all_XLim);
 num_cols = 3; %Number of different protocols
 num_rows = 4; %Number of washins
 
-left_edge = 0.1;
-bottom_edge = 0.07;
-total_width = 0.55;
-total_height = 0.53;
-base_gap = 0.012;
+left_edge = 0.08;
+bottom_edge = 0.08;
+total_width = 0.56;
+total_height = 0.49;
+base_gap = 0.01;
 
 %X Lim adjusted graph widths
 base_width = (total_width - base_gap * (num_cols-1)) / sum(diff_lim_x);

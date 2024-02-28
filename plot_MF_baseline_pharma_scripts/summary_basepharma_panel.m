@@ -3,7 +3,7 @@
 
 
 % Specify ax positions
-left_edge = 0.7324;
+left_edge = 0.7427;
 bottom_edge = 0.08;
 total_width = 0.1809;
 panel_gap = 0.04;
@@ -97,7 +97,7 @@ for ii = 1:num_panels
             opts);
 
     if ii == 1
-        cb1.Position = [0.9297 0.1140 0.0151 0.0743];
+        cb1.Position = [0.9397 0.1140 0.0151 0.0743];
     end
 
     %Add and tweak labels
