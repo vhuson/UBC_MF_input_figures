@@ -3,10 +3,10 @@
 
 
 left_edge = 0.7427;
-bottom_edge = 0.06;
+bottom_edge = 0.08;
 total_width = 0.1809;
 panel_gap = 0.04;
-total_height = 0.51;
+total_height = 0.49;
 
 num_panels = 3;
 base_width = total_width;
@@ -153,7 +153,7 @@ opts_ratio.bar = true;
 
 [ax_base_par{p_idx},cb1] = UBC_par_line_plot2(...
     ONidx,[],base_ratio_ss_uncorr(point_0:end),f_base,pos_ax,opts_ratio);
-cb1.Position = [0.9397 0.0940 0.0151 0.0743];
+cb1.Position = [0.9397 0.1140 0.0151 0.0743];
 
 %Offset XLim a little bit
 ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
