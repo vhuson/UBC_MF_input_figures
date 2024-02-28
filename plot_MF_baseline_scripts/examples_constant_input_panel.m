@@ -4,12 +4,12 @@
 
 
 %19, 29 37 51 60
-typ_cell_IDs = {'1657','1685','1766','1758','1678'};
-
+% typ_cell_IDs = {'1657','1685','1766','1758','1678'};
+%5, 29 37 51 60
+typ_cell_IDs = {'1719','1685','1766','1758','1678'};
 
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames,typ_cell_IDs,ONidx);
 
-typ_cell_num(1) = 5;
 
 %Define axis positions
 num_cols = 3; %Number of different protocols
