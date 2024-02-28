@@ -24,10 +24,27 @@ norm_off = all_baseline;
 norm_OFFidx = [];
 
 
+%Concatenate and fill zeros
+[full_baseline_incl_traces] = concat_inst_freqs(all_full_traces,...
+    pre_prot_baseline_traces,Fs);
+
+%Remove zeros from mean segments 
+% nan_mean_segments = mean_segments;
+nan_mean_segments = all_ss_segments;
+for ii = 1:numel(nan_mean_segments)
+    nan_idx_mean_segments = nan_mean_segments{ii} == 0;
+
+    if ~all(nan_idx_mean_segments)
+        nan_mean_segments{ii}(nan_idx_mean_segments) = NaN;
+    end
+    %Specifically maintain zeros in cell 51
+    nan_mean_segments{ii}(48,:) = all_ss_segments{ii}(48,:);
+end
+
 
 
 %Xlim
-all_XLim = {[0 10],[0 10],[0 10]};
+all_XLim = {[0 11],[0 11],[0 11]};
 
 avg_XLim = [0 0.2];
 
@@ -40,8 +57,8 @@ pos_ax = [pos_left-base_width    pos_bottom    1*base_width   pos_height];
 
 
 opts = struct();
-% opts.XTick = 0:5:10;
-% opts.XTickLabel = arrayfun(@num2str,opts.XTick,'UniformOutput',false);
+opts.XTick = 1:5:21;
+opts.XTickLabel = arrayfun(@num2str,opts.XTick-1,'UniformOutput',false);
 
 ax_hm = {};
 for ax_idx = 1:3
@@ -56,16 +73,15 @@ for ax_idx = 1:3
     ax_hm{ax_idx} = axes(f_base,'Position',pos_ax);
 
     % full traces
-    [norm_traces] = norm_UBC(all_full_traces{ax_idx},norm_on,norm_off,norm_OFFidx);
+    [norm_traces] = norm_UBC(full_baseline_incl_traces{ax_idx},norm_on,norm_off,norm_OFFidx);
     norm_traces = norm_traces(ONidx,:);
 
     % average traces
-    [norm_avg_traces] = norm_UBC(mean_segments{ax_idx},norm_on,norm_off,norm_OFFidx);
-    norm_avg_traces = norm_avg_traces(ONidx,:);
+    % [norm_avg_traces] = norm_UBC(mean_segments{ax_idx},norm_on,norm_off,norm_OFFidx);
+    % norm_avg_traces = norm_avg_traces(ONidx,:);
 
     opts.XLim = curr_xlim;
     opts.XLabel = '';
-    opts.XTick = [0 5 10];
     if ax_idx == 2
         opts.XLabel = 'Time (s)';
     end
@@ -77,4 +93,4 @@ for ax_idx = 1:3
  
 end
 
-cellfun(@(x) move_tick_labels(x,2),ax_hm);
+% cellfun(@(x) move_tick_labels(x,2),ax_hm);
