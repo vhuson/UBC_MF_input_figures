@@ -15,13 +15,13 @@ diff_lim_x = cellfun(@diff, all_XLim);
 num_cols = 3; %Number of different protocols
 num_rows = 4 * numel(curr_cells); %Number of washins * number of cells to plot
 
-left_edge = 0.1;
-bottom_edge = 0.62;
+left_edge = 0.08;
+bottom_edge = 0.6050;
 top_edge = 0.96;
-ax_space = 0.012;
+ax_space = 0.01;
 ax_space_v = 0.020;
 cell_space = 0.03;
-total_width = 0.55;
+total_width = 0.56;
 
 base_height = (top_edge - bottom_edge) - ax_space_v * (num_rows-1)...
                                 - cell_space * (numel(curr_cells)-1);
@@ -58,7 +58,8 @@ for ii = 1:numel(all_mean_pharma_ci_all)
 end
 
 %Plot options
-all_colors = bbpr(3);
+% all_colors = bbpr(3);
+all_colors = zeros(3,3);
 opts = struct();
 opts.axis_off = true;
 
@@ -139,7 +140,7 @@ for ii = 1:numel(curr_cells)
         same_ylim(ax_basep_typ(row_idx,:));
         
         if jj == 2
-            text(ax_basep_typ{row_idx,1},0,0,['Cell\newline#',num2str(curr_cell)],'Units','normalized',...
+            text(ax_basep_typ{row_idx,1},0,0,['#',num2str(curr_cell)],'Units','normalized',...
                 'Position',[-0.05 -0.1],'VerticalAlignment','middle',...
                 'HorizontalAlignment','right')
         end

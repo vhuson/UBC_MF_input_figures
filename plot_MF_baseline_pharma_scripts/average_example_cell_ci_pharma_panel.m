@@ -18,13 +18,13 @@ diff_lim_x = cellfun(@diff, all_XLim);
 num_cols = 3; %Number of different protocols
 num_rows = 4 * numel(curr_cells); %Number of washins * number of cells to plot
 
-left_edge = 0.7;
-bottom_edge = 0.62;
+left_edge = 0.6890;
+bottom_edge = 0.6050;
 top_edge = 0.96;
-ax_space = 0.012;
-ax_space_v = 0.025;
+ax_space = 0.01;
+ax_space_v = 0.02;
 cell_space = 0.03;
-total_width = 0.25;
+total_width = 0.2900;
 
 base_height = (top_edge - bottom_edge) - ax_space_v * (num_rows-1)...
                                 - cell_space * (numel(curr_cells)-1);
@@ -64,7 +64,8 @@ all_ss_pharma_base_all = {all_ss_pharma_base1,...
 
 
 %Plot options
-all_colors = bbpr(3);
+% all_colors = bbpr(3);
+all_colors = zeros(3,3);
 opts = struct();
 opts.axis_off = true;
 
