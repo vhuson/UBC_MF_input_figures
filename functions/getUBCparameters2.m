@@ -55,6 +55,16 @@ if isempty(freqStart)
 end
 
 pause = freqStart/Fs;
+
+
+%Pause for excitatory UBCs
+freqThres_exc = (slow_amp-baseline)/3+baseline;
+freqStart_exc = find(smoothTrace(1:slow_tpeak)<freqThres_exc,1,'last');
+if isempty(freqStart_exc)
+    freqStart = 0;
+end
+
+pause_exc = freqStart_exc/Fs;
     
 
 %Half-width
@@ -139,11 +149,12 @@ n_spikes = (sum(avgTrace(1:HD_x2))-baseline*HD_x2)/Fs;
 
 main_pars = struct('baseline',baseline,'fast_amp',fast_amp-baseline,...
             'fast_tpeak',fast_tpeak/Fs,'slow_amp',slow_amp-baseline,...
-            'slow_tpeak',slow_tpeak/Fs, 'pause',pause,...
+            'slow_tpeak',slow_tpeak/Fs, 'pause',pause,'pause_exc',pause_exc,...
             'n_spikes',n_spikes,'HD',HD,'HD_fast',HD_fast);
         
 
 supp_pars = struct('freqThres', freqThres, 'freqStart', freqStart,...
+                    'freqThres_exc', freqThres_exc, 'freqStart_exc', freqStart_exc,...
                     'firstHalf',firstHalf, 'lastHalf', lastHalf,...
                     'firstHalf_fast',firstHalf_fast,...
                     'lastHalf_fast', lastHalf_fast,...

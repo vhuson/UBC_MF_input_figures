@@ -11,7 +11,7 @@ plot(supp_pars.fast_tpeak_samples,main_pars.fast_amp+main_pars.baseline, 'ro')
 
 plot(supp_pars.slow_tpeak_samples,main_pars.slow_amp+main_pars.baseline, 'go')
 
-plot([1 supp_pars.freqStart],[supp_pars.freqThres supp_pars.freqThres],'k')
+plot([1 supp_pars.freqStart_exc],[supp_pars.freqThres_exc supp_pars.freqThres_exc],'k')
 
 
 plot([supp_pars.firstHalf supp_pars.lastHalf],...

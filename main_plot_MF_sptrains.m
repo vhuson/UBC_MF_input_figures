@@ -12,14 +12,16 @@ file_match = 'TRAIN5';
 [all_mean_trains_5,all_full_trains_5,all_idx_5] = get_mean_by_filecode(...
     allData,file_match,washin);
 
-%Get parameters (train5 hardcoded)
-[all_train_slow_amp,all_train_slow_HD,all_train_pause,all_train_n_spikes,...
-    ~,~,all_train_burst_baseline] = ...
-                                get_train_parameters(all_mean_trains_5,Fs);
-
-
 train_fltr_10 = ~cellfun(@isempty,all_mean_trains);
 train_fltr_5 = ~cellfun(@isempty,all_mean_trains_5);
+
+
+%Get parameters (train5 hardcoded)
+[all_train_slow_amp,all_train_slow_HD,all_train_pause,all_train_n_spikes,...
+    ~,~,all_train_burst_baseline,all_n_spikes_stim,all_n_spikes_post] = ...
+    get_train_parameters(all_mean_trains_5(train_fltr_5),Fs);
+
+
 
 [fltr_ONidx_t10] = get_fltr_ONidx(ONidx,find(train_fltr_10));
 [fltr_ONidx_t5] = get_fltr_ONidx(ONidx,find(train_fltr_5));
