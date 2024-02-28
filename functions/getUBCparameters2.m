@@ -1,4 +1,4 @@
-function [main_pars,supp_pars] = getUBCparameters2(avgTrace,baseTrace,stim_end,Fs)
+function [main_pars,supp_pars,smoothTrace] = getUBCparameters2(avgTrace,baseTrace,stim_end,Fs)
 %getUBCparameters Calculates basic UBC response parameters
 %   Takes in an average trace where 0 is the time of stimulation, 
 %   to do the calculations on
@@ -13,7 +13,7 @@ scatter(fast_tpeak,fast_amp)
 scatter([firstHalf lastHalf],repmat(slow_amp/2,1,2))
 scatter([firstHalf_fast lastHalf_fast],repmat(fast_amp/2,1,2))
 %}
-if nargin == 2
+if nargin < 4
     Fs = 20000;
 end
 
