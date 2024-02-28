@@ -5,22 +5,46 @@
 
 %19, 29 37 51 60
 typ_cell_IDs = {'1657','1685','1766','1758','1678'};
+
+
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames,typ_cell_IDs,ONidx);
 
+typ_cell_num(1) = 5;
+
+%Define axis positions
+num_cols = 3; %Number of different protocols
+num_rows = numel(typ_cell_num); %Number of washins * number of cells to plot
+
+left_edge = 0.08;
+bottom_edge = 0.6050;
+top_edge = 0.96;
+ax_space = 0.01;
+ax_space_v = 0.020;
+cell_space = 0.03;
+total_width = 0.56;
 
 
-base_width = 0.18;
-base_w_unit = base_width/5;
-base_height = 0.055;
-top_margin = 0.96;
-left_margin = 0.08;
-left_margin_avg = 0.689;
-base_space = 0.02;
-base_hspace = 0.01;
+left_edge2 = 0.6890;
+total_width2 = 0.2900;
 
-pos_ax = [left_margin-base_width-base_hspace,...
-    top_margin+base_space,...
-    base_width, base_height];
+total_height = top_edge - bottom_edge;
+base_height = total_height - ax_space_v * (num_rows-1);
+base_height = base_height / num_rows;
+
+all_bottom_edges = (base_height + ax_space_v) * (0:(num_rows-1)) + bottom_edge;
+all_bottom_edges = fliplr(all_bottom_edges);
+
+base_width = total_width - ax_space * (num_cols-1);
+base_width = base_width / num_cols;
+
+all_left_edges = (base_width + ax_space) * (0:(num_cols-1)) + left_edge;
+
+base_width2 = total_width2 - ax_space * (num_cols-1);
+base_width2 = base_width2 / num_cols;
+
+all_left_edges2 = (base_width2 + ax_space) * (0:(num_cols-1)) + left_edge2;
+
+
 
 %Concatenate and fill zeros
 [full_baseline_incl_traces] = concat_inst_freqs(all_full_traces,...
@@ -39,8 +63,8 @@ for ii = 1:numel(nan_mean_segments)
     nan_mean_segments{ii}(48,:) = all_ss_segments{ii}(48,:);
 end
 
-% all_colors = repmat([0 0 0],3,1);
-all_colors = bbpr(3);
+all_colors = repmat([0 0 0],3,1);
+% all_colors = bbpr(3);
 lim_x = [0 11];
 lim_x_ss = [8.95 10.95];
 % lim_x_avg = [[0 1];[0 0.4];[0 0.2]];
@@ -65,33 +89,26 @@ ax_burst_typ_ss = {};
 %Loop over cells
 for ii = 1:numel(typ_cell_num)
     curr_cell = typ_cell_num(ii);
-    pos_ax = [left_margin,...
-              top_margin-base_height*ii-base_space*(ii-1),...
-              base_width, base_height];
 
     %Loop over input freqs
     for jj = 1:numel(full_baseline_incl_traces)
-        pos_ax(1) = left_margin + (base_width + base_hspace) * (jj-1);
-        pos_ax(3) = base_width;
+        %Define axes full trace
+        pos_ax = [all_left_edges(jj) all_bottom_edges(ii) base_width base_height];
+        
+        % plot full trace
         [ax_burst_typ{ii}{jj}] = plot_burst_traces_overlay(full_baseline_incl_traces(jj),Fs,...
             ONidx,curr_cell,all_colors(jj,:),0,...
             [],lim_x,f_base,pos_ax,opts);
+        add_zero_line(ax_burst_typ{ii}{jj});
 
+        %Define axes average segment
+        pos_ax = [all_left_edges2(jj) all_bottom_edges(ii) base_width2 base_height];
 
-        % pos_ax(1) = left_margin + (base_width + base_hspace*1.3) * numel(full_baseline_incl_traces)...
-        %                         + sum(base_w_avg(1:(jj-1))) + base_hspace * (jj-1);
-        pos_ax(1) = left_margin_avg + (base_w_avg(jj) + base_hspace)  * (jj-1);
-        
-        pos_ax(3) = base_w_avg(jj);
-
-        % [ax_burst_typ_ss{ii}{jj}] = plot_burst_traces_overlay(full_baseline_incl_traces(jj),Fs,...
-        %     ONidx,curr_cell,all_colors(1,:),0,...
-        %     [],lim_x_ss,f_base,pos_ax,opts);
-
+        % plot average segment
         [ax_burst_typ_avg{ii}{jj}] = plot_burst_traces_overlay(nan_mean_segments(jj),Fs,...
             ONidx,curr_cell,all_colors(jj,:),0,...
             [],lim_x_avg(jj,:),f_base,pos_ax,opts);
-
+        add_zero_line(ax_burst_typ_avg{ii}{jj});
         if ii == 1
             title(ax_burst_typ{ii}{jj},trace_labels{jj})
             if jj ==2
@@ -108,24 +125,85 @@ for ii = 1:numel(typ_cell_num)
         end
 
     end
-    % same_ylim([ax_burst_typ{ii},ax_burst_typ_ss{ii}],'YMinValue',50);
-    same_ylim([ax_burst_typ{ii},ax_burst_typ_avg{ii}],'YMinValue',50);
-    % same_ylim();
     
-    scale_opts = struct();
-    if ii == numel(typ_cell_num)
-        scale_opts.xlabel = 's';
-        scale_opts.ylabel = 'spk/s';
-    end
-    add_scale_bar(ax_burst_typ{ii}{1},[1,y_scalebar_size(ii)],scale_opts);
-    % add_scale_bar(ax_burst_typ_ss{ii}{end},[0.5,0],scale_opts);
-
-    if ii == numel(typ_cell_num)
-        scale_opts.xlabel = 'ms';
-        scale_opts.xscale_factor = 1000;
-        scale_opts.ylabel = 'spk/s';
-        add_scale_bar(ax_burst_typ_avg{ii}{end},[0.1,0],scale_opts);
-    end
+    % same_ylim([ax_burst_typ{ii},ax_burst_typ_avg{ii}],'YMinValue',50);
+    same_ylim([ax_burst_typ{ii},ax_burst_typ_avg{ii}]);
+    
+    % scale_opts = struct();
+    % if ii == numel(typ_cell_num)
+    %     scale_opts.xlabel = 's';
+    %     scale_opts.ylabel = 'spk/s';
+    % end
+    % add_scale_bar(ax_burst_typ{ii}{1},[1,y_scalebar_size(ii)],scale_opts);
+    % % add_scale_bar(ax_burst_typ_ss{ii}{end},[0.5,0],scale_opts);
+    % 
+    % if ii == numel(typ_cell_num)
+    %     scale_opts.xlabel = 'ms';
+    %     scale_opts.xscale_factor = 1000;
+    %     scale_opts.ylabel = 'spk/s';
+    %     add_scale_bar(ax_burst_typ_avg{ii}{end},[0.1,0],scale_opts);
+    % end
     
 
 end
+
+%Adjust ylim of last cell
+if strcmp(typ_cell_IDs{end},'1678')
+    same_ylim([ax_burst_typ{end},ax_burst_typ_avg{end}],'YMaxValue',65);
+end
+
+% Add scale bars
+scale_opts = struct();
+scale_opts.xlabel = 's';
+scale_opts.ylabel = 'spk/s';
+scale_opts.xscale_factor = 1;
+scale_opts.label_fontsize = 10;
+scale_opts.origin = [10 -25];
+add_scale_bar(ax_burst_typ{end}{end},[1,20],scale_opts)
+
+scale_opts.xlabel = 'ms';
+scale_opts.xscale_factor = 1000;
+scale_opts.origin = [0.1 -25];
+add_scale_bar(ax_burst_typ_avg{end}{end},[0.1,0],scale_opts)
+same_ylim([ax_burst_typ{end},ax_burst_typ_avg{end}]);
+
+
+
+%Adjust positioning by y-limits
+all_first_axes = vertcat(ax_burst_typ{:});
+all_first_axes = all_first_axes(:,1);
+
+[all_graph_heights,all_bottoms] = axis_height_by_ylim(all_first_axes);
+
+for ii = 1:5
+    for jj =1:3
+        ax_burst_typ{ii}{jj}.Position(2) = all_bottoms(ii);
+        ax_burst_typ{ii}{jj}.Position(4) = all_graph_heights(ii);
+
+        ax_burst_typ_avg{ii}{jj}.Position(2) = all_bottoms(ii);
+        ax_burst_typ_avg{ii}{jj}.Position(4) = all_graph_heights(ii);
+    end
+end
+
+
+% scale_opts = struct();
+% scale_opts.xlabel = 's';
+% scale_opts.ylabel = 'spk/s';
+% scale_opts.xscale_factor = 1;
+% scale_opts.label_fontsize = 10;
+% scale_opts.origin = [9 -25];
+
+% for idx = 1:4:num_rows
+    %Add scale bar to last
+    % add_scale_bar(ax_basep_typ{idx+3,end},[1,20],scale_opts)
+    % same_ylim(ax_basep_typ(idx+3,:));
+% 
+%     [all_graph_heights,all_bottoms] = axis_height_by_ylim(ax_basep_typ(idx:idx+3,1));
+% 
+%     for ii = 1:numel(all_graph_heights)
+%         for prot = 2:3
+%             ax_basep_typ{(idx-1)+ii,prot}.Position(2) = all_bottoms(ii);
+%             ax_basep_typ{(idx-1)+ii,prot}.Position(4) = all_graph_heights(ii);
+%         end
+%     end
+% end
