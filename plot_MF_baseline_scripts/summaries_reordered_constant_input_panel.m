@@ -4,7 +4,7 @@
 
 left_edge = 0.7427;
 bottom_edge = 0.06;
-total_width = 0.23;
+total_width = 0.1809;
 panel_gap = 0.04;
 total_height = 0.51;
 
@@ -55,6 +55,7 @@ opts.YScale = 'log';
 % opts.XScale = 'log';
 opts.XLabel = "";
 opts.YLabel = "#Spikes";
+opts.XTick = opts.input_n;
 opts.XTickLabel = XTickLabel(point_0:end);
 opts.min_val = 0.1;
 
@@ -148,9 +149,11 @@ opts_ratio.XLabel = "Constant input (Hz)";
 opts_ratio.input_n = input_n(point_0:end);
 opts_ratio.XTickLabel = XTickLabel(point_0:end);
 opts_ratio.min_val = 0.01;
+opts_ratio.bar = true;
 
-[ax_base_par{p_idx}] = UBC_par_line_plot2(...
+[ax_base_par{p_idx},cb1] = UBC_par_line_plot2(...
     ONidx,[],base_ratio_ss_uncorr(point_0:end),f_base,pos_ax,opts_ratio);
+cb1.Position = [0.9397 0.0940 0.0151 0.0743];
 
 %Offset XLim a little bit
 ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
