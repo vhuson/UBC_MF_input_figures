@@ -12,7 +12,6 @@ all_XLim = {[-1 10],[-1 10],[-1 10]};
 diff_lim_x = cellfun(@diff, all_XLim);
 
 %Define axis positions
-%Define axes pos
 num_cols = 3; %Number of different protocols
 num_rows = 4 * numel(curr_cells); %Number of washins * number of cells to plot
 
