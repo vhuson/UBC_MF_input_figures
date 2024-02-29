@@ -97,6 +97,8 @@ train_pharma_examples_panel
 
 train_pharma_heatmap_panel
 
+train_pharma_summary_panel
+
 
 %Tweak figure
 fig_opts = struct();
