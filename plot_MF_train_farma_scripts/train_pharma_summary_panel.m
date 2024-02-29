@@ -24,9 +24,11 @@ all_left_edges = (base_width + base_space) .* (0:(num_cols-1)) + pos_left;
 all_summary_data = cell(1,8);
 for ii = 1:8
     all_summary_data{ii} = cellfun(@(x) x(ii),all_n_spikes_stim_pharma);
+    % all_summary_data{ii} = cellfun(@(x) x(ii),all_n_spikes_post_pharma);
 end
-min_val = 0.1;
+min_val = 1;
 chosen_plot_ylabel = 'Stim spikes (n)';
+% chosen_plot_ylabel = 'Post spikes (n)';
 
 %Plot settings
 step_size = [10, 20, 30, 40, 50, 60];

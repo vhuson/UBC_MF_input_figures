@@ -1,7 +1,7 @@
 %% Plot trains stacked pharma
 
-f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
+% f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
 
 select_cells = fltr_ONidx_tpharma;
 
@@ -128,6 +128,8 @@ for ii = 1:num_cells
 end
 pharma_stack{1}{1}.YLim(2) = 123;
 pharma_stack{1}{2}.YLim(2) = 123;
+pharma_stack2{1}{1}.YLim(2) = 123;
+pharma_stack2{1}{2}.YLim(2) = 123;
 
 %Add scale bar
 scale_opts = struct();
@@ -136,7 +138,7 @@ scale_opts.ylabel = 'spk/s';
 scale_opts.origin = [37,-70];
 cellfun(@(x) add_scale_bar(x{end},[3 50],scale_opts),pharma_stack);
 
-scale_opts.origin = [30.5,-35];
+scale_opts.origin = [30.5,-70];
 cellfun(@(x) add_scale_bar(x{end},[0.5 0],scale_opts),pharma_stack2);
 
 

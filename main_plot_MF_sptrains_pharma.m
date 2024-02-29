@@ -106,12 +106,12 @@ fig_opts.FontSize = 10;
 standardFig(f_train_pharma,fig_opts);
 
 %Add labels
-% plot_labels = repmat({[]},1,17);
-% plot_labels{1} = 'a';
-% plot_labels{7} = 'b';
-% plot_labels{13} = 'c';
-% plot_labels{14} = 'd';
-% plot_labels{15} = 'e';
-% plot_labels{16} = 'f';
+plot_labels = repmat({[]},1,35);
+plot_labels{3} = 'a';
+plot_labels{7} = 'b';
+plot_labels{11} = 'c';
+plot_labels{15} = 'd';
+plot_labels{19} = 'e';
+plot_labels{27} = 'f';
 % plot_labels{17} = 'g';
-% labelPlots(f_train_pharma,plot_labels);
+labelPlots(f_train_pharma,plot_labels);
