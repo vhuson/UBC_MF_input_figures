@@ -116,6 +116,9 @@ plot_labels{16} = 'f';
 plot_labels{17} = 'g';
 labelPlots(f_train,plot_labels);
 
+%% Other plots
+train5_20s_figure
+
 %% Plot trains stacked
 
 f_train = figure('Position', [57.7273 20.2000 1.4287e+03 761.8909],...
