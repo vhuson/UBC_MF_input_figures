@@ -5,6 +5,8 @@ function [ax_stack_1] = plot_stacked_traces(...
 base_opts.plot_color = false;
 base_opts.Visible = 'on';
 base_opts.XLim = false;
+
+base_opts.padding = 0.08;
 if nargin < 3
     select_cells = 1:size(curr_data_array,1);
 end
@@ -33,7 +35,7 @@ end
 
 disp_num = numel(select_cells);
 
-[all_positions] = get_stacked_axes_positions(pos1,0.08,disp_num);
+[all_positions] = get_stacked_axes_positions(pos1,opts.padding,disp_num);
 all_positions = flipud(all_positions);
 
 ax_stack_1 = cell(1,disp_num);

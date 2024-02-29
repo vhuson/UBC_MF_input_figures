@@ -16,7 +16,7 @@ else
     opts = merge_structs(base_opts,opts);
 end
 
-plot_on = true;
+plot_on = false;
 
 % Set parameters of the train
 step_starts = [5, 8, 12, 16, 20, 24, 28, 32, 36];
@@ -68,6 +68,9 @@ for ii = find(~empty_fltr')
 
         [main_pars, supp_pars, smoothTrace] = getUBCparameters2(...
             curr_trace(curr_start:curr_end),base_trace,step_dur-start_delay,Fs);
+        if isempty(main_pars.pause_exc)
+            main_pars.pause_exc = 0;
+        end
 
         %Recalculate n_spikes
         main_pars.n_spikes = sum(curr_trace(curr_start:curr_end)) /Fs - ...
