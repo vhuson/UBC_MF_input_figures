@@ -68,6 +68,7 @@ seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
                 0   0   1];
+all_colors_pharma = seed_map(seed_colors_pharma,4);
 
 
 stack_opts = struct();
