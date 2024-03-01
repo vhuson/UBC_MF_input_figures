@@ -17,17 +17,22 @@ typ_cell_IDs = {'1754','1751','1750','1749','1753'};
 % select_cells = select_cells([2,10,14]);
 
 
+y_labels_on = false;
 
 %Set axis position
 pos_bottom = 0.6;
 pos_top = 0.96;
 pos_height = pos_top - pos_bottom;
-pos_left = 0.1;
-full_width = 0.55;
+% pos_left = 0.1;
+% full_width = 0.55;
+pos_left = 0.21;
+full_width = 0.52;
 base_space = 0.01;
 
-pos_left2 = 0.6722;
-base_width2 = 0.2921;
+% pos_left2 = 0.6722;
+% base_width2 = 0.2921;
+pos_left2 = 0.7466;
+base_width2 = 0.2177;
 
 
 %Gather data
@@ -75,11 +80,13 @@ pos_ax2 = [pos_left2  pos_bottom  base_width2  pos_height];
 cellfun(@add_zero_line, train_stack_2(2:end));
 
 %Add cell label
+if y_labels_on
 for ii = 2:numel(train_stack_1)
     text(train_stack_1{ii},0,0,['#',num2str(typ_cell_num(ii-1))],'Units','normalized',...
                 'Position',[-0.05 0.5],'VerticalAlignment','middle',...
                 'HorizontalAlignment','center',...
                 'Rotation',0)
+end
 end
 %Add scale bar
 scale_opts = struct();

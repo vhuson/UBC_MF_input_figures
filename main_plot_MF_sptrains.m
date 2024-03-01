@@ -94,7 +94,9 @@ f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
     'Color','w');
 
 train5_examples_panel
+train5_burst_examples_panel
 
+train5_burst_heatmap_panel
 train5_heatmap_panel
 
 train5_summaries_panel
@@ -106,14 +108,14 @@ fig_opts.FontSize = 10;
 standardFig(f_train,fig_opts);
 
 %Add labels
-plot_labels = repmat({[]},1,17);
-plot_labels{1} = 'a';
-plot_labels{7} = 'b';
-plot_labels{13} = 'c';
-plot_labels{14} = 'd';
-plot_labels{15} = 'e';
-plot_labels{16} = 'f';
-plot_labels{17} = 'g';
+plot_labels = repmat({[]},1,24);
+plot_labels{13} = 'a';
+plot_labels{14} = 'b';
+plot_labels{19} = 'c';
+plot_labels{22} = 'd';
+plot_labels{23} = 'e';
+plot_labels{24} = 'f';
+
 labelPlots(f_train,plot_labels);
 
 %% Other plots
