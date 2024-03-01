@@ -115,3 +115,7 @@ plot_labels{19} = 'e';
 plot_labels{27} = 'f';
 % plot_labels{17} = 'g';
 labelPlots(f_train_pharma,plot_labels);
+
+%% other figure
+train_pharma_20s_figure
+
