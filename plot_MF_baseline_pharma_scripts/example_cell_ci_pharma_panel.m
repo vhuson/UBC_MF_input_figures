@@ -130,7 +130,7 @@ for ii = 1:numel(curr_cells)
             'HorizontalAlignment','left');
         curr_t.Units = 'data';
         
-        if curr_cell == 20
+        if curr_cell == curr_cells(ismember(typ_cell_IDs,'1672'))
             %Set smaller ylim
             ax_basep_typ{row_idx,kk}.YLim(2) = min([ax_basep_typ{row_idx,kk}.YLim(2),...
                 30]);

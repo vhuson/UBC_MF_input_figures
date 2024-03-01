@@ -6,6 +6,10 @@ setup_workspace_alldata
 allData{56}.spks_prot{2}{17}(14) = [];
 
 %% Gather baseline pharma data
+% Exclude cells that get too excitable during this protocol
+bad_cell_IDs = {'1692','1720'};
+[bad_cell_idxs] = UBC_cell_ID2idx(fileNames,bad_cell_IDs,ONidx);
+
 
 %First need to gather baseline data for all washin states
 washin_states = {[1 0 0 0 0],[0 1 0 0 0],[0 1 1 0 0],[0 1 1 1 0]};
@@ -25,6 +29,7 @@ washin_state = [0 1 1 0 0];
     washin_state);
 
 washin_fltr = ~isnan(mean_peak_pharma_base3(:,1));
+washin_fltr(bad_cell_idxs) = false;
 
 
 washin_state = [1 0 0 0 0];
