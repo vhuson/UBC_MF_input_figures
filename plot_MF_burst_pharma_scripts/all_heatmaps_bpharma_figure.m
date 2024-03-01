@@ -121,7 +121,7 @@ for ii = 1:num_rows
         %Add stim start line
         hold(ax_pharm_hm{ii,jj},'on')
         line(ax_pharm_hm{ii,jj},repmat(ax_pharm_hm{ii,jj}.XTick(1),1,2),...
-            ax_pharm_hm{ii,jj}.YLim,'Color',[0.7 0.7 0.7],'LineWidth',0.5,'LineStyle',':')
+            ax_pharm_hm{ii,jj}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
         hold(ax_pharm_hm{ii,jj},'off')
 
         %Add titles

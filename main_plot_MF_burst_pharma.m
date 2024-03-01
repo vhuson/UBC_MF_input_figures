@@ -159,7 +159,7 @@ plot_labels{1} = 'a';
 plot_labels{6} = 'b';
 plot_labels{11} = 'c';
 plot_labels{16} = 'd';
-labelPlots(f_burst_pharma_hmsupp,plot_labels,fig_opts);
+labelPlots(f_burst_pharma_hmsupp,plot_labels);
 
 
 %% Other figures
