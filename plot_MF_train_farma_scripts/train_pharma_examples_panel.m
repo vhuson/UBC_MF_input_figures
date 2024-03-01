@@ -18,6 +18,8 @@ select_cells = fltr_ONidx_tpharma;
 typ_cell_idxs = [6, 1];
 typ_cell_num = [4, 6];
 
+y_labels_on = false;
+
 
 %Set axis position
 num_cells = numel(typ_cell_num);
@@ -27,13 +29,17 @@ num_rows = num_cells * 4 +1;
 pos_bottom = 0.6;
 pos_top = 0.96;
 pos_height = pos_top - pos_bottom;
-pos_left = 0.1;
-full_width = 0.55;
+% pos_left = 0.1;
+% full_width = 0.55;
+pos_left = 0.21;
+full_width = 0.52;
 base_space = 0.01;
 cell_space = 0.02;
 
-pos_left2 = 0.6722;
-base_width2 = 0.2921;
+% pos_left2 = 0.6722;
+% base_width2 = 0.2921;
+pos_left2 = 0.7466;
+base_width2 = 0.2177;
 
 base_height = pos_height - base_space * (num_rows-1) - cell_space * num_cells;
 base_height = base_height / num_rows;
@@ -117,12 +123,13 @@ for ii = 1:num_cells
     plot_traces,Fs,1:4,f_train_pharma,pos_ax2,stack_opts2);
     cellfun(@add_zero_line, pharma_stack2{ii});
 
+    if y_labels_on
     %Add cell label
     text(pharma_stack{ii}{2},0,0,['#',num2str(typ_cell_num(ii))],'Units','normalized',...
                 'Position',[-0.05 -0],'VerticalAlignment','middle',...
                 'HorizontalAlignment','center',...
                 'Rotation',0)
-    
+    end
     %Same ylim
     same_ylim_stack({pharma_stack{ii}, pharma_stack2{ii}});
 end
@@ -148,6 +155,7 @@ cellfun(@axis_height_by_ylim,pharma_stack2,'UniformOutput', false);
 
 
 %Add washin label
+% if y_labels_on
 for ii = 1:numel(pharma_stack)
     for jj = 1:4
         curr_label = ['\color[rgb]{',num2str(all_colors_pharma(jj,:)),'}',...
@@ -159,7 +167,7 @@ for ii = 1:numel(pharma_stack)
         curr_t.Units = 'data';
     end
 end
-
+% end
 
 
 

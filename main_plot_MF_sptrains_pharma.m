@@ -19,6 +19,13 @@ all_train_burst_baseline_pharma = {};
 all_n_spikes_stim_pharma = {};
 all_n_spikes_post_pharma = {};
 
+%Burst parameters
+all_mean_pharma_bursts = {};
+all_full_pharma_bursts = {};
+all_burst_durs      = [0.01 0.02 0.05 0.10 0.2];
+all_burst_tails     = [2.9    3    10   10   10];
+
+
 all_washin = {[1 0 0 0 0];[0 1 0 0 0];[0 1 1 0 0];[0 1 1 1 0]};
 for ii = 1:4
 
@@ -33,43 +40,17 @@ for ii = 1:4
         all_n_spikes_stim_pharma{ii},all_n_spikes_post_pharma{ii}] = ...
         get_train_parameters(all_mean_trains_pharma{ii},Fs);
 
+    %Get burst traces
+    [all_mean_pharma_bursts{ii},all_full_pharma_bursts{ii}] = ...
+        get_burst_data(allData(train_pharma_fltr),Fs,all_burst_durs, all_burst_tails,...
+        washin);
+
 end
 
 
 [fltr_ONidx_tpharma] = get_fltr_ONidx(ONidx,find(train_pharma_fltr));
 
 
-% Gather all mean burst data
-all_burst_durs      = [0.01 0.02 0.05 0.10 0.2];
-all_burst_tails     = [2.9    3    10   10   10];
-washin_state = [1 0 0 0 0];
-
-%Get traces
-[all_mean_bursts,all_full_bursts] = ...
-    get_burst_data(allData,Fs,all_burst_durs, all_burst_tails,...
-    washin_state);
-
-%Get UBC parameters
-[all_burst_slow_amp,all_burst_slow_HD,all_burst_pause,all_burst_n_spikes,...
-    all_burst_fast_amp,all_burst_fast_HD,all_burst_baseline] = get_allburst_parameters(...
-    all_mean_bursts,all_baseline,Fs);
-
-
-%Use baseline for NaNs
-for ii = 1:size(all_mean_bursts{1},1)
-    curr_trace = all_mean_bursts{1}(ii,:);
-
-    %Fill with zeros
-    curr_trace(isnan(curr_trace)) = 0;
-
-    %Fill up to first spike with baseline
-    first_nozero = find(curr_trace ~= 0,1,"first");
-    curr_trace(1:first_nozero) = all_baseline(ii);
-
-    %Put back into array
-    all_mean_bursts{1}(ii,:) = curr_trace;
-    
-end
 
 
 %Protocol templates
@@ -94,7 +75,10 @@ f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
     'Color','w');
 
 train_pharma_examples_panel
+train_pharma_burst_examples_panel
 
+%Heatmaps including bursts
+train_pharma_burst_heatmap_panel
 train_pharma_heatmap_panel
 
 train_pharma_summary_panel
@@ -106,14 +90,16 @@ fig_opts.FontSize = 10;
 standardFig(f_train_pharma,fig_opts);
 
 %Add labels
-plot_labels = repmat({[]},1,35);
-plot_labels{3} = 'a';
-plot_labels{7} = 'b';
-plot_labels{11} = 'c';
-plot_labels{15} = 'd';
-plot_labels{19} = 'e';
-plot_labels{27} = 'f';
-% plot_labels{17} = 'g';
+plot_labels = repmat({[]},1,40);
+plot_labels{19} = 'a';
+plot_labels{20} = 'b';
+% plot_labels{3} = 'c';
+% plot_labels{7} = 'd';
+plot_labels{24} = 'c';
+% plot_labels{11} = 'f';
+% plot_labels{15} = 'g';
+plot_labels{28} = 'd';
+plot_labels{40} = 'e';
 labelPlots(f_train_pharma,plot_labels);
 
 %% other figure
