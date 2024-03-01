@@ -1,4 +1,18 @@
+%Set up path
+mfile_name          = mfilename('fullpath');
+[pathstr,name,ext]  = fileparts(mfile_name);
+cd(pathstr);
+
+addpath(genpath('functions'))
+addpath(genpath('plot_MF_baseline_pharma_scripts'))
+addpath(genpath('plot_MF_baseline_scripts'))
+addpath(genpath('plot_MF_burst_pharma_scripts'))
+addpath(genpath('plot_MF_burst_scripts'))
+addpath(genpath('plot_MF_train_pharma_scripts'))
+addpath(genpath('plot_MF_train_scripts'))
+
 %% Get files
+%
 Fs = 20000;
 
 fileNames = dir('data_analyzed\MF_stim_prots_pharma_saved\*');
@@ -73,3 +87,4 @@ OFFidx = ONidx(end-numel(OFFidx)+1:end);
 %Remove bad cells
 % badCells = [120    40    14    49   31];
 % ONidx(ismember(ONidx,badCells)) = [];
+%}
