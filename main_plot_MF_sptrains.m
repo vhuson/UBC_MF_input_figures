@@ -77,6 +77,8 @@ input_train_5(28*Fs:29*Fs) = 60;
 input_train_5(32*Fs:33*Fs) = 20;
 input_train_5(36*Fs:37*Fs) = 20;
 
+train5_step_times = [5, 8, 12, 16, 20, 24, 28, 32, 36];
+
 %Train10
 input_train_10 = zeros(1,800001);
 input_train_10(5*Fs:33*Fs) = 10;
@@ -108,13 +110,13 @@ fig_opts.FontSize = 10;
 standardFig(f_train,fig_opts);
 
 %Add labels
-plot_labels = repmat({[]},1,24);
-plot_labels{13} = 'a';
-plot_labels{14} = 'b';
-plot_labels{19} = 'c';
-plot_labels{22} = 'd';
-plot_labels{23} = 'e';
-plot_labels{24} = 'f';
+plot_labels = repmat({[]},1,27);
+plot_labels{15} = 'a';
+plot_labels{16} = 'b';
+plot_labels{22} = 'c';
+plot_labels{25} = 'd';
+plot_labels{26} = 'e';
+plot_labels{27} = 'f';
 
 labelPlots(f_train,plot_labels);
 

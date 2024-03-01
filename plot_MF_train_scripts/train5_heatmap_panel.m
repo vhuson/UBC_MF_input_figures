@@ -9,8 +9,8 @@ pos_top = 0.565;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
-pos_left = 0.21;
-full_width = 0.52;
+pos_left = 0.1966;
+full_width = 0.5334;
 base_space = 0.01;
 
 % pos_left2 = 0.6722;
@@ -43,7 +43,7 @@ norm_OFFidx = [];
 
 %Set plot options
 %Xlim
-lim_x = [0 40];
+lim_x = [0 36];
 
 % all_titles = {'1 Hz', '2.5 Hz', '5 Hz'};
 opts = struct();
@@ -78,6 +78,14 @@ ax_sp_hm{ax_idx} = axes(f_train,'Position',pos_ax);
 
 makeUBCHeatmap(ax_sp_hm{ax_idx}, norm_traces, Fs, opts);
 
+%add stim onset line
+hold(ax_sp_hm{ax_idx},'on')
+for curr_step_time = train5_step_times(2:8)
+line(ax_sp_hm{ax_idx},repmat(curr_step_time*Fs,1,2),...
+    ax_sp_hm{ax_idx}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+end
+hold(ax_sp_hm{ax_idx},'off')
+
 %plot zoom in
 opts.XLim = [27.5 31];
 opts.XTick = [28:31];
@@ -89,7 +97,13 @@ pos_ax2 = [pos_left2   pos_bottom    base_width2    pos_height];
 ax_sp_hm{2} = axes(f_train,'Position',pos_ax2);
 
 makeUBCHeatmap(ax_sp_hm{2}, norm_traces, Fs, opts);
-    
+
+%add stim onset line
+hold(ax_sp_hm{2},'on')
+
+line(ax_sp_hm{2},repmat(train5_step_times(7)*Fs,1,2),...
+    ax_sp_hm{2}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+hold(ax_sp_hm{2},'off')    
 
 
 % cellfun(@(x) move_tick_labels(x,2),ax_sp_hm);

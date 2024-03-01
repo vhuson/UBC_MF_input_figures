@@ -11,6 +11,7 @@ base_opts.YTickLabel = false;
 base_opts.YRulerVis = "on";
 base_opts.bar = false;
 base_opts.min_val = -Inf;
+base_opts.max_val = Inf;
 base_opts.input_n = [1, 2, 5, 10, 20];
 
 base_opts.XTick = base_opts.input_n;
@@ -34,6 +35,7 @@ end
 norm_bol = opts.norm;
 bar_bol = opts.bar;
 min_val = opts.min_val;
+max_val = opts.max_val;
 input_n = opts.input_n;
 
 curr_par_mat = [burst_par{:}];
@@ -53,6 +55,12 @@ below_min_val = curr_par_mat< min_val;
 
 adjust_y = any(below_min_val,'all');
 curr_par_mat(below_min_val) = min_val;
+
+%Check if values above max and adjust
+above_max_val = curr_par_mat> max_val;
+
+adjust_y_max = any(above_max_val,'all');
+curr_par_mat(above_max_val) = max_val;
 
 
 
@@ -176,5 +184,11 @@ if adjust_y %Set to min_val
         ['<',currAx.YTickLabel{currAx.YTick == min_val}];
 end
 
+if adjust_y_max %Set to max_val
+    currAx.YLim(2) = max_val;
+    currAx.YTick = unique([currAx.YTick, max_val]);
+    currAx.YTickLabel{currAx.YTick == max_val} = ...
+        ['>',currAx.YTickLabel{currAx.YTick == max_val}];
+end
 
 end

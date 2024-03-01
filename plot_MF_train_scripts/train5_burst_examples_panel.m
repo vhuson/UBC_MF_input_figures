@@ -8,8 +8,8 @@ select_cells = fltr_ONidx_t5;
 % TRAIN5 selection
 % [4,6,15,19,22] 
 % typ_cell_IDs = {'1754','1751','1750','1765','1753'};
-% [4,6,15,18,22] 
-typ_cell_IDs = {'1754','1751','1750','1749','1753'};
+% [4,6,12,15,18,22] 
+typ_cell_IDs = {'1754','1751','1759','1750','1749','1753'};
 
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_fltr_5),...
     typ_cell_IDs,select_cells);
@@ -69,7 +69,11 @@ scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
 scale_opts.origin = [2,-25];
-add_scale_bar(train_stack_burst{end},[0.5 0],scale_opts);
+add_scale_bar(train_stack_burst{end},[0.5 20],scale_opts);
+
+for ii = 2:numel(train_stack_burst)-1
+    add_scale_bar(train_stack_burst{ii},[0 20]);
+end
 
 
 %Axis by ylim

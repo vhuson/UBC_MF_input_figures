@@ -46,6 +46,7 @@ opts = struct();
 opts.XLim = lim_x;
 opts.XLabel = '';
 opts.XTick = [0.5:2:3.5];
+opts.XTickLabel = arrayfun(@num2str,opts.XTick-0.5,'UniformOutput',false);
 
 
 % Plotting routing
@@ -69,6 +70,11 @@ ax_sp_burst_hm{ax_idx} = axes(f_train,'Position',pos_ax);
 
 makeUBCHeatmap(ax_sp_burst_hm{ax_idx}, norm_traces, Fs, opts);
 
+%add stim onset line
+hold(ax_sp_burst_hm{ax_idx},'on')
+line(ax_sp_burst_hm{ax_idx},repmat(ax_sp_burst_hm{ax_idx}.XTick(1),1,2),...
+    ax_sp_burst_hm{ax_idx}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+hold(ax_sp_burst_hm{ax_idx},'off')
 
 
 % cellfun(@(x) move_tick_labels(x,2),ax_sp_hm);

@@ -97,6 +97,11 @@ for p_idx = 1:num_cols
     if p_idx == num_cols
         opts.bar = true;
     end
+    if p_idx == 2
+        opts.max_val = 70;
+    else
+        opts.max_val = Inf;
+    end
     [ax_train_par{p_idx},cb1] = UBC_par_line_plot2(...
         summary_on,summary_off,all_plot_par{p_idx}(plot_steps),f_train,pos_ax,opts);
     xlim([opts.input_n(1) opts.input_n(end)])
