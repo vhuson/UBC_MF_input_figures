@@ -87,7 +87,12 @@ for ii = 1:num_rows
 
     %Plot heatmap
     makeUBCHeatmap(ax_pharm_sp_burst_hm{ii}, norm_traces, Fs, opts);
-
+    
+    %add stim onset line
+    hold(ax_pharm_sp_burst_hm{ii},'on')
+    line(ax_pharm_sp_burst_hm{ii},repmat(ax_pharm_sp_burst_hm{ii}.XTick(1),1,2),...
+        ax_pharm_sp_burst_hm{ii}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+    hold(ax_pharm_sp_burst_hm{ii},'off')
 
 end
 

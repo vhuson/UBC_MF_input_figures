@@ -13,8 +13,8 @@ pos_top = 0.565;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
-pos_left = 0.21;
-full_width = 0.52;
+pos_left = 0.1966;
+full_width = 0.5334;
 base_space = 0.01;
 
 % pos_left2 = 0.6722;
@@ -52,7 +52,7 @@ seed_colors_pharma = [0 0 0;
 all_colors_pharma = seed_map(seed_colors_pharma,4);
 
 opts = struct();
-opts.XLim = [0 40];
+opts.XLim = [0 36];
 opts.XLabel = '';
 opts.XTick = [0:10:40];
 opts.XTickLabel = '';
@@ -100,7 +100,14 @@ for ii = 1:num_rows
 
     %Plot heatmap
     makeUBCHeatmap(ax_pharm_sp_hm{ii}, norm_traces, Fs, opts);
-
+    
+    %add stim onset line
+    hold(ax_pharm_sp_hm{ii},'on')
+    for curr_step_time = train5_step_times(2:8)
+        line(ax_pharm_sp_hm{ii},repmat(curr_step_time*Fs,1,2),...
+            ax_pharm_sp_hm{ii}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+    end
+    hold(ax_pharm_sp_hm{ii},'off')
 
     %plot zoom in
     %setup axes and plot
@@ -108,6 +115,12 @@ for ii = 1:num_rows
     ax_pharm_sp_hm2{ii} = axes(f_train_pharma,'Position',pos_ax2);
 
     makeUBCHeatmap(ax_pharm_sp_hm2{ii}, norm_traces, Fs, opts2);
+
+    hold(ax_pharm_sp_hm2{ii},'on')
+
+    line(ax_pharm_sp_hm2{ii},repmat(train5_step_times(7)*Fs,1,2),...
+        ax_pharm_sp_hm2{ii}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+    hold(ax_pharm_sp_hm2{ii},'off')
 
 
 end

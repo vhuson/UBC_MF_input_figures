@@ -110,22 +110,37 @@ end
 scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [stack_opts.XLim(2)-0.5,-120];
-add_scale_bar(pharma_stack_burst{1}{end},[0.5 50],scale_opts);
+scale_opts.origin = [stack_opts.XLim(2)-0.5,20];
+add_scale_bar(pharma_stack_burst{1}{end},[0.5 100],scale_opts);
+for ii = 1:numel(pharma_stack_burst{1})-1
+    add_scale_bar(pharma_stack_burst{1}{ii},[0 100]);
+end
 
 scale_opts.origin = [stack_opts.XLim(2)-0.5,-70];
 add_scale_bar(pharma_stack_burst{2}{end},[0.5 50],scale_opts);
+for ii = 1:numel(pharma_stack_burst{2})-1
+    add_scale_bar(pharma_stack_burst{2}{ii},[0 50]);
+end
 
 %Axis size by ylim
-cellfun(@axis_height_by_ylim,pharma_stack_burst,'UniformOutput', false);
+% cellfun(@axis_height_by_ylim,pharma_stack_burst,'UniformOutput', false);
 
 %Fix Ylim and ax positions (requires train panel to already be there)
+
 for ii = 1:numel(pharma_stack_burst)
     for jj = 1:4
+        curr_ylim = pharma_stack_burst{ii}{jj}.YLim;
+        train_ylim = pharma_stack{ii}{jj}.YLim;
+        if curr_ylim(2) < train_ylim(2)
+            pharma_stack_burst{ii}{jj}.YLim = train_ylim;
+        end
         
         % pharma_stack_burst{ii}{jj}.YLim = pharma_stack{ii}{jj}.YLim;
-        pharma_stack_burst{ii}{jj}.Position([2]) = pharma_stack{ii}{jj}.Position([2]);
-
+        % if ii == 1 && jj == 4
+        %     pharma_stack_burst{ii}{jj}.Position([2]) = pharma_stack{ii}{jj}.Position([2]);
+        % else
+            pharma_stack_burst{ii}{jj}.Position([2,4]) = pharma_stack{ii}{jj}.Position([2,4]);
+        % end
     end
 end
 

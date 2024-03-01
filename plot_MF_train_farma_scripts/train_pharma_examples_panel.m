@@ -31,8 +31,8 @@ pos_top = 0.96;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
-pos_left = 0.21;
-full_width = 0.52;
+pos_left = 0.1966;
+full_width = 0.5334;
 base_space = 0.01;
 cell_space = 0.02;
 
@@ -54,7 +54,7 @@ all_bottom_edges = all_bottom_edges(1:4:9);
 cell_height = base_height * 4 + base_space *3;
 
 %Gather data
-trim_amount = 1000;
+trim_amount = 4*Fs + 1000;
 input_train = input_train_5;
 input_train = input_train(:,1:end-trim_amount);
 
@@ -79,7 +79,7 @@ all_colors_pharma = seed_map(seed_colors_pharma,4);
 
 stack_opts = struct();
 stack_opts.Visible = 'off';
-stack_opts.XLim = [0 40];
+stack_opts.XLim = [0 36];
 stack_opts.padding = base_space*100;
 
 
@@ -142,7 +142,7 @@ pharma_stack2{1}{2}.YLim(2) = 123;
 scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [37,-70];
+scale_opts.origin = [33,-70];
 cellfun(@(x) add_scale_bar(x{end},[3 50],scale_opts),pharma_stack);
 
 scale_opts.origin = [30.5,-70];
@@ -181,8 +181,6 @@ text(input_ax{1},20.5,42,'40','VerticalAlignment','bottom','HorizontalAlignment'
 text(input_ax{1},24.5,52,'50','VerticalAlignment','bottom','HorizontalAlignment','center')
 text(input_ax{1},28.5,62,'60','VerticalAlignment','bottom','HorizontalAlignment','center')
 text(input_ax{1},32.5,22,'20','VerticalAlignment','bottom','HorizontalAlignment','center')
-text(input_ax{1},33.2,2,'0','VerticalAlignment','bottom')
-text(input_ax{1},36.5,22,'20','VerticalAlignment','bottom','HorizontalAlignment','center')
 
 text(input_ax2{1},27.5,7,'5','VerticalAlignment','bottom')
 text(input_ax2{1},28.5,62,'60','VerticalAlignment','bottom','HorizontalAlignment','center')
