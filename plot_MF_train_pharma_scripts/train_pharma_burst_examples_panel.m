@@ -7,17 +7,11 @@
 select_cells = fltr_ONidx_tpharma;
 
 % TRAIN5 selection
-% [4,6,15,19,22] 
-% typ_cell_IDs = {'1754','1751','1750','1765','1753'};
-% [4,6,15,18,22] 
-% typ_cell_IDs = {'1754','1751','1750','1749','1753'};
-% 
-% [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_pharma_fltr),...
-%     typ_cell_IDs,select_cells);
+% [4,6] 
+typ_cell_IDs = {'1657','1663'};
 
-
-typ_cell_idxs = [6, 1];
-typ_cell_num = [4, 6];
+[typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(select_cells),...
+    typ_cell_IDs,select_cells);
 
 
 %Set axis position
@@ -39,7 +33,7 @@ base_height = base_height / num_rows;
 
 all_bottom_edges = (base_height + base_space) .* (0:(num_rows-1));
 all_bottom_edges = all_bottom_edges + pos_bottom;
-all_bottom_edges = all_bottom_edges + floor(0:1/4:num_cels) .* cell_space;
+all_bottom_edges = all_bottom_edges + floor(0:1/4:num_cells) .* cell_space;
 all_bottom_edges = fliplr(all_bottom_edges);
 
 all_bottom_edges = all_bottom_edges(1:4:9);

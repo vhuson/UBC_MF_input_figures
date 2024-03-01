@@ -70,6 +70,8 @@ input_train_5(28*Fs:29*Fs) = 60;
 input_train_5(32*Fs:33*Fs) = 20;
 input_train_5(36*Fs:37*Fs) = 20;
 
+train5_step_times = [5, 8, 12, 16, 20, 24, 28, 32, 36];
+
 %% Main figure
 f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
     'Color','w');
