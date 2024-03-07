@@ -48,7 +48,14 @@ pos_ax(1) = sum(pos_ax([1,3]))+base_space;
 pos_ax(3) = base_width; % + bar_width;
 [ax_burst_par{p_idx}, cb1] = UBC_par_line_plot(...
     ONidx,[],all_burst_pause,[0 1 1],-Inf,f_burst,pos_ax);
-cb1.Position = [0.9313 0.1078 0.0166 0.0713];
+% cb1.Position = [0.9313 0.1078 0.0166 0.0713];
+%Adjust color bar
+cb1.Position(1) = 0.9313; %Left edge
+cb1.Units = 'pixels';
+cb1.Position(3:4) = [8.7326 59.5984];
+cb1.Units = 'normalized';
+cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2; 
+
 ylabel('Pause (s)')
 ax_burst_par{p_idx}.YLim(1) = 0.001;
 fix_powered_ylabels(ax_burst_par{p_idx})
