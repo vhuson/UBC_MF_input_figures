@@ -123,7 +123,7 @@ for ii = 1:num_rows
         %Add stim start line
         hold(ax_pharm_hm{ii,jj},'on')
         line(ax_pharm_hm{ii,jj},repmat(ax_pharm_hm{ii,jj}.XTick(1),1,2),...
-            ax_pharm_hm{ii,jj}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+            ax_pharm_hm{ii,jj}.YLim,'Color',[1 0.0 0],'LineWidth',0.5,'LineStyle',':')
         hold(ax_pharm_hm{ii,jj},'off')
 
         %Add titles
@@ -134,5 +134,15 @@ for ii = 1:num_rows
     end
 end
 
+
+
+
+for ii = 1:4
+    if exist("curr_cells","var")
+        [hm_ax] = heatmap_markers(ax_pharm_hm{ii,1},curr_cells);
+    else
+        [hm_ax] = heatmap_markers(ax_pharm_hm{ii,1},[8    10    13    18    24]);
+    end
+end
 
 
