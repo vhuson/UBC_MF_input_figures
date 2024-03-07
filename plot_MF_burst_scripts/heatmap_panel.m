@@ -70,8 +70,16 @@ for ax_idx = 1:5
     
     hold(ax_hm{ax_idx},'on')
     line(ax_hm{ax_idx},repmat(ax_hm{ax_idx}.XTick(1),1,2),...
-        ax_hm{ax_idx}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+        ax_hm{ax_idx}.YLim,'Color',[1 0.0 0],'LineWidth',0.5,'LineStyle',':')
     hold(ax_hm{ax_idx},'off')
 
 
+end
+
+
+
+if exist("typ_cell_num","var")
+    [hm_ax] = heatmap_markers(ax_hm{1},typ_cell_num);
+else
+    [hm_ax] = heatmap_markers(ax_hm{1},[19 37 51]);
 end
