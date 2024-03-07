@@ -2,11 +2,11 @@
 %     'Color','w');
 
 
-left_edge = 0.7427;
-bottom_edge = 0.08;
-total_width = 0.1809;
-panel_gap = 0.04;
-total_height = 0.49;
+left_edge = 0.7607;
+bottom_edge = 0.2150;
+total_width = 0.1629;
+panel_gap = 0.02;
+total_height = 0.355;
 
 num_panels = 3;
 base_width = total_width;
@@ -56,7 +56,7 @@ opts.YScale = 'log';
 opts.XLabel = "";
 opts.YLabel = "#Spikes";
 opts.XTick = opts.input_n;
-opts.XTickLabel = XTickLabel(point_0:end);
+opts.XTickLabel = [];
 opts.min_val = 0.1;
 
 
@@ -64,9 +64,10 @@ opts.min_val = 0.1;
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
     ONidx,[],base_n_spikes_ss_uncorr(point_0:end),f_base,pos_ax,opts);
 
-%Offset XLim a little bit
+%Offset lims a little bit
 ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
     - diff(ax_base_par{p_idx}.XLim) * 0.05;
+ax_base_par{p_idx}.YLim(1) = ax_base_par{p_idx}.YLim(1) * 0.85;
 
 fix_powered_ylabels(ax_base_par{p_idx})
 
@@ -93,9 +94,10 @@ opts.YLabel = "Peak rate (spk/s)";
 [ax_base_par{p_idx}] = UBC_par_line_plot2(...
     ONidx,[],base_peak_ss_uncorr(point_0:end),f_base,pos_ax,opts);
 
-%Offset XLim a little bit
+%Offset lims a little bit
 ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
     - diff(ax_base_par{p_idx}.XLim) * 0.05;
+ax_base_par{p_idx}.YLim(1) = ax_base_par{p_idx}.YLim(1) * 0.85;
 
 fix_powered_ylabels(ax_base_par{p_idx})
 
@@ -153,7 +155,13 @@ opts_ratio.bar = true;
 
 [ax_base_par{p_idx},cb1] = UBC_par_line_plot2(...
     ONidx,[],base_ratio_ss_uncorr(point_0:end),f_base,pos_ax,opts_ratio);
-cb1.Position = [0.9397 0.1140 0.0151 0.0743];
+
+%Adjust color bar
+cb1.Position(1) = 0.9397; %Left edge
+cb1.Units = 'pixels';
+cb1.Position(3:4) = [8.7326 59.5984];
+cb1.Units = 'normalized';
+cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2; 
 
 %Offset XLim a little bit
 ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...

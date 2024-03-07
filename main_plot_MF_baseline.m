@@ -63,7 +63,7 @@ plot_labels{1} = 'a';
 plot_labels{2} = 'b';
 plot_labels{31} = 'c';
 plot_labels(34:36) = {'e','d','f'};
-labelPlots(f_base,plot_labels,fig_opts);
+labelPlots(f_base,plot_labels);
 
 %% Other figures
 stacked_constant_input_figure
