@@ -100,7 +100,13 @@ for input_idx = 1:5
             opts);
 
     if input_idx == 5
-        cb1.Position = [0.8688 0.0503 0.0151 0.0743];
+        % cb1.Position = [0.8688 0.0503 0.0151 0.0743];
+        %Adjust color bar
+        cb1.Position(1) = 0.8688; %Left edge
+        cb1.Units = 'pixels';
+        cb1.Position(3:4) = [8.7326 59.5984];
+        cb1.Units = 'normalized';
+        cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2;
     end
 
     fix_powered_ylabels(ax_pharm_n{input_idx});
