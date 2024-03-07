@@ -81,6 +81,16 @@ pos_ax2 = [pos_left2  pos_bottom  base_width2  pos_height];
     curr_traces,Fs,select_cells,f_train,pos_ax2,stack_opts);
 cellfun(@add_zero_line, train_stack_2(2:end));
 
+%add stim onset line
+for ii = 2:numel(train_stack_2)
+    hold(train_stack_2{ii},'on')
+    line(train_stack_2{ii},repmat(train5_step_times(7),1,2),...
+        train_stack_2{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+    line(train_stack_2{ii},repmat((train5_step_times(7)+1),1,2),...
+        train_stack_2{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+    hold(train_stack_2{ii},'off')
+end
+
 %Add cell label
 if y_labels_on
 for ii = 2:numel(train_stack_1)

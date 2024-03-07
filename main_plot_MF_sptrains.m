@@ -112,11 +112,12 @@ standardFig(f_train,fig_opts);
 %Add labels
 plot_labels = repmat({[]},1,27);
 plot_labels{15} = 'a';
-plot_labels{16} = 'b';
+plot_labels{8} = 'b';
 plot_labels{22} = 'c';
-plot_labels{25} = 'd';
-plot_labels{26} = 'e';
-plot_labels{27} = 'f';
+plot_labels{24} = 'd';
+plot_labels{25} = 'e';
+plot_labels{26} = 'f';
+plot_labels{27} = 'g';
 
 labelPlots(f_train,plot_labels);
 

@@ -73,8 +73,14 @@ makeUBCHeatmap(ax_sp_burst_hm{ax_idx}, norm_traces, Fs, opts);
 %add stim onset line
 hold(ax_sp_burst_hm{ax_idx},'on')
 line(ax_sp_burst_hm{ax_idx},repmat(ax_sp_burst_hm{ax_idx}.XTick(1),1,2),...
-    ax_sp_burst_hm{ax_idx}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+    ax_sp_burst_hm{ax_idx}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
 hold(ax_sp_burst_hm{ax_idx},'off')
 
-
+for ii = 1
+    if exist("typ_cell_num","var")
+        [hm_ax] = heatmap_markers(ax_sp_burst_hm{ax_idx,1},typ_cell_num);
+    else
+        [hm_ax] = heatmap_markers(ax_sp_burst_hm{ax_idx,1},[4     6    12    15    18    22]);
+    end
+end
 % cellfun(@(x) move_tick_labels(x,2),ax_sp_hm);

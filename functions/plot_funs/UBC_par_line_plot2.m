@@ -148,6 +148,15 @@ if bar_bol
     cb1.Label.Units = 'normalized';
     cb1.Label.Position(1) = 3.7;
     standardBar(cb1);
+    
+    %Adjust color bar
+    cb1.Position(1) = sum(ax_position([1,3])); %0.9393; %Left edge
+    cb1.Units = 'pixels';
+    cb1.Position(1) = cb1.Position(1) + 13;
+    cb1.Position(3:4) = [8.7326 59.5984];
+    cb1.Units = 'normalized';
+    cb1.Position(2) = ax_position(2)+ax_position(4)/2-cb1.Position(4)/2;
+    
 end
 currAx.XTick = input_n;
 

@@ -1,8 +1,8 @@
 %% Plot trains stacked
 
-f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
-train5_examples_panel
+% f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
+% train5_examples_panel
 
 select_cells = fltr_ONidx_t5;
 % TRAIN5 selection

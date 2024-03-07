@@ -111,7 +111,6 @@ for p_idx = 1:num_cols
         - diff(ax_train_par{p_idx}.XLim) * 0.05;
     % fix_powered_ylabels(ax_train_par{p_idx})
     opts.YScale = 'linear';
+    ax_train_par{p_idx}.XTickLabelRotation = 0;
 end
 fix_powered_ylabels(ax_train_par{1})
-
-cb1.Position = [0.9393 0.2107 0.0176 0.0621];

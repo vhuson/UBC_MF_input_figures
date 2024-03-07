@@ -82,7 +82,7 @@ makeUBCHeatmap(ax_sp_hm{ax_idx}, norm_traces, Fs, opts);
 hold(ax_sp_hm{ax_idx},'on')
 for curr_step_time = train5_step_times(2:8)
 line(ax_sp_hm{ax_idx},repmat(curr_step_time*Fs,1,2),...
-    ax_sp_hm{ax_idx}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+    ax_sp_hm{ax_idx}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
 end
 hold(ax_sp_hm{ax_idx},'off')
 
@@ -102,7 +102,9 @@ makeUBCHeatmap(ax_sp_hm{2}, norm_traces, Fs, opts);
 hold(ax_sp_hm{2},'on')
 
 line(ax_sp_hm{2},repmat(train5_step_times(7)*Fs,1,2),...
-    ax_sp_hm{2}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+    ax_sp_hm{2}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+line(ax_sp_hm{2},repmat((train5_step_times(7)+1)*Fs,1,2),...
+    ax_sp_hm{2}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
 hold(ax_sp_hm{2},'off')    
 
 
