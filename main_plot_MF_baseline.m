@@ -60,8 +60,8 @@ standardFig(f_base,fig_opts);
 %Add labels
 plot_labels = repmat({[]},1,40);
 plot_labels{1} = 'a';
-plot_labels{2} = 'c';
-plot_labels{31} = 'b';
+plot_labels{2} = 'b';
+plot_labels{31} = 'c';
 plot_labels(34:36) = {'e','d','f'};
 labelPlots(f_base,plot_labels,fig_opts);
 

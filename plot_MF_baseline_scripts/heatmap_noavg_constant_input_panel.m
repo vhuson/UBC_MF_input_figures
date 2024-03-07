@@ -93,4 +93,14 @@ for ax_idx = 1:3
  
 end
 
+
+for ii = 1
+    if exist("typ_cell_num","var")
+        [hm_ax] = heatmap_markers(ax_hm{ii,1},typ_cell_num);
+    else
+        [hm_ax] = heatmap_markers(ax_hm{ii,1},[5    29    37    51    60]);
+    end
+end
+
+
 % cellfun(@(x) move_tick_labels(x,2),ax_hm);
