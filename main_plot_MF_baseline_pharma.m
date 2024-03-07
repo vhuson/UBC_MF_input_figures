@@ -2,8 +2,6 @@
 
 setup_workspace_alldata
 
-%Dirty fix for problem in cell 1774 "56"
-allData{56}.spks_prot{2}{17}(14) = [];
 
 %% Gather baseline pharma data
 % Exclude cells that get too excitable during this protocol

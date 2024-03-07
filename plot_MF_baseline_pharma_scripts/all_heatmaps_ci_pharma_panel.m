@@ -142,3 +142,12 @@ end
 
 
 
+for ii = 1:4
+    if exist("curr_cells","var")
+        [hm_ax] = heatmap_markers(ax_pharm_hm{ii,1},curr_cells);
+    else
+        [hm_ax] = heatmap_markers(ax_pharm_hm{ii,1},[1 18]);
+    end
+end
+
+

@@ -75,7 +75,7 @@ opts.YLabel = chosen_plot_ylabel;
 opts.xtick_symbols = {"o","^","square","diamond"};
 opts.base_style = '-';
 
-opts.bar = true;
+opts.bar = false;
 
 % Loop over all panels
 for ii = 1:num_panels
@@ -87,8 +87,8 @@ for ii = 1:num_panels
     all_pharma_currpar = cellfun(@(x) x(ii),chosen_plot_par);
     
 
-    if ii == 2
-        opts.bar = false;
+    if ii == 3
+        opts.bar = true;
     end
 
     %Plot
@@ -96,8 +96,14 @@ for ii = 1:num_panels
             fltr_ONidx,[],all_pharma_currpar,f_base_pharma,pos_ax,...
             opts);
 
-    if ii == 1
-        cb1.Position = [0.9397 0.1140 0.0151 0.0743];
+    if ii == 3
+        % cb1.Position = [0.9397 0.1140 0.0151 0.0743];
+        %Adjust color bar
+        cb1.Position(1) = 0.9397; %Left edge
+        cb1.Units = 'pixels';
+        cb1.Position(3:4) = [8.7326 59.5984];
+        cb1.Units = 'normalized';
+        cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2;
     end
 
     %Add and tweak labels
