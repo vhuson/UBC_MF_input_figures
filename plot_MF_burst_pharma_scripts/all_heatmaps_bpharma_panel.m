@@ -13,12 +13,12 @@ num_cols = 5; %Number of different protocols
 num_rows = 4; %Number of washins
 
 left_edge = 0.1;
-bottom_edge = 0.07;
-% bottom_edge = 0.31;
-total_width = 0.85;
-total_height = 0.88;
-% total_height = 0.32;
-base_gap = 0.02;
+% bottom_edge = 0.07;
+bottom_edge = 0.315;
+total_width = 0.87;
+% total_height = 0.88;
+total_height = 0.29;
+base_gap = 0.01;
 
 %X Lim adjusted graph widths
 base_width = (total_width - base_gap * (num_cols-1)) / sum(diff_lim_x);
@@ -102,7 +102,7 @@ for ii = 1:num_rows
         pos_ax = [all_left_edges(jj),   all_bottom_edges(ii),...
             graph_widths(jj)    graph_height];
 
-        ax_pharm_hm{ii,jj} = axes(f_burst_pharma_hmsupp,'Position',pos_ax);
+        ax_pharm_hm{ii,jj} = axes(f_burst_pharma,'Position',pos_ax);
 
         %Setup current plot options
         opts.XLim = all_XLim{jj};        

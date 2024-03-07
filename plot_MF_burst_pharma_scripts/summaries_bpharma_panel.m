@@ -5,11 +5,11 @@
 % Define ax positions
 num_cols = 5;
 
-left_edge = 0.08;
-bottom_edge = 0.4834;
+left_edge = 0.1;
+bottom_edge = 0.1534;
 % bottom_edge2 = 0.32;
-total_width = 0.75;
-total_height = 0.12;
+total_width = 0.73;
+total_height = 0.11;
 base_gap = 0.03;
 
 bottom_edge2 = bottom_edge - total_height - 0.02;
@@ -100,7 +100,7 @@ for input_idx = 1:5
             opts);
 
     if input_idx == 5
-        cb1.Position = [0.8688 0.3703 0.0151 0.0743];
+        cb1.Position = [0.8688 0.0503 0.0151 0.0743];
     end
 
     fix_powered_ylabels(ax_pharm_n{input_idx});
@@ -129,7 +129,7 @@ legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Box', 'off',...
     'NumColumns',1,...
     'Units','normalized',...
-    'Position', [0.8338 0.5005 0.1506 0.0844])
+    'Position', [0.8338 0.1805 0.1506 0.0844])
 
 % same_ylim(ax_pharm_n(1:2))
 % same_ylim(ax_pharm_n(3:5))

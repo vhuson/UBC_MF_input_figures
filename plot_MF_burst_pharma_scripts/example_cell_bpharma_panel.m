@@ -21,10 +21,10 @@ diff_lim_x = cellfun(@diff,all_lim_x);
 num_rows = numel(curr_cells);
 num_cols = 5; %Number of burst types
 
-left_edge = 0.08;
+left_edge = 0.1;
 top_edge = 0.92;
 total_height = 0.28;
-total_width = 0.3489;
+total_width = 0.3289;
 height_space = 0.015;
 base_space = 0.01;
 

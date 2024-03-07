@@ -120,6 +120,8 @@ example_cell_bpharma_panel
 example_line_bpharma_v2_panel
 example_line_bpharma_nspikes_panel
 
+all_heatmaps_bpharma_panel
+
 summaries_bpharma_panel
 % summaries_bpharma_singlerow_panel
 
@@ -131,11 +133,13 @@ standardFig(f_burst_pharma,fig_opts);
 washin_graphic_panel
 
 %Add labels
-plot_labels = repmat({[]},1,77);
+plot_labels = repmat({[]},1,102);
 plot_labels{1} = 'a';
 plot_labels{26} = 'b';
 plot_labels{52} = 'c';
 plot_labels{77} = 'd';
+plot_labels{97} = 'e';
+plot_labels{102} = 'f';
 % plot_labels{82} = 'e';
 labelPlots(f_burst_pharma,plot_labels);
 
