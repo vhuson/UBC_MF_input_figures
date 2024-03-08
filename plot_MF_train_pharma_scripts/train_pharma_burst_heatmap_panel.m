@@ -91,8 +91,17 @@ for ii = 1:num_rows
     %add stim onset line
     hold(ax_pharm_sp_burst_hm{ii},'on')
     line(ax_pharm_sp_burst_hm{ii},repmat(ax_pharm_sp_burst_hm{ii}.XTick(1),1,2),...
-        ax_pharm_sp_burst_hm{ii}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+        ax_pharm_sp_burst_hm{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
     hold(ax_pharm_sp_burst_hm{ii},'off')
 
 end
 
+
+
+for ii = 1:4
+    if exist("curr_cells","var")
+        [hm_ax] = heatmap_markers(ax_pharm_sp_burst_hm{ii},typ_cell_num);
+    else
+        [hm_ax] = heatmap_markers(ax_pharm_sp_burst_hm{ii},[4 6]);
+    end
+end

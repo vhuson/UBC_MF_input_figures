@@ -94,13 +94,14 @@ standardFig(f_train_pharma,fig_opts);
 %Add labels
 plot_labels = repmat({[]},1,40);
 plot_labels{19} = 'a';
-plot_labels{20} = 'b';
+plot_labels{2} = 'b';
 % plot_labels{3} = 'c';
 % plot_labels{7} = 'd';
-plot_labels{24} = 'c';
+% plot_labels{24} = 'c';
 % plot_labels{11} = 'f';
 % plot_labels{15} = 'g';
-plot_labels{28} = 'd';
+plot_labels{28} = 'c';
+plot_labels{33} = 'd';
 plot_labels{40} = 'e';
 labelPlots(f_train_pharma,plot_labels);
 

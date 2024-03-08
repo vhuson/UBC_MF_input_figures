@@ -105,7 +105,7 @@ for ii = 1:num_rows
     hold(ax_pharm_sp_hm{ii},'on')
     for curr_step_time = train5_step_times(2:8)
         line(ax_pharm_sp_hm{ii},repmat(curr_step_time*Fs,1,2),...
-            ax_pharm_sp_hm{ii}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+            ax_pharm_sp_hm{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
     end
     hold(ax_pharm_sp_hm{ii},'off')
 
@@ -119,7 +119,9 @@ for ii = 1:num_rows
     hold(ax_pharm_sp_hm2{ii},'on')
 
     line(ax_pharm_sp_hm2{ii},repmat(train5_step_times(7)*Fs,1,2),...
-        ax_pharm_sp_hm2{ii}.YLim,'Color',[1 0.5 0],'LineWidth',0.5,'LineStyle',':')
+        ax_pharm_sp_hm2{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+    line(ax_pharm_sp_hm2{ii},repmat((train5_step_times(7)+1)*Fs,1,2),...
+        ax_pharm_sp_hm2{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
     hold(ax_pharm_sp_hm2{ii},'off')
 
 

@@ -118,6 +118,7 @@ for ii = 1:num_cells
     plot_traces,Fs,1:4,f_train_pharma,pos_ax2,stack_opts2);
     cellfun(@add_zero_line, pharma_stack2{ii});
 
+
     if y_labels_on
     %Add cell label
     text(pharma_stack{ii}{2},0,0,['#',num2str(typ_cell_num(ii))],'Units','normalized',...
@@ -164,7 +165,15 @@ for ii = 1:numel(pharma_stack)
 end
 % end
 
+%annotation line for stim block
+dist1 = train5_step_times(7) - stack_opts2.XLim(1);
+scaled_dist1 = dist1/diff(stack_opts2.XLim);
+scaled_dist2 = (dist1+1)/diff(stack_opts2.XLim);
 
+xcord1 = pos_left2 + base_width2 * scaled_dist1;
+xcord2 = pos_left2 + base_width2 * scaled_dist2;
+h1 = annotation('line',repmat(xcord1,1,2),[pos_bottom all_bottom_edges(2)+cell_height],'Linewidth',0.5,'LineStyle',':','Color',[1 0 0]);
+h2 = annotation('line',repmat(xcord2,1,2),[pos_bottom all_bottom_edges(2)+cell_height],'Linewidth',0.5,'LineStyle',':','Color',[1 0 0]);
 
 %Label train input
 text(input_ax{1},0,2,'0','VerticalAlignment','bottom')

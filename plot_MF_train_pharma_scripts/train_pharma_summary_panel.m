@@ -89,4 +89,3 @@ for ii = 2:numel(ax_sp_p_par)
     ax_sp_p_par{ii}.YRuler.MinorTick = 'off';
     ax_sp_p_par{ii}.YTickLabel = [];    
 end
-cb1.Position = [0.9483 0.1424 0.0151 0.0652];
