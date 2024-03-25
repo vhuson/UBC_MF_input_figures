@@ -24,6 +24,10 @@ base_opts.startP = 5;
 base_opts.stimDur = 0.201;
 base_opts.endP = 20;
 
+%Artifact removal options
+base_opts.fbuff = 19;
+base_opts.bbuff = 35;
+base_opts.art_pad = 1;
 
 if nargin < 3
     opts = base_opts;
@@ -118,6 +122,10 @@ while pp <= numel(prot_file_names)
         detect_opts.min_peak = all_minpeak{pp}(ii);
         detect_opts.cut_peak = all_cutpeak{pp}(ii);
         detect_opts.min_width = all_minwidth{pp}(ii);
+        %Artifact removal options
+        detect_opts.fbuff = opts.fbuff;
+        detect_opts.bbuff = opts.bbuff;
+        detect_opts.art_pad = opts.art_pad;
 
 
         %Load data

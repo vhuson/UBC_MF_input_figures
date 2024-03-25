@@ -5,6 +5,9 @@ base_opts.max_peak = 2000;
 base_opts.min_peak = 40;
 base_opts.cut_peak = 20;
 base_opts.min_width = 0.1e-3;
+base_opts.fbuff = 19;
+base_opts.bbuff = 35;
+base_opts.art_pad = 1;
 
 if nargin < 2
     opts = base_opts;
@@ -28,7 +31,9 @@ detrend_trace = data.y-detrend;
 [~, pid_prot] = findpeaks(detrend_trace,...
     'MinPeakProminence',curr_maxpeak,...'MinPeakHeight',20,...
     'MinPeakDistance',Fs/1000,'MinPeakWidth',1);
-corr_trace = remove_artifacts(detrend_trace,pid_prot);
+
+art_opts = struct('fbuff',opts.fbuff,'bbuff',opts.bbuff,'pad',opts.art_pad);
+corr_trace = remove_artifacts(detrend_trace,pid_prot,art_opts);
 
 
 %Find responses

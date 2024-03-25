@@ -1,21 +1,30 @@
 %% Load ibws and analyze
 
 %% Get filenames and unique cell names
+curr_path = 'data_raw\MF_stim_fastshutdown';
+% curr_path = 'data_raw\MF_stim_trains';
+
 [fileNames, allCellNames] = ...
-    get_files_and_cellnames('data_raw\MF_stim_fastshutdown');
+    get_files_and_cellnames(curr_path);
 
 %% Run spike detection
-currCell = allCellNames{6};
+currCell = allCellNames{9};
 
 opts = struct();
 opts.max_peak = 2000;
-opts.min_peak = 40;
-opts.cut_peak = 75;
+opts.min_peak = 30;
+opts.cut_peak = 15;
 opts.min_width = 0.1e-3;
 opts.use_old = false;
 
 opts.prot_start = 1;
 opts.rec_start = 1;
+%artifact removal
+opts.fbuff = 19;
+opts.bbuff = 90;
+opts.art_pad = 3;
+
+
 [freqs,spks,traces,freqs_prot,spks_prot,Spk,sPause,...
     curr_file_names,use_old,freqs_old,Spk_old,sPause_old] = ...
     run_UBC_spike_detection(currCell, fileNames,opts);
@@ -84,7 +93,7 @@ washinID_states = {[1,0,0,0,0];...
                     [0,1,1,1,0];...
                     [0,0,0,0,1]};
 
-washinConcentrations = {'','1 uM','5 uM','1 uM',''};
+washinConcentrations = {'','5 uM','5 uM','1 uM',''};
 
 
                 
@@ -116,11 +125,10 @@ med_opts.smooth = 5;
 
 
 %% Save cell
-% cd('savedDCoN')
+
 cd('data_analyzed\MF_stim_fastshutdown')
-% cd('MF_stim_train_saved')
-% cd('MF_stim_prots_pharma_saved_noWashin')
-% cd('DCoN_All/savedDCoN_strych')
+% cd('data_analyzed\MF_stim_train_saved')
+
 
 saveas(gcf,[currCell,'.png'])
 save([currCell,'_analyzed.mat'],...
