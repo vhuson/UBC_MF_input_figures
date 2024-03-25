@@ -1,7 +1,7 @@
-f_mf_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
+% f_mf_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
 
-show_individual_traces = false;
+% show_individual_traces = true;
 
 left_edge = 0.13;
 top_edge = 0.95;
@@ -53,22 +53,27 @@ add_scale_bar(ax_mfburst_input,[1,250],scale_opts);
 % Panel for fast cell burst reponse
 % curr_cell_data = allData_invivo{3};
 % curr_freqs = curr_cell_data.freqs{1}(:,1:2);
-
-curr_cell_data = allData_invivo{9};
-curr_freqs = curr_cell_data.freqs{1}(:,1:4);
+% cell 3 (1561), was original, cell 9 (1800) was ugly replacement
+curr_cell_data = allData_invivo{10};
+curr_freqs = curr_cell_data.freqs{1}(:,1:3);
 curr_freqs = vertcat(curr_freqs{:});
-fast_ylim = [0 150];
+curr_freqs = curr_freqs(:,1:30*Fs);
+fast_ylim = [0 200];
 
 ax_pos_burst(2) = ax_pos_burst(2)-burst_p_height-height_space;
 ax_fast_burst = axes('Position', ax_pos_burst);
 
 hold on
 if show_individual_traces
-    for ii = 1:2
-        plot(x_time',curr_freqs(:,ii),'Color',[0.7 0.7 0.7])
+    for ii = 1:3
+        plot(x_time,curr_freqs(ii,:),'Color',[0.7 0.7 0.7])
     end
 end
 y_data = mean(curr_freqs);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
+
 plot((1:numel(y_data))/Fs,y_data,'k')
 hold off
 xlim([4.5 10])
@@ -83,7 +88,11 @@ add_scale_bar(ax_fast_burst,[1,50],scale_opts);
 
 % Panel for fast cell mf reponse
 % curr_mf_resp = reshape(curr_cell_data.freqs{4},[600000,3]);
-curr_mf_resp = reshape(curr_cell_data.freqs{2}{2},600001,2);
+curr_mf_resp = curr_cell_data.freqs{2}{6};
+curr_mf_resp(1:5*Fs) = []; %Cut off front bit
+curr_mf_resp = reshape(curr_mf_resp(1:150*Fs),[30*Fs,5]);
+curr_mf_resp = curr_mf_resp(:,1:2:5);
+
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
 ax_fast_mf = axes('Position', ax_pos_mf);
@@ -94,6 +103,9 @@ if show_individual_traces
     end
 end
 y_data = mean(curr_mf_resp,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
 
 plot((1:numel(y_data))/Fs,y_data,'k')
 axis tight
@@ -120,7 +132,12 @@ if show_individual_traces
         plot(x_time',curr_freqs(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_freqs,2),'k')
+y_data = mean(curr_freqs,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
+plot((1:numel(y_data))/Fs,y_data,'k')
+
 hold off
 xlim([4.5 10])
 ylim(mid_ylim);
@@ -133,7 +150,7 @@ ax_mid_burst.Visible = 'off';
 add_scale_bar(ax_mid_burst,mid_scale_bar,scale_opts);
 
 
-%Panel for fast cell mf reponse
+%Panel for mid cell mf reponse
 curr_mf_resp = reshape(curr_cell_data.freqs{4},[600000,3]);
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
@@ -144,7 +161,12 @@ if show_individual_traces
         plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_mf_resp,2),'k')
+y_data = mean(curr_mf_resp,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
+
+plot((1:numel(y_data))/Fs,y_data,'k')
 hold off
 ylim(mid_ylim);
 standardAx(ax_mid_mf);
@@ -168,7 +190,11 @@ if show_individual_traces
         plot(x_time',curr_freqs(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_freqs,2),'k')
+y_data = mean(curr_freqs,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
+plot((1:numel(y_data))/Fs,y_data,'k')
 hold off
 xlim([4.5 10])
 ylim(off_ylim);
@@ -192,7 +218,12 @@ if show_individual_traces
         plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_mf_resp,2),'k')
+y_data = mean(curr_mf_resp,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
+
+plot((1:numel(y_data))/Fs,y_data,'k')
 hold off
 ylim(off_ylim);
 standardAx(ax_off_mf);

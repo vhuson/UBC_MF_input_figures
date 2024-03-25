@@ -1,4 +1,4 @@
-show_individual_traces = false;
+% show_individual_traces = true;
 % f_mf_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
 %     'Color','w');
 
@@ -37,12 +37,15 @@ add_scale_bar(ax_mfburst_input,[1,50],scale_opts);
 
 
 % Panel for fast cell burst reponse
-curr_cell_data = allData_invivo{9};
-fast_ylim = [0 100];
+curr_cell_data = allData_invivo{10};
+fast_ylim = [0 200];
 
 %Panel for fast cell mf reponse
 % curr_mf_resp = reshape(curr_cell_data.freqs{2},[600000,3]);
-curr_mf_resp = reshape(curr_cell_data.freqs{2}{1},600001,2);
+curr_mf_resp = curr_cell_data.freqs{2}{1};
+curr_mf_resp(1:5*Fs) = []; %Cut off front bit
+curr_mf_resp = reshape(curr_mf_resp(1:150*Fs),[30*Fs,5]);
+curr_mf_resp = curr_mf_resp(:,1:2:5);
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
 ax_fast_mf = axes('Position', ax_pos_mf);
@@ -53,14 +56,20 @@ if show_individual_traces
     end
 end
 y_data = mean(curr_mf_resp,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
 
 plot((1:numel(y_data))/Fs,y_data,'k')
 axis tight
 hold off
+ylim(fast_ylim);
+
+
 t1 = text(ax_fast_mf,-1, ax_fast_mf.YLim(2)/2,'Fast cell','Rotation',90,...
     'HorizontalAlignment','center');
 
-ylim(fast_ylim);
+
 standardAx(ax_fast_mf);
 ax_fast_mf.Visible = 'off';
 add_scale_bar(ax_fast_mf,[1,50]);
@@ -84,7 +93,12 @@ if show_individual_traces
         plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_mf_resp,2),'k')
+y_data = mean(curr_mf_resp,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
+
+plot((1:numel(y_data))/Fs,y_data,'k')
 hold off
 ylim(mid_ylim);
 
@@ -116,7 +130,12 @@ if show_individual_traces
         plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_mf_resp,2),'k')
+y_data = mean(curr_mf_resp,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
+
+plot((1:numel(y_data))/Fs,y_data,'k')
 hold off
 ylim(off_ylim);
 
