@@ -1,9 +1,5 @@
 %% In vivo like inputs
 %Set up path
-mfile_name          = mfilename('fullpath');
-[pathstr,name,ext]  = fileparts(mfile_name);
-cd(pathstr);
-
 addpath(genpath('functions'))
 addpath(genpath('plot_MF_invivo_scripts'))
 
@@ -13,6 +9,10 @@ Fs = 20000;
 fileNames_invivo = dir('data_raw\MF_stim\saved\*');
 fileNames_invivo = fileNames_invivo(contains({fileNames_invivo(:).name},'.mat'));
 
+fileNames_invivo2 = dir('data_analyzed\MF_stim_fastshutdown\*');
+fileNames_invivo2 = fileNames_invivo2(contains({fileNames_invivo2(:).name},'.mat'));
+
+fileNames_invivo = [fileNames_invivo; fileNames_invivo2];
 
 allData_invivo = cell(size(fileNames_invivo));
 
@@ -54,6 +54,11 @@ plot_labels{2} = 'b';
 plot_labels{9} = 'c';
 labelPlots(f_mf_burst,plot_labels);
 
+%%
+
+plot_new_invivoSP_traces_figure
+
+plot_new_T160_traces_figure
 
 %% Figure with MF (burst) just 1 cell
 

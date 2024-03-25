@@ -1,5 +1,5 @@
-% f_mf_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
-%     'Color','w');
+f_mf_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
 show_individual_traces = false;
 
@@ -49,10 +49,15 @@ add_scale_bar(ax_mfburst_input,[1,250],scale_opts);
 
 
 
-%Panel for fast cell burst reponse
-curr_cell_data = allData_invivo{3};
-curr_freqs = curr_cell_data.freqs{1}(:,1:2);
-fast_ylim = [0 200];
+
+% Panel for fast cell burst reponse
+% curr_cell_data = allData_invivo{3};
+% curr_freqs = curr_cell_data.freqs{1}(:,1:2);
+
+curr_cell_data = allData_invivo{9};
+curr_freqs = curr_cell_data.freqs{1}(:,1:4);
+curr_freqs = vertcat(curr_freqs{:});
+fast_ylim = [0 150];
 
 ax_pos_burst(2) = ax_pos_burst(2)-burst_p_height-height_space;
 ax_fast_burst = axes('Position', ax_pos_burst);
@@ -63,7 +68,8 @@ if show_individual_traces
         plot(x_time',curr_freqs(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_freqs,2),'k')
+y_data = mean(curr_freqs);
+plot((1:numel(y_data))/Fs,y_data,'k')
 hold off
 xlim([4.5 10])
 ylim(fast_ylim);
@@ -75,8 +81,9 @@ ax_fast_burst.Visible = 'off';
 add_scale_bar(ax_fast_burst,[1,50],scale_opts);
 
 
-%Panel for fast cell mf reponse
-curr_mf_resp = reshape(curr_cell_data.freqs{4},[600000,3]);
+% Panel for fast cell mf reponse
+% curr_mf_resp = reshape(curr_cell_data.freqs{4},[600000,3]);
+curr_mf_resp = reshape(curr_cell_data.freqs{2}{2},600001,2);
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
 ax_fast_mf = axes('Position', ax_pos_mf);
@@ -86,7 +93,10 @@ if show_individual_traces
         plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_mf_resp,2),'k')
+y_data = mean(curr_mf_resp,2);
+
+plot((1:numel(y_data))/Fs,y_data,'k')
+axis tight
 hold off
 ylim(fast_ylim);
 standardAx(ax_fast_mf);
@@ -96,7 +106,7 @@ add_scale_bar(ax_fast_mf,[1,50]);
 
 
 
-%Panel for med cell burst reponse
+% Panel for med cell burst reponse
 curr_cell_data = allData_invivo{1};
 curr_freqs = curr_cell_data.freqs{1}(:,1:2);
 mid_ylim = [0 50];
@@ -144,7 +154,7 @@ add_scale_bar(ax_mid_mf,mid_scale_bar);
 
 
 
-%Panel for off cell burst reponse
+% Panel for off cell burst reponse
 curr_cell_data = allData_invivo{2};
 curr_freqs = curr_cell_data.freqs{1}(:,1:2);
 off_ylim = [0 50];

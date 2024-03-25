@@ -36,13 +36,13 @@ add_scale_bar(ax_mfburst_input,[1,50],scale_opts);
 
 
 
-%Panel for fast cell burst reponse
-curr_cell_data = allData_invivo{3};
-curr_freqs = curr_cell_data.freqs{1}(:,1:2);
-fast_ylim = [0 150];
+% Panel for fast cell burst reponse
+curr_cell_data = allData_invivo{9};
+fast_ylim = [0 100];
 
 %Panel for fast cell mf reponse
-curr_mf_resp = reshape(curr_cell_data.freqs{2},[600000,3]);
+% curr_mf_resp = reshape(curr_cell_data.freqs{2},[600000,3]);
+curr_mf_resp = reshape(curr_cell_data.freqs{2}{1},600001,2);
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
 ax_fast_mf = axes('Position', ax_pos_mf);
@@ -52,7 +52,10 @@ if show_individual_traces
         plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
     end
 end
-plot(x_time,mean(curr_mf_resp,2),'k')
+y_data = mean(curr_mf_resp,2);
+
+plot((1:numel(y_data))/Fs,y_data,'k')
+axis tight
 hold off
 t1 = text(ax_fast_mf,-1, ax_fast_mf.YLim(2)/2,'Fast cell','Rotation',90,...
     'HorizontalAlignment','center');
