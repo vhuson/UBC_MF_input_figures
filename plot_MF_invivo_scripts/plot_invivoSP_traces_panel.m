@@ -15,7 +15,7 @@ height_space = 0.01;
 
 
 
-% Panel for MF input
+%% Panel for MF input
 x_time = (1:30*Fs)/Fs;
 ax_pos_mf = [left_edge_mf top_edge-burst_p_height mf_p_width burst_p_height];
 ax_mfburst_input = axes('Position', ax_pos_mf);
@@ -32,15 +32,16 @@ ylabel('Input')
 scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'Hz';
+scale_opts.origin = [28.7246 60];
 add_scale_bar(ax_mfburst_input,[1,50],scale_opts);
 
 
 
-% Panel for fast cell burst reponse
+%% Panel for fast cell mf reponse
 curr_cell_data = allData_invivo{10};
 fast_ylim = [0 200];
 
-%Panel for fast cell mf reponse
+
 % curr_mf_resp = reshape(curr_cell_data.freqs{2},[600000,3]);
 curr_mf_resp = curr_cell_data.freqs{2}{1};
 curr_mf_resp(1:5*Fs) = []; %Cut off front bit
@@ -72,17 +73,21 @@ t1 = text(ax_fast_mf,-1, ax_fast_mf.YLim(2)/2,'Fast cell','Rotation',90,...
 
 standardAx(ax_fast_mf);
 ax_fast_mf.Visible = 'off';
-add_scale_bar(ax_fast_mf,[1,50]);
+
+scale_opts = struct();
+scale_opts.xlabel = 's';
+scale_opts.ylabel = 'Hz';
+add_scale_bar(ax_fast_mf,[0,50],scale_opts);
 
 
 
-%Panel for med cell burst reponse
+%% Panel for med cell mf reponse
 curr_cell_data = allData_invivo{1};
 curr_freqs = curr_cell_data.freqs{1}(:,1:2);
 mid_ylim = [0 50];
-mid_scale_bar = [1 20];
+mid_scale_bar = [0 20];
 
-%Panel for fast cell mf reponse
+
 curr_mf_resp = reshape(curr_cell_data.freqs{2},[600000,3]);
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
@@ -107,19 +112,18 @@ t1 = text(ax_mid_mf,-1, ax_mid_mf.YLim(2)/2,'Slow cell','Rotation',90,...
 
 standardAx(ax_mid_mf);
 ax_mid_mf.Visible = 'off';
-add_scale_bar(ax_mid_mf,mid_scale_bar);
+add_scale_bar(ax_mid_mf,mid_scale_bar,scale_opts);
 
 
 
 
-%Panel for off cell burst reponse
+%% Panel for off cell mf reponse
 curr_cell_data = allData_invivo{2};
 curr_freqs = curr_cell_data.freqs{1}(:,1:2);
 off_ylim = [0 50];
-off_scale_bar = [1 10];
+off_scale_bar = [0 10];
 
 
-%Panel for off cell mf reponse
 curr_mf_resp = reshape(curr_cell_data.freqs{2},[600000,3]);
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
@@ -146,4 +150,4 @@ standardAx(ax_off_mf);
 ax_off_mf.Visible = 'off';
 % scale_opts = struct();
 % scale_opts.origin = [27 8];
-add_scale_bar(ax_off_mf,off_scale_bar);
+add_scale_bar(ax_off_mf,off_scale_bar,scale_opts);
