@@ -1,6 +1,9 @@
 function [] = plot_UBC_spike_detection(ftrace,pp,ii,freqs_prot,pid_prot,detrend_trace,...
                                     corr_trace,pid,pv,pid_old,pv_old,...
-                                    freqs_old,freqs,Fs,T)
+                                    freqs_old,freqs,Fs,T,use_old)
+if nargin < 16
+    use_old = false;
+end
 %UNTITLED6 Summary of this function goes here
 %   Detailed explanation goes here
 set(0, 'currentfigure', ftrace);
@@ -34,9 +37,17 @@ if ~isempty(pid)
 end
 
 subplot(5,1,4:5)
-plot(1/Fs:1/Fs:T,freqs_old{pp}{ii},'b')
+if use_old
+    plot(1/Fs:1/Fs:T,freqs{pp}{ii},'b')
+else
+    plot(1/Fs:1/Fs:T,freqs_old{pp}{ii},'b')
+end
 hold on
-plot(1/Fs:1/Fs:T,freqs{pp}{ii},'k')
+if use_old
+    plot(1/Fs:1/Fs:T,freqs_old{pp}{ii},'k')
+else
+    plot(1/Fs:1/Fs:T,freqs{pp}{ii},'k')
+end
 hold off
 xlim([0 T])
 ylabel('Response (spk/s)')

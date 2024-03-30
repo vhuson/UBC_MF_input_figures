@@ -31,11 +31,11 @@ post_stim = find(diff(find(contains(curr_file_names,'100Hz'))) > 2)+2.5;
 if isempty(post_stim)
     post_stim = numel(freqs{1})+0.5;
 end
-typCell = 4;
-cellRange = [1:numel(freqs{1})];
-startT = 4.5;
-stimEnd = 5.2001;
-endT = 	10;
+typCell = opts.typCell;
+cellRange = opts.cellRange;
+startT = opts.startT ;
+stimEnd = opts.stimEnd;
+endT = 	opts.endT;
 rangeT = round(startT*Fs:endT*Fs);
 rangeT2 = round(stimEnd*Fs:endT*Fs);
 

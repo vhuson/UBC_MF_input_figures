@@ -141,7 +141,7 @@ while pp <= numel(prot_file_names)
         %Save results
         freqs{pp}{ii} = time2rate(pid,Fs,T);
         freqs_old{pp}{ii} = time2rate(pid_old,Fs,T);
-        spks{pp}{ii} = pid*(T*Fs);
+        spks{pp}{ii} = pid./Fs;
         traces{pp}{ii} = data.y(1:Fs*T);
         
         freqs_prot{pp}{ii} = time2rate(pid_prot,Fs,T);
@@ -171,7 +171,7 @@ while pp <= numel(prot_file_names)
             %Plot results
             plot_UBC_spike_detection(ftrace,pp,ii,freqs_prot,pid_prot,detrend_trace,...
                                     corr_trace,pid,pv,pid_old,pv_old,...
-                                    freqs_old,freqs,Fs,T)
+                                    freqs_old,freqs,Fs,T,use_old{pp}(ii))
 
             %Ask user input
             [ii_new,curr_max_peak,curr_min_peak,curr_cut_peak,curr_min_width,...

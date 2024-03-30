@@ -66,40 +66,41 @@ end
 pid2_clean = pid2;
 pid2_clean(first_arts) = [];
 
-pad = opts.pad;
+if ~isempty(pid2_clean)
+    pad = opts.pad;
 
-starts = (1:numel(pid2_clean))-pad;
-starts(1:pad) = 1;
-ends = (1:numel(pid2_clean))+pad;
-ends(end-(pad-1):end) = numel(pid2_clean);
+    starts = (1:numel(pid2_clean))-pad;
+    starts(1:pad) = 1;
+    ends = (1:numel(pid2_clean))+pad;
+    ends(end-(pad-1):end) = numel(pid2_clean);
 
-for ii = 1:numel(pid2_clean)
-    %Get average artifact over over "pad" number of artifacts
-    curr_temp_art = mean(all_arts(starts(ii):ends(ii),:),1);
+    for ii = 1:numel(pid2_clean)
+        %Get average artifact over over "pad" number of artifacts
+        curr_temp_art = mean(all_arts(starts(ii):ends(ii),:),1);
 
-    %Normalize up and down strokes
-    curr_temp_art(curr_temp_art>0) = ...
-        curr_temp_art(curr_temp_art>0)./max(curr_temp_art);
-    curr_temp_art(curr_temp_art<0) = ...
-        curr_temp_art(curr_temp_art<0)./-min(curr_temp_art);
+        %Normalize up and down strokes
+        curr_temp_art(curr_temp_art>0) = ...
+            curr_temp_art(curr_temp_art>0)./max(curr_temp_art);
+        curr_temp_art(curr_temp_art<0) = ...
+            curr_temp_art(curr_temp_art<0)./-min(curr_temp_art);
 
-    %Resize up and down strokes to current artifact
-    curr_temp_art(curr_temp_art>0) = ...
-        curr_temp_art(curr_temp_art>0).*max(all_arts(ii,:));
-    curr_temp_art(curr_temp_art<0) = ...
-        curr_temp_art(curr_temp_art<0).*-min(all_arts(ii,:));
+        %Resize up and down strokes to current artifact
+        curr_temp_art(curr_temp_art>0) = ...
+            curr_temp_art(curr_temp_art>0).*max(all_arts(ii,:));
+        curr_temp_art(curr_temp_art<0) = ...
+            curr_temp_art(curr_temp_art<0).*-min(all_arts(ii,:));
 
-    %Make sure everything stays in range
-    trace_range = pid2_clean(ii)-fbuff:pid2_clean(ii)+bbuff;
-    art_range = 1:fbuff+bbuff+1;
-    bad_idxes = trace_range<1 | trace_range>numel(art_trace);
-    trace_range(bad_idxes)  = [];
-    art_range(bad_idxes)    = [];
+        %Make sure everything stays in range
+        trace_range = pid2_clean(ii)-fbuff:pid2_clean(ii)+bbuff;
+        art_range = 1:fbuff+bbuff+1;
+        bad_idxes = trace_range<1 | trace_range>numel(art_trace);
+        trace_range(bad_idxes)  = [];
+        art_range(bad_idxes)    = [];
 
-    %Place estimated artifact in artifact trace
-    art_trace(trace_range) = curr_temp_art(art_range);
+        %Place estimated artifact in artifact trace
+        art_trace(trace_range) = curr_temp_art(art_range);
+    end
 end
-
 corr_trace = corr_trace - art_trace;
 
 % figure; plot(detrend_trace)

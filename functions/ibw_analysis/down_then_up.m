@@ -10,15 +10,18 @@ for ii = 1:numel(pid)
     pre_range(pre_range<1) = [];
     post_range(post_range>(numel(data_trace))) = [];
 
+    if numel(pre_range)>3 && numel(post_range)>3
+        pre_spike = data_trace(pre_range);
+        post_spike = data_trace(post_range);
 
-    pre_spike = data_trace(pre_range);
-    post_spike = data_trace(post_range);
-    
-    pre_spike = sort(pre_spike,'descend');
-    post_spike = sort(post_spike,'descend');
-    
-    pid_fltr(ii) = all(post_spike(1:4) > pre_spike(1:4));
-    % pid_fltr(ii) = mean(post_spike) > mean(pre_spike);
+        pre_spike = sort(pre_spike,'descend');
+        post_spike = sort(post_spike,'descend');
+
+        pid_fltr(ii) = all(post_spike(1:4) > pre_spike(1:4));
+        % pid_fltr(ii) = mean(post_spike) > mean(pre_spike);
+    else
+        pid_fltr(ii) = true;
+    end
 end
 pid_good = pid(pid_fltr);
 end

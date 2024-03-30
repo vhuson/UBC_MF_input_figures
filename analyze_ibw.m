@@ -1,19 +1,20 @@
 %% Load ibws and analyze
 
 %% Get filenames and unique cell names
-curr_path = 'data_raw\MF_stim_fastshutdown';
+% curr_path = 'data_raw\MF_stim_fastshutdown';
 % curr_path = 'data_raw\MF_stim_trains';
+curr_path = 'data_raw\MF_stim_trains_pharma';
 
 [fileNames, allCellNames] = ...
     get_files_and_cellnames(curr_path);
 
 %% Run spike detection
-currCell = allCellNames{9};
+currCell = allCellNames{11};
 
 opts = struct();
 opts.max_peak = 2000;
 opts.min_peak = 30;
-opts.cut_peak = 15;
+opts.cut_peak = 40;
 opts.min_width = 0.1e-3;
 opts.use_old = false;
 
@@ -35,10 +36,75 @@ sPause{1}(use_old{1}) = sPause_old{1}(use_old{1});
 freqs{1}(use_old{1}) = freqs_old{1}(use_old{1});
 freqs{2}(use_old{2}) = freqs_old{2}(use_old{2});
 
+
+%% Fix spks
+% for ii = 1:numel(spks)
+%     for jj = 1:numel(spks{ii})
+%         T = numel(freqs{ii}{jj})/20000;
+%         spks_new{ii}{jj} = spks{ii}{jj}./(T*20000)./20000;
+%     end
+% end
+
+%% Remove outlier spikes
+%
+ftrace = figure;
+
+rem_p = 2;
+rem_t = 1:numel(freqs{rem_p});
+maxHz = 300;
+Fs = 20000;
+
+spks_new = spks;
+freqs_new = freqs;
+for ii = 1:numel(rem_t)
+    curr_t = rem_t(ii);
+    T = numel(freqs{rem_p}{curr_t})/Fs;
+
+    curr_spks = spks{rem_p}{curr_t};
+
+    %Remove crazy spikes
+    hz_idx = 1./diff(curr_spks);
+    upper_lim = min([median(hz_idx)+mad(hz_idx)*10, maxHz]);
+    bad_idx = find(hz_idx>upper_lim)+1;
+    % curr_spks(bad_idx) = [];
+
+    cnt = 1;
+    while cnt <= numel(bad_idx)
+        curr_spks(bad_idx(1)) = [];
+
+        hz_idx = 1./diff(curr_spks);
+        bad_idx = find(hz_idx>upper_lim)+1;
+    end
+
+    bad_idx = find(hz_idx>upper_lim)+1;
+    curr_spks(bad_idx) = [];
+    
+    curr_pid = round(curr_spks*Fs);
+    curr_freq = time2rate(curr_spks*Fs,Fs,T);
+    
+    spks_new{rem_p}{curr_t} = curr_spks;
+    freqs_new{rem_p}{curr_t} = curr_freq;
+
+    %Plot results
+    old_pid = round(spks_prot{rem_p}{curr_t}*Fs);
+    plot_UBC_spike_detection(ftrace,rem_p,curr_t,freqs_prot,...
+        old_pid,traces{rem_p}{curr_t},...
+        traces{rem_p}{curr_t},curr_pid,...
+        traces{rem_p}{curr_t}(curr_pid),...
+        old_pid,traces{rem_p}{curr_t}(old_pid),...
+        freqs,freqs_new,Fs,T)
+
+    pause
+
+    
+end
+
+%spks = spks_new; freqs = freqs_new;
+%}
 %% Discard a trace
 %{
-disc_p = 2;
-disc_t = 4;
+disc_p = 1;
+disc_t = 21;
 disc_global = get_overall_idx(curr_file_names,[disc_p,disc_t]);
 
 freqs{disc_p}(disc_t) = [];
@@ -59,11 +125,11 @@ end
 Fs = 20000;
 
 par_opts = struct();
-par_opts.OFF = false;
+par_opts.OFF = true;
 par_opts.baseRange = 1;
 par_opts.startPoint = 5.0;
-par_opts.endPoint = 20;
-par_opts.smooth = 10;
+par_opts.endPoint = 10;
+par_opts.smooth = 120;
 
 [Amp, HD, baseline,sPause] = get_UBC_HD_and_amp(freqs,Fs,sPause,par_opts);
 
@@ -86,7 +152,7 @@ fig_opts.endT = 	10;
 %}
 
 washinStates = {'Baseline','LY 341495','NBQX',...
-    'JNJ 16259685','Washout'};
+    'JNJ 16259685','Washout','Washout'};
 washinID_states = {[1,0,0,0,0];...
                     [0,1,0,0,0];...
                     [0,1,1,0,0];...
@@ -119,15 +185,16 @@ med_opts.startPoint = 5.0;
 med_opts.stimDur = 0.2;
 med_opts.endPoint = 30;
 med_opts.delay_startPoint = 0.0;
-med_opts.smooth = 5;
+med_opts.smooth = 120;
 
 [medianStats, smoothFreqs] = get_median_UBC_stats(curr_file_names,freqs,Fs,washinIDs,med_opts);
 
 
 %% Save cell
 
-cd('data_analyzed\MF_stim_fastshutdown')
+% cd('data_analyzed\MF_stim_fastshutdown')
 % cd('data_analyzed\MF_stim_train_saved')
+cd('data_analyzed\MF_stim_train_pharma_saved')
 
 
 saveas(gcf,[currCell,'.png'])
