@@ -10,7 +10,7 @@ base_space = 0.09;
 graph_height = 0.14;
 ax_burst_par = {};
 
-summary_off = OFFidx(end-1:end);
+summary_off = OFFidx;
 % summary_off = [];
 
 %Panel 1
