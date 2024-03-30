@@ -7,10 +7,11 @@
 select_cells = fltr_ONidx_tpharma;
 
 % TRAIN5 selection
-% [4,6] 
-typ_cell_IDs = {'1657','1663'};
+typ_cell_IDs = {'1823','1774'};
+% typ_cell_IDs = {'1823','1817'};
+% typ_cell_IDs = {'1823','1833'};
 
-[typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(select_cells),...
+[typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_pharma_fltr),...
     typ_cell_IDs,select_cells);
 
 

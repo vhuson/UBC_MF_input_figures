@@ -6,10 +6,11 @@
 select_cells = fltr_ONidx_tpharma;
 
 % TRAIN5 selection
-% [4,6] 
-typ_cell_IDs = {'1657','1663'};
+typ_cell_IDs = {'1823','1774'};
+% typ_cell_IDs = {'1823','1817'};
+% typ_cell_IDs = {'1823','1833'};
 
-[typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(select_cells),...
+[typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_pharma_fltr),...
     typ_cell_IDs,select_cells);
 
 
@@ -56,6 +57,8 @@ input_train = input_train(:,1:end-trim_amount);
 curr_traces = all_mean_trains_pharma;
 for ii = 1:numel(curr_traces)
     curr_traces{ii} = cellfun(@(x) {medfilt1(x,Fs*0.02)},curr_traces{ii});
+    %Truncate longer traces
+    curr_traces{ii} = cellfun(@(x) {x(1:800001)},curr_traces{ii});
     curr_traces{ii} = vertcat(curr_traces{ii}{:});
 
     %Trim end a bit
@@ -129,10 +132,12 @@ for ii = 1:num_cells
     %Same ylim
     same_ylim_stack({pharma_stack{ii}, pharma_stack2{ii}});
 end
-pharma_stack{1}{1}.YLim(2) = 123;
-pharma_stack{1}{2}.YLim(2) = 123;
-pharma_stack2{1}{1}.YLim(2) = 123;
-pharma_stack2{1}{2}.YLim(2) = 123;
+pharma_stack{1}{1}.YLim(2) = 160;
+pharma_stack{1}{2}.YLim(2) = 160;
+pharma_stack{1}{3}.YLim(2) = 160;
+pharma_stack2{1}{1}.YLim(2) = 160;
+pharma_stack2{1}{2}.YLim(2) = 160;
+pharma_stack2{1}{3}.YLim(2) = 160;
 
 %Add scale bar
 scale_opts = struct();

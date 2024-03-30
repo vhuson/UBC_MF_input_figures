@@ -32,6 +32,8 @@ all_bottom_edges = fliplr(all_bottom_edges);
 curr_traces = all_mean_trains_pharma;
 for ii = 1:numel(curr_traces)
     curr_traces{ii} = cellfun(@(x) {medfilt1(x,Fs*0.02)},curr_traces{ii});
+    %Truncate longer traces
+    curr_traces{ii} = cellfun(@(x) {x(1:800001)},curr_traces{ii});
     curr_traces{ii} = vertcat(curr_traces{ii}{:});
 end
 

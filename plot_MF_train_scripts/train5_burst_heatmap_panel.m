@@ -17,6 +17,8 @@ curr_traces = all_mean_bursts{5}(train_fltr_5,:);
 
 curr__train_traces = all_mean_trains_5(train_fltr_5);
 curr__train_traces = cellfun(@(x) {medfilt1(x,Fs*0.02)},curr__train_traces);
+%Truncate longer traces
+curr__train_traces = cellfun(@(x) {x(1:800001)},curr__train_traces);
 curr__train_traces = vertcat(curr__train_traces{:});
 select_cells = fltr_ONidx_t5;
 

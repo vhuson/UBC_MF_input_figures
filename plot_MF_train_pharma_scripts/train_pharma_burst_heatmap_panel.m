@@ -32,6 +32,8 @@ curr_traces = cellfun(@(x) {x{5}},curr_traces);
 curr_train_traces = all_mean_trains_pharma;
 for ii = 1:numel(curr_train_traces)
     curr_train_traces{ii} = cellfun(@(x) {medfilt1(x,Fs*0.02)},curr_train_traces{ii});
+    %Truncate longer traces
+    curr_train_traces{ii} = cellfun(@(x) {x(1:800001)},curr_train_traces{ii});
     curr_train_traces{ii} = vertcat(curr_train_traces{ii}{:});
 end
 
@@ -99,7 +101,7 @@ end
 
 
 for ii = 1:4
-    if exist("curr_cells","var")
+    if exist("typ_cell_num","var")
         [hm_ax] = heatmap_markers(ax_pharm_sp_burst_hm{ii},typ_cell_num);
     else
         [hm_ax] = heatmap_markers(ax_pharm_sp_burst_hm{ii},[4 6]);

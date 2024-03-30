@@ -55,7 +55,7 @@ all_ylabels = {'Peak response (\Deltaspk/s)',...
 
 
 % all_min_vals = [1 1 0.01];
-all_min_vals = [1 -Inf -Inf];
+all_min_vals = [1 -Inf -20];
 
 
 
@@ -68,7 +68,7 @@ step_size = [10, 20, 30, 40, 50, 60, 20, 20];
 %Plot settings
 summary_on = fltr_ONidx_t5;
 % summary_off = OFFidx(end-1:end);
-summary_off = [];
+summary_off = fltr_ONidx_t5(end-3:end);
     
 
 opts = struct();
@@ -105,6 +105,9 @@ for p_idx = 1:num_cols
     [ax_train_par{p_idx},cb1] = UBC_par_line_plot2(...
         summary_on,summary_off,all_plot_par{p_idx}(plot_steps),f_train,pos_ax,opts);
     xlim([opts.input_n(1) opts.input_n(end)])
+    
+    %Turn off OFF stuff
+    summary_off = [];
 
     %Offset XLim a little bit
     ax_train_par{p_idx}.XLim(1) = ax_train_par{p_idx}.XLim(1)...

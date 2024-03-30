@@ -29,7 +29,7 @@ fileNames4 = fileNames4(contains({fileNames4(:).name},'.mat'));
 
 fileNames = [fileNames; fileNames2; fileNames3; fileNames4];
 
-badCellNames = {'Cell1747_analyzed.mat', 'Cell1748_analyzed.mat'};
+badCellNames = {'Cell1747_analyzed.mat', 'Cell1748_analyzed.mat','Cell1835_analyzed.mat'};
 removeCells = find(cellfun(@(x) ismember(x,badCellNames),{fileNames(:).name}));
 
 

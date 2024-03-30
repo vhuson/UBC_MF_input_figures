@@ -4,7 +4,6 @@ setup_workspace_alldata
 
 
 %% Gather burst pharma data
-
 %First need to gather baseline data for all washin states
 washin_states = {[1 0 0 0 0],[0 1 0 0 0],[0 1 1 0 0],[0 1 1 1 0]};
 [washin_base_rates] = get_washin_baselines(allData,washin_states,Fs);

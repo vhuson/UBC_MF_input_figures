@@ -40,6 +40,8 @@ input_train = input_train_5;
 
 curr_traces = all_mean_trains_5(train_fltr_5);
 curr_traces = cellfun(@(x) {medfilt1(x,Fs*0.02)},curr_traces);
+%Truncate longer traces
+curr_traces = cellfun(@(x) {x(1:800001)},curr_traces);
 curr_traces = vertcat(curr_traces{:});
 
 %Trim end to cut last 20

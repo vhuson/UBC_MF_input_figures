@@ -21,6 +21,8 @@ base_width2 = 0.2177;
 %Gather data
 curr_traces = all_mean_trains_5(train_fltr_5);
 curr_traces = cellfun(@(x) {medfilt1(x,Fs*0.02)},curr_traces);
+%Truncate longer traces
+curr_traces = cellfun(@(x) {x(1:800001)},curr_traces);
 curr_traces = vertcat(curr_traces{:});
 select_cells = fltr_ONidx_t5;
 
