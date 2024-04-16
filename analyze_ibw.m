@@ -1,20 +1,23 @@
 %% Load ibws and analyze
 
 %% Get filenames and unique cell names
-% curr_path = 'data_raw\MF_stim_fastshutdown';
+curr_path = 'data_raw\MF_stim_fastshutdown';
 % curr_path = 'data_raw\MF_stim_trains';
-curr_path = 'data_raw\MF_stim_trains_pharma';
+% curr_path = 'data_raw\MF_stim_trains_pharma';
+% curr_path = 'data_raw\MF_stim_invivo_pharma\**\*';
+% curr_path = 'data_raw\MF_stim';
 
 [fileNames, allCellNames] = ...
     get_files_and_cellnames(curr_path);
 
 %% Run spike detection
-currCell = allCellNames{11};
+currCell = allCellNames{7};
 
 opts = struct();
 opts.max_peak = 2000;
 opts.min_peak = 30;
-opts.cut_peak = 40;
+opts.cut_peak = 30;
+opts.cut_peak_max = 500;
 opts.min_width = 0.1e-3;
 opts.use_old = false;
 
@@ -23,7 +26,7 @@ opts.rec_start = 1;
 %artifact removal
 opts.fbuff = 19;
 opts.bbuff = 90;
-opts.art_pad = 3;
+opts.art_pad = 5;
 
 
 [freqs,spks,traces,freqs_prot,spks_prot,Spk,sPause,...
@@ -125,17 +128,17 @@ end
 Fs = 20000;
 
 par_opts = struct();
-par_opts.OFF = true;
+par_opts.OFF = false;
 par_opts.baseRange = 1;
 par_opts.startPoint = 5.0;
-par_opts.endPoint = 10;
-par_opts.smooth = 120;
+par_opts.endPoint = 7;
+par_opts.smooth = 10;
 
 [Amp, HD, baseline,sPause] = get_UBC_HD_and_amp(freqs,Fs,sPause,par_opts);
 
 %% Plot individual
 fig_opts = struct();
-fig_opts.typCell = 4;
+fig_opts.typCell = 2;
 fig_opts.cellRange = [1:numel(freqs{1})];
 fig_opts.startT = 4.5;
 fig_opts.stimEnd = 5.2001;
@@ -185,7 +188,7 @@ med_opts.startPoint = 5.0;
 med_opts.stimDur = 0.2;
 med_opts.endPoint = 30;
 med_opts.delay_startPoint = 0.0;
-med_opts.smooth = 120;
+med_opts.smooth = 10;
 
 [medianStats, smoothFreqs] = get_median_UBC_stats(curr_file_names,freqs,Fs,washinIDs,med_opts);
 
@@ -194,7 +197,8 @@ med_opts.smooth = 120;
 
 % cd('data_analyzed\MF_stim_fastshutdown')
 % cd('data_analyzed\MF_stim_train_saved')
-cd('data_analyzed\MF_stim_train_pharma_saved')
+% cd('data_analyzed\MF_stim_train_pharma_saved')
+cd('data_analyzed\MF_stim_invivo_all');
 
 
 saveas(gcf,[currCell,'.png'])

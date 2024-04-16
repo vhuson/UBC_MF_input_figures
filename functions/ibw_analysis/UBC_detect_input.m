@@ -1,5 +1,5 @@
 function [ii_new,curr_max_peak,curr_min_peak,curr_cut_peak,curr_min_width,...
-    curr_use_old,break_loop] = UBC_detect_input(ii,detect_opts,use_old)
+    curr_use_old,break_loop,curr_cut_peak_max] = UBC_detect_input(ii,detect_opts,use_old)
 %UNTITLED7 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -8,13 +8,14 @@ ii_new = ii;
 curr_max_peak = detect_opts.max_peak;
 curr_min_peak = detect_opts.min_peak;
 curr_cut_peak = detect_opts.cut_peak;
+curr_cut_peak_max = detect_opts.cut_peak_max;
 curr_min_width = detect_opts.min_width;
 curr_use_old = use_old;
 break_loop = false;
 
 changeBol = true;
 while changeBol
-    changeValues = [0 0 0 0 0];
+    changeValues = [0 0 0 0 0 0];
     dochange = input('Change parameters (1:Yes 0/blank:No 99:Break loop): ');
 
     if isempty(dochange) || dochange == 0 %All good continue
@@ -30,6 +31,7 @@ while changeBol
             '3-cut_peak: ',num2str(detect_opts.cut_peak),newline,...
             '4-min_width: ',num2str(detect_opts.min_width),newline,...
             '5-use_old: ',num2str(use_old),newline,...
+            '6-cut_peak_max: ',num2str(detect_opts.cut_peak_max),newline,...
             'Which number would you like to change? (blank=none 0=all)',newline]);
 
         if isempty(change) %All good continue
@@ -38,7 +40,7 @@ while changeBol
         elseif change == 0 %All bad change all
             changeValues(:) = 1;
             changeBol = false;
-        elseif change <= 5
+        elseif change <= 6
             changeValues(change) = 1;
             changeBol = false;
         end
@@ -80,7 +82,13 @@ while changeBol
                 curr_use_old = str2num(temp_use_old);
             end
         end
-
+        if changeValues(6)
+            temp_cut_peak_max = input(['cut_peak_max was: ',num2str(detect_opts.cut_peak_max),...
+                'New cut_peak_max: '],'s');
+            if ~isempty(temp_cut_peak_max)
+                curr_cut_peak_max = str2double(temp_cut_peak_max);
+            end
+        end
 
     end
 

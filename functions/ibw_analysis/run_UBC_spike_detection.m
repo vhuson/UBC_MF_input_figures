@@ -7,6 +7,7 @@ function [freqs,spks,traces,freqs_prot,spks_prot,Spk,sPause,...
 base_opts.max_peak = 2000;
 base_opts.min_peak = 40;
 base_opts.cut_peak = 20;
+base_opts.cut_peak_max = 2000;
 base_opts.min_width = 0.1e-3;
 
 %Loop options
@@ -67,6 +68,7 @@ prot_file_names{2} = curr_file_names(~contains(curr_file_names,'100Hz'));
 max_peak = opts.max_peak;
 min_peak = opts.min_peak;
 cut_peak = opts.cut_peak;
+cut_peak_max = opts.cut_peak_max;
 min_width = opts.min_width;
 
 %Loop parameters
@@ -93,6 +95,10 @@ all_minpeak{2} = repmat(min_peak,size(prot_file_names{2}));
 all_cutpeak = cell(2,1);
 all_cutpeak{1} = repmat(cut_peak,size(prot_file_names{1}));
 all_cutpeak{2} = repmat(cut_peak,size(prot_file_names{2}));
+
+all_cutpeak_max = cell(2,1);
+all_cutpeak_max{1} = repmat(cut_peak_max,size(prot_file_names{1}));
+all_cutpeak_max{2} = repmat(cut_peak_max,size(prot_file_names{2}));
 
 all_minwidth = cell(2,1);
 all_minwidth{1} = repmat(min_width,size(prot_file_names{1}));
@@ -121,6 +127,7 @@ while pp <= numel(prot_file_names)
         detect_opts.max_peak = all_maxpeak{pp}(ii);
         detect_opts.min_peak = all_minpeak{pp}(ii);
         detect_opts.cut_peak = all_cutpeak{pp}(ii);
+        detect_opts.cut_peak_max = all_cutpeak_max{pp}(ii);
         detect_opts.min_width = all_minwidth{pp}(ii);
         %Artifact removal options
         detect_opts.fbuff = opts.fbuff;
@@ -175,12 +182,13 @@ while pp <= numel(prot_file_names)
 
             %Ask user input
             [ii_new,curr_max_peak,curr_min_peak,curr_cut_peak,curr_min_width,...
-                curr_use_old, break_loop] = UBC_detect_input(ii,detect_opts,use_old{pp}(ii));
+                curr_use_old, break_loop, curr_cut_peak_max] = UBC_detect_input(ii,detect_opts,use_old{pp}(ii));
             
             
             all_maxpeak{pp}(ii) = curr_max_peak;
             all_minpeak{pp}(ii) = curr_min_peak;
             all_cutpeak{pp}(ii) = curr_cut_peak;
+            all_cutpeak_max{pp}(ii) = curr_cut_peak_max;
             all_minwidth{pp}(ii)= curr_min_width;
             use_old{pp}(ii)     = curr_use_old;
             
