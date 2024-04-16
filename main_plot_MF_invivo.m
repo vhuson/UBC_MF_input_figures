@@ -37,7 +37,7 @@ prot_timings = cellfun(@(x) {csvread(fullfile(fileProtocols(1).folder,x))},...
 f_mf_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
     'Color','w');
 
-show_individual_traces = false;
+show_individual_traces = true;
 median_fltr = false;
 
 plot_burst_traces_panel

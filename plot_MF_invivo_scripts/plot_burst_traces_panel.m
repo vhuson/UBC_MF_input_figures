@@ -70,7 +70,7 @@ ax_fast_burst = axes('Position', ax_pos_burst);
 hold on
 if show_individual_traces
     for ii = 1:3
-        plot(x_time,curr_freqs(ii,:),'Color',[0.7 0.7 0.7])
+        plot(x_time,curr_freqs(ii,:),'Color',[0.85 0.85 0.85])
     end
 end
 y_data = mean(curr_freqs);
@@ -105,7 +105,7 @@ ax_fast_mf = axes('Position', ax_pos_mf);
 hold on
 if show_individual_traces
     for ii = 1:3
-        plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
+        plot(x_time',curr_mf_resp(:,ii),'Color',[0.85 0.85 0.85])
     end
 end
 y_data = mean(curr_mf_resp,2);
@@ -136,7 +136,7 @@ ax_mid_burst = axes('Position', ax_pos_burst);
 hold on
 if show_individual_traces
     for ii = 1:2
-        plot(x_time',curr_freqs(:,ii),'Color',[0.7 0.7 0.7])
+        plot(x_time',curr_freqs(:,ii),'Color',[0.85 0.85 0.85])
     end
 end
 y_data = mean(curr_freqs,2);
@@ -167,7 +167,7 @@ ax_mid_mf = axes('Position', ax_pos_mf);
 hold on
 if show_individual_traces
     for ii = 1:3
-        plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
+        plot(x_time',curr_mf_resp(:,ii),'Color',[0.85 0.85 0.85])
     end
 end
 y_data = mean(curr_mf_resp,2);
@@ -197,7 +197,7 @@ ax_off_burst = axes('Position', ax_pos_burst);
 hold on
 if show_individual_traces
     for ii = 1:2
-        plot(x_time',curr_freqs(:,ii),'Color',[0.7 0.7 0.7])
+        plot(x_time',curr_freqs(:,ii),'Color',[0.85 0.85 0.85])
     end
 end
 y_data = mean(curr_freqs,2);
@@ -225,7 +225,7 @@ ax_off_mf = axes('Position', ax_pos_mf);
 hold on
 if show_individual_traces
     for ii = 1:3
-        plot(x_time',curr_mf_resp(:,ii),'Color',[0.7 0.7 0.7])
+        plot(x_time',curr_mf_resp(:,ii),'Color',[0.85 0.85 0.85])
     end
 end
 y_data = mean(curr_mf_resp,2);
