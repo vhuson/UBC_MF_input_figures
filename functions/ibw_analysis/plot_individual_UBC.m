@@ -7,6 +7,7 @@ base_opts.cellRange = 1:numel(freqs{1});
 base_opts.startT = 4.5;
 base_opts.stimEnd = 5.2001;
 base_opts.endT = 	10;
+base_opts.post_stim = false;
 
 if nargin < 10
     opts = base_opts;
@@ -27,9 +28,13 @@ traces2 = [traces2{:}];
 
 fig1 = figure('Color','w','Position', [209 181 974 581]);
 
-post_stim = find(diff(find(contains(curr_file_names,'100Hz'))) > 2)+2.5;
-if isempty(post_stim)
-    post_stim = numel(freqs{1})+0.5;
+if ~opts.post_stim
+    post_stim = find(diff(find(contains(curr_file_names,'100Hz'))) > 2)+2.5;
+    if isempty(post_stim)
+        post_stim = numel(freqs{1})+0.5;
+    end
+else
+    post_stim = opts.post_stim;
 end
 typCell = opts.typCell;
 cellRange = opts.cellRange;

@@ -1,22 +1,22 @@
 %% Load ibws and analyze
 
 %% Get filenames and unique cell names
-curr_path = 'data_raw\MF_stim_fastshutdown';
+% curr_path = 'data_raw\MF_stim_fastshutdown';
 % curr_path = 'data_raw\MF_stim_trains';
 % curr_path = 'data_raw\MF_stim_trains_pharma';
-% curr_path = 'data_raw\MF_stim_invivo_pharma\**\*';
+curr_path = 'data_raw\MF_stim_invivo_pharma\**\*';
 % curr_path = 'data_raw\MF_stim';
 
 [fileNames, allCellNames] = ...
     get_files_and_cellnames(curr_path);
 
 %% Run spike detection
-currCell = allCellNames{7};
+currCell = allCellNames{4};
 
 opts = struct();
-opts.max_peak = 2000;
-opts.min_peak = 30;
-opts.cut_peak = 30;
+opts.max_peak =1000;
+opts.min_peak = 20;
+opts.cut_peak = 15;
 opts.cut_peak_max = 500;
 opts.min_width = 0.1e-3;
 opts.use_old = false;
@@ -106,8 +106,8 @@ end
 %}
 %% Discard a trace
 %{
-disc_p = 1;
-disc_t = 21;
+disc_p = 2;
+disc_t = 5;
 disc_global = get_overall_idx(curr_file_names,[disc_p,disc_t]);
 
 freqs{disc_p}(disc_t) = [];
@@ -131,19 +131,19 @@ par_opts = struct();
 par_opts.OFF = false;
 par_opts.baseRange = 1;
 par_opts.startPoint = 5.0;
-par_opts.endPoint = 7;
-par_opts.smooth = 10;
+par_opts.endPoint = 10;
+par_opts.smooth = 20;
 
 [Amp, HD, baseline,sPause] = get_UBC_HD_and_amp(freqs,Fs,sPause,par_opts);
 
 %% Plot individual
 fig_opts = struct();
-fig_opts.typCell = 2;
+fig_opts.typCell = 3;
 fig_opts.cellRange = [1:numel(freqs{1})];
 fig_opts.startT = 4.5;
 fig_opts.stimEnd = 5.2001;
 fig_opts.endT = 	10;
-
+% fig_opts.post_stim = [10,19,29,39]+0.5;
 
 [fig1] = plot_individual_UBC(traces,Fs,curr_file_names,Amp,baseline,...
     HD,sPause,freqs,currCell,fig_opts);
@@ -152,6 +152,23 @@ fig_opts.endT = 	10;
 %% Add washin information
 %{
     plotCurrentUBC(freqs,freqs_prot,traces,curr_file_names,Fs)
+%}
+
+temp_file_names = curr_file_names;
+%{
+%Fix filenames with basic protocol in the middle
+fixed_files = curr_file_names;
+mark_str = 'IVburst';
+mark_prots = cellfun(@(x) ~isempty(strfind(x,mark_str)),fixed_files);
+
+%Locations of names to change relative to marked prot
+change_locs = [1,2];
+
+for ii = find(mark_prots)
+    fixed_files(ii+change_locs) = {'diff'};
+end
+
+temp_file_names = fixed_files;
 %}
 
 washinStates = {'Baseline','LY 341495','NBQX',...
@@ -177,7 +194,7 @@ washinConcentrations = {'','5 uM','5 uM','1 uM',''};
 % washinConcentrations = {'','','','',''};
 
 %Suggest borders based on gaps
-washinIDs = get_washinIDs(curr_file_names,washinID_states);
+washinIDs = get_washinIDs(temp_file_names,washinID_states);
 
 
 
@@ -186,7 +203,7 @@ med_opts = struct();
 med_opts.baseRange = 1;
 med_opts.startPoint = 5.0;
 med_opts.stimDur = 0.2;
-med_opts.endPoint = 30;
+med_opts.endPoint = 13;
 med_opts.delay_startPoint = 0.0;
 med_opts.smooth = 10;
 

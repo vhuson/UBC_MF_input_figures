@@ -66,8 +66,10 @@ if ~isempty(pid2)
     pid2_clean = pid2;
     pid2_clean(first_arts) = [];
     
-    if ~isempty(pid2_clean)
-        pad = opts.pad;
+    pad = opts.pad;
+
+    if ~isempty(pid2_clean) && numel(pid2_clean > pad)
+        
         
         starts = (1:numel(pid2_clean))-pad;
         starts(1:pad) = 1;

@@ -182,15 +182,29 @@ while pp <= numel(prot_file_names)
 
             %Ask user input
             [ii_new,curr_max_peak,curr_min_peak,curr_cut_peak,curr_min_width,...
-                curr_use_old, break_loop, curr_cut_peak_max] = UBC_detect_input(ii,detect_opts,use_old{pp}(ii));
+                curr_use_old, break_loop, curr_cut_peak_max,save_future] = UBC_detect_input(ii,detect_opts,use_old{pp}(ii));
             
-            
-            all_maxpeak{pp}(ii) = curr_max_peak;
-            all_minpeak{pp}(ii) = curr_min_peak;
-            all_cutpeak{pp}(ii) = curr_cut_peak;
-            all_cutpeak_max{pp}(ii) = curr_cut_peak_max;
-            all_minwidth{pp}(ii)= curr_min_width;
-            use_old{pp}(ii)     = curr_use_old;
+            if ~save_future
+                all_maxpeak{pp}(ii) = curr_max_peak;
+                all_minpeak{pp}(ii) = curr_min_peak;
+                all_cutpeak{pp}(ii) = curr_cut_peak;
+                all_cutpeak_max{pp}(ii) = curr_cut_peak_max;
+                all_minwidth{pp}(ii)= curr_min_width;
+                use_old{pp}(ii)     = curr_use_old;
+            else
+                ii_idx = ii;
+
+                for p_idx = pp:numel(all_maxpeak)
+                    all_maxpeak{p_idx}(ii_idx:end) = curr_max_peak;
+                    all_minpeak{p_idx}(ii_idx:end) = curr_min_peak;
+                    all_cutpeak{p_idx}(ii_idx:end) = curr_cut_peak;
+                    all_cutpeak_max{p_idx}(ii_idx:end) = curr_cut_peak_max;
+                    all_minwidth{p_idx}(ii_idx:end)= curr_min_width;
+                    use_old{p_idx}(ii_idx:end)     = curr_use_old;
+
+                    ii_idx = 1;
+                end
+            end
             
             ii = ii_new;
 

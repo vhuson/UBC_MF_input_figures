@@ -1,5 +1,5 @@
 function [ii_new,curr_max_peak,curr_min_peak,curr_cut_peak,curr_min_width,...
-    curr_use_old,break_loop,curr_cut_peak_max] = UBC_detect_input(ii,detect_opts,use_old)
+    curr_use_old,break_loop,curr_cut_peak_max,save_future] = UBC_detect_input(ii,detect_opts,use_old)
 %UNTITLED7 Summary of this function goes here
 %   Detailed explanation goes here
 
@@ -12,14 +12,20 @@ curr_cut_peak_max = detect_opts.cut_peak_max;
 curr_min_width = detect_opts.min_width;
 curr_use_old = use_old;
 break_loop = false;
+save_future = false;
 
 changeBol = true;
 while changeBol
     changeValues = [0 0 0 0 0 0];
-    dochange = input('Change parameters (1:Yes 0/blank:No 99:Break loop): ');
+    dochange = input('Change parameters (1:Yes 0/blank:No 3:Save pars 99:Break loop): ');
 
     if isempty(dochange) || dochange == 0 %All good continue
         ii_new = ii+1;
+        break;
+    elseif dochange == 3;
+        %Change all future parameters to current set
+        ii_new = ii+1;
+        save_future = true;
         break;
     elseif dochange == 99
         break_loop = true;
