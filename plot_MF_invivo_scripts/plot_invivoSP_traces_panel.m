@@ -3,12 +3,12 @@
 %     'Color','w');
 
 % left_edge = 0.13;
-top_edge = 0.56;
+top_edge = 0.64;
 
 left_edge_mf = 0.13;
 
 % burst_p_width = 0.1425;
-burst_p_height = 0.08;
+burst_p_height = 0.06;
 mf_p_width = 0.8;
 height_space = 0.01;
 
@@ -88,14 +88,14 @@ mid_ylim = [0 50];
 mid_scale_bar = [0 20];
 
 
-curr_mf_resp = reshape(curr_cell_data.freqs{2},[600000,3]);
+curr_mf_resp = reshape(curr_cell_data.freqs{2}{3},[600001,3]);
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
 ax_mid_mf = axes('Position', ax_pos_mf);
 hold on
 if show_individual_traces
     for ii = 1:3
-        plot(x_time',curr_mf_resp(:,ii),'Color',[0.85 0.85 0.85])
+        plot(x_time',curr_mf_resp(1:numel(x_time),ii),'Color',[0.85 0.85 0.85])
     end
 end
 y_data = mean(curr_mf_resp,2);
@@ -103,7 +103,7 @@ if median_fltr
     y_data = medfilt1(y_data,Fs*0.02);
 end
 
-plot((1:numel(y_data))/Fs,y_data,'k')
+plot(x_time,y_data(1:numel(x_time)),'k')
 hold off
 ylim(mid_ylim);
 
@@ -124,14 +124,14 @@ off_ylim = [0 50];
 off_scale_bar = [0 10];
 
 
-curr_mf_resp = reshape(curr_cell_data.freqs{2},[600000,3]);
+curr_mf_resp = reshape(curr_cell_data.freqs{2}{3},[600001,3]);
 
 ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
 ax_off_mf = axes('Position', ax_pos_mf);
 hold on
 if show_individual_traces
     for ii = 1:3
-        plot(x_time',curr_mf_resp(:,ii),'Color',[0.85 0.85 0.85])
+        plot(x_time',curr_mf_resp(1:numel(x_time),ii),'Color',[0.85 0.85 0.85])
     end
 end
 y_data = mean(curr_mf_resp,2);
@@ -139,7 +139,7 @@ if median_fltr
     y_data = medfilt1(y_data,Fs*0.02);
 end
 
-plot((1:numel(y_data))/Fs,y_data,'k')
+plot(x_time,y_data(1:numel(x_time)),'k')
 hold off
 ylim(off_ylim);
 
