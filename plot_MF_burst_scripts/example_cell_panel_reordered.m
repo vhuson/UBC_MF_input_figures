@@ -2,8 +2,8 @@
 %     'Color','w');
 
 %Get right cell idxes
-% typ_cell_IDs = {'1657','1685','1758'};
-typ_cell_IDs = {'1657','1766','1758'};
+typ_cell_IDs = {'1657','1766','1758','1807'};
+% typ_cell_IDs = {'1657','1766','1758','1702'};
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames,typ_cell_IDs,ONidx);
 
 
@@ -16,12 +16,12 @@ all_XLim = {[0.2 1.5],[0.2 1.5], [0.2 1.5], [0.2 1.5], [0.2 2.5]};
 
 base_space = 0; %Value unused
 left_edge_start = 0.08;
-bottom_edge_final = 0.8;
+bottom_edge_final = 0.75;
 top_edge = 0.98;
 ax_space = 0.01;
 
 base_height = (top_edge - bottom_edge_final) - ax_space * (numel(typ_cell_num)-1);
-base_height = base_height/3;
+base_height = base_height/numel(typ_cell_num);
 
 bottom_edge_start = top_edge - base_height;
 total_width = 0.83;

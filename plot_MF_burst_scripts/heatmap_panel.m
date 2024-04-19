@@ -1,8 +1,8 @@
 
 
-pos_bottom = 0.29;
+pos_bottom = 0.277;
 pos_left = 0.07;
-pos_height = 0.48;
+pos_height = 0.4425;
 full_width = 0.790;
 
 
