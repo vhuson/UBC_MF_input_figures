@@ -78,12 +78,15 @@ f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
 
 train_pharma_examples_panel
 train_pharma_burst_examples_panel
-
+% 
 %Heatmaps including bursts
 train_pharma_burst_heatmap_panel
 train_pharma_heatmap_panel
-
-train_pharma_summary_panel
+% 
+train_pharma_summary_panel_peak
+train_pharma_summary_panel_stimspikes
+train_pharma_summary_panel_postspikes
+% train_pharma_summary_panel
 
 
 %Tweak figure

@@ -3,14 +3,18 @@
 
 select_cells = fltr_ONidx_tpharma;
 
+%Plot options
+title_on = false;
+color_bar_on = false;
+
 %Set axis position
 num_cols = 6;
 
 pos_left = 0.1;
-pos_bottom = 0.2478;
+pos_bottom = 0.23;
 full_width = 0.9243-pos_left;
 base_space = 0.017;
-base_height = 0.08;
+base_height = 0.085;
 
 base_width = full_width - base_space * (num_cols-1);
 base_width = base_width / num_cols;
@@ -23,11 +27,12 @@ all_left_edges = (base_width + base_space) .* (0:(num_cols-1)) + pos_left;
 % Get n_spikes data;
 all_summary_data = cell(1,8);
 for ii = 1:8
-    all_summary_data{ii} = cellfun(@(x) x(ii),all_n_spikes_stim_pharma);
+    all_summary_data{ii} = cellfun(@(x) x(ii),all_train_slow_amp_pharma);
+    % all_summary_data{ii} = cellfun(@(x) x(ii),all_n_spikes_stim_pharma);
     % all_summary_data{ii} = cellfun(@(x) x(ii),all_n_spikes_post_pharma);
 end
 min_val = 1;
-chosen_plot_ylabel = '\DeltaSpikes during step (n)';
+chosen_plot_ylabel = 'Peak (\Deltaspk/s)';
 % chosen_plot_ylabel = 'Post spikes (n)';
 
 %Plot settings
@@ -55,7 +60,7 @@ for ii = 1:num_cols
     
     curr_plot_data = all_summary_data{ii};
 
-    if ii == num_cols
+    if color_bar_on && ii == num_cols
         opts.bar = true;
     end
     

@@ -7,8 +7,8 @@ select_cells = fltr_ONidx_tpharma;
 %Set axis position
 num_rows = 4;
 
-pos_bottom = 0.28;
-pos_top = 0.565;
+pos_bottom = 0.368;
+pos_top = 0.619;
 pos_height = pos_top - pos_bottom;
 pos_left = 0.1;
 full_width = 0.08;

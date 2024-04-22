@@ -20,7 +20,7 @@ num_cells = numel(typ_cell_num);
 num_cols = 1;
 num_rows = num_cells * 4 +1;
 
-pos_bottom = 0.6;
+pos_bottom = 0.654;
 pos_top = 0.96;
 pos_height = pos_top - pos_bottom;
 pos_left = 0.1;
