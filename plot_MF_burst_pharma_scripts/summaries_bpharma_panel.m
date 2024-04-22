@@ -75,7 +75,7 @@ all_bottom_edges = repmat(bottom_edge2,1,num_cols);
 ax_pharm_n = {};
 
 opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[],...{trace_labels},...
-    'XTick',[],'YScale','log','min_val',1,'YLabel','Response spikes (n)');
+    'XTick',[],'YScale','log','min_val',1,'YLabel','\DeltaSpikes (n)');
 
 opts.xtick_symbols = {"o","^","square","diamond"};
 opts.base_style = '-';

@@ -39,7 +39,8 @@ end
 
 
 %Normalize per cell based on-mGluR2 highest protocol
-norm_on = max([curr_traces{2}],[],2);
+% norm_on = max([curr_traces{2}],[],2);
+norm_on = max(medfilt1(curr_traces{2},Fs*0.11,[],2),[],2);
 
 %Same normalization for OFFs
 norm_off = [];

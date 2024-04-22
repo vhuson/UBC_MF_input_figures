@@ -27,7 +27,7 @@ for ii = 1:8
     % all_summary_data{ii} = cellfun(@(x) x(ii),all_n_spikes_post_pharma);
 end
 min_val = 1;
-chosen_plot_ylabel = 'Stim spikes (n)';
+chosen_plot_ylabel = '\DeltaSpikes during step (n)';
 % chosen_plot_ylabel = 'Post spikes (n)';
 
 %Plot settings

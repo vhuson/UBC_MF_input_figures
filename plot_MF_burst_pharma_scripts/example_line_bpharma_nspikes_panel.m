@@ -83,7 +83,7 @@ for ii = 1:numel(curr_cells)
         if plot_amp
             opts.YLabel = "Peak (\Deltaspk/s)";
         else
-            opts.YLabel = "Response spikes (n)";
+            opts.YLabel = "\DeltaSpikes (n)";
         end
     end
 

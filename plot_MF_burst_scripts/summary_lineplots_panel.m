@@ -19,7 +19,7 @@ pos_ax = [left_margin,  bottom_margin, base_width, graph_height];
 % pos_ax = [0.07 0.07 base_width 0.2064];
 [ax_burst_par{p_idx}] = UBC_par_line_plot(...
     ONidx,summary_off,all_burst_slow_amp,[0 1 0],1,f_burst,pos_ax);
-ylabel('Peak response (\Deltaspk/s)')
+ylabel('Peak (\Deltaspk/s)')
 fix_powered_ylabels(ax_burst_par{p_idx})
 
 
@@ -28,7 +28,7 @@ p_idx = 2;
 pos_ax(1) = sum(pos_ax([1,3]))+base_space;
 [ax_burst_par{p_idx}] = UBC_par_line_plot(...
     ONidx,summary_off,all_burst_n_spikes,[0 1 0],-Inf,f_burst,pos_ax);
-ylabel("Response spikes (n)")
+ylabel("\DeltaSpikes (n)")
 fix_powered_ylabels(ax_burst_par{p_idx})
 
 
