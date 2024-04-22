@@ -27,7 +27,7 @@ curr_traces = vertcat(curr_traces{:});
 select_cells = fltr_ONidx_t5;
 
 %Normalize per cell
-norm_on = max(curr_traces,[],2);
+norm_on = max(medfilt1(curr_traces,Fs*0.11,[],2),[],2);
 norm_on(norm_on < 1) = 1;
 % norm_on = all_Amp;
 
