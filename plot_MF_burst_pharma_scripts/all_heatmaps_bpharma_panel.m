@@ -41,7 +41,8 @@ all_mean_pharma_bursts_all = {all_mean_pharma_bursts1,...
 
 
 %Normalize per cell based on-mGluR2
-norm_on = max(all_mean_pharma_bursts_all{2}{5},[],2);
+% norm_on = max(all_mean_pharma_bursts_all{2}{5},[],2);
+norm_on = max(medfilt1(all_mean_pharma_bursts_all{2}{5},Fs*0.16,[],2),[],2);
 
 %Normalize per cell per protocol based on-mGluR2
 per_prot_norm = false;

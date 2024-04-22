@@ -7,7 +7,8 @@ full_width = 0.790;
 
 
 %Normalize per cell
-norm_on = max(all_mean_bursts{5},[],2);
+% norm_on = max(all_mean_bursts{5},[],2);
+norm_on = max(medfilt1(all_mean_bursts{5},Fs*0.16,[],2),[],2);
 % norm_on = max([all_burst_fast_amp{5},all_burst_slow_amp{5}],[],2);
 % norm_on = all_Amp;
 
