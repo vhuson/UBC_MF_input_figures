@@ -182,20 +182,24 @@ set(currAx,'XScale',opts.XScale)
 currAx.YRuler.Visible = opts.YRulerVis;
 
 
-standardAx(currAx);
+standardAx(currAx,struct('FontSize',10));
 
 
 
 if adjust_y %Set to min_val
     currAx.YLim(1) = min_val;
-    currAx.YTick = unique([currAx.YTick, min_val]);
+    currAx.YTick = unique([currAx.YTick, min_val,max_val]);
+    currAx.YTickLabel = string(currAx.YTick);
     currAx.YTickLabel{currAx.YTick == min_val} = ...
         ['<',currAx.YTickLabel{currAx.YTick == min_val}];
 end
 
 if adjust_y_max %Set to max_val
     currAx.YLim(2) = max_val;
-    currAx.YTick = unique([currAx.YTick, max_val]);
+    if ~adjust_y
+        currAx.YTick = unique([currAx.YTick, max_val]);
+        currAx.YTickLabel = string(currAx.YTick);
+    end
     currAx.YTickLabel{currAx.YTick == max_val} = ...
         ['>',currAx.YTickLabel{currAx.YTick == max_val}];
 end
