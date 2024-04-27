@@ -120,8 +120,8 @@ plot_labels{22} = 'c';
 plot_labels{24} = 'd';
 plot_labels{25} = 'e';
 plot_labels{26} = 'f';
-plot_labels{27} = 'g';
-plot_labels{28} = 'h';
+plot_labels{27} = 'h';
+plot_labels{28} = 'g';
 
 labelPlots(f_train,plot_labels);
 

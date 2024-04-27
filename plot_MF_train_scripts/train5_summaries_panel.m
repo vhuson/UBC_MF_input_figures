@@ -20,6 +20,9 @@ base_width = total_width / num_cols - base_space;
 
 all_left_edges = (base_width + base_space) .* (0:(num_cols-1)) + left_margin;
 
+%Shift right most panel manually
+all_left_edges(3) = 0.8007;
+
 
 
 %Get data
@@ -87,6 +90,7 @@ all_plot_yscale = {'linear','linear','log'};
 
 %Train plot pars
 plot_steps = 1:6;
+all_plot_steps = {[1:6],[1:6],[2:6]};
 % plot_steps = [2, 7, 8];
 step_size = [10, 20, 30, 40, 50, 60, 20, 20];
 
@@ -96,12 +100,12 @@ summary_on = fltr_ONidx_t5;
 % summary_off = OFFidx(end-1:end);
 % summary_off = fltr_ONidx_t5(end-3:end);
 % summary_off = [];
-% all_summary_off = {[],[],fltr_ONidx_t5(end-1:end)};
-all_summary_off = {[],[],[]};
+all_summary_off = {[],[],fltr_ONidx_t5(end-3:end)};
+% all_summary_off = {[],[],[]};
     
 
 opts = struct();
-opts.input_n = step_size(plot_steps);
+
 % opts.input_n = [1 2 3];
 % if peak_log
 %     opts.YScale = 'log';
@@ -111,8 +115,7 @@ opts.input_n = step_size(plot_steps);
 % opts.XScale = 'log';
 opts.XLabel = "Input step (spk/s)";
 
-opts.XTick = opts.input_n;
-opts.XTickLabel = step_size(plot_steps);
+
 opts.min_val = 1;
 
 
@@ -130,6 +133,11 @@ for p_idx = 1:num_cols
     opts.YScale = all_plot_yscale{p_idx};
     summary_off = all_summary_off{p_idx};
 
+    plot_steps = all_plot_steps{p_idx};
+    opts.input_n = step_size(plot_steps);
+    opts.XTick = opts.input_n;
+    opts.XTickLabel = step_size(plot_steps);
+
     if p_idx == num_cols
         opts.bar = true;
     end
@@ -141,9 +149,20 @@ for p_idx = 1:num_cols
     %Turn off OFF stuff
     % summary_off = [];
 
+
     %Offset XLim a little bit
     ax_train_par{p_idx}.XLim(1) = ax_train_par{p_idx}.XLim(1)...
         - diff(ax_train_par{p_idx}.XLim) * 0.05;
+    
+    if strcmp(ax_train_par{p_idx}.YScale,'linear')
+        ax_train_par{p_idx}.YLim(1) = ax_train_par{p_idx}.YLim(1)...
+            - diff(ax_train_par{p_idx}.YLim) * 0.05;
+    else
+        ax_train_par{p_idx}.YLim(1) = exp(log(ax_train_par{p_idx}.YLim(1))...
+            - diff(log(ax_train_par{p_idx}.YLim)) * 0.05);
+    end
+
+    ax_train_par{p_idx}.XTickLabel(2:end-1) = {''}; 
     % fix_powered_ylabels(ax_train_par{p_idx})
     % opts.YScale = 'linear';
     ax_train_par{p_idx}.XTickLabelRotation = 0;

@@ -21,7 +21,8 @@ num_rows = 1;
 bottom_margin = 0.1964;
 base_width = 0.1283;
 base_space = 0.14;
-left_margin = 0.9643-base_width;
+% left_margin = 0.9643-base_width;
+left_margin = 0.5567;
 
 graph_height = 0.1143;
 
@@ -63,10 +64,10 @@ for ax_idx = 1:numel(all_line_plot_par)
 
 
 
-    scatter(1:numel(select_cells),curr_par{1}(select_cells),[],desat_colors,'filled')
+    % scatter(1:numel(select_cells),curr_par{1}(select_cells),[],desat_colors,'filled')
 
 
-    for ii = 2:6
+    for ii = 6%2:6
         desat_colors = desat_fun(all_colors,(6-ii)/base_num);
         scatter(1:numel(select_cells),curr_par{ii}(select_cells),[],desat_colors,'filled')
 
@@ -85,4 +86,4 @@ for ax_idx = 1:numel(all_line_plot_par)
     standardAx(line_ax{ax_idx},struct('FontSize',10));
 end
 %Add legend
-legend(line_ax{ax_idx},string(10:10:60),'Box','off','NumColumns',1,'Position', [0.8914 0.2341 0.0976 0.1052])
+% legend(line_ax{ax_idx},string(10:10:60),'Box','off','NumColumns',1,'Position', [0.6259 0.2402 0.0976 0.1052])
