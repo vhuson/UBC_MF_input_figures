@@ -239,9 +239,11 @@ search_level = peak_amp/2 + baseline;
 train_hd_idx = find(trace_segment(search_start:end)<search_level,1,"first");
 
 if isempty(train_hd_idx)
-    train_hd_idx = numel(trace_segment);
+    train_hd_idx = numel(trace_segment)+1;
+else
+    train_hd_idx = train_hd_idx+search_start;
 end
-train_hd_idx = train_hd_idx+search_start;
+
 train_half_decay = train_hd_idx/Fs - time_0;
 
 
