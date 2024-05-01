@@ -1,11 +1,108 @@
 %% save csv
-curr_ms = double(all_locs)/20;
+curr_ms = double(round(all_locs*Fs))/20;
 
-curr_prot = 'lin_ramp_80Hz_x3';
+curr_prot = 'sine_20amp_1Hz_26base';
 % curr_prot = 'exp_ramp_80Hz_x3';
 
 
 csvwrite([curr_prot,'.txt'],curr_ms(:)')
+
+
+%% sine solver
+Fs = 20000;
+
+base_rate = 15;
+sin_freq = 0.5;
+sin_amp = 15;
+sin_start = 5;
+
+
+% wave_fun = @(x) base_rate + ...
+%                 sin((x-sin_start).*2*pi*sin_freq)*sin_amp;
+
+wave_fun = zeros(1,50*Fs);
+wave_fun(5*Fs:15*Fs) = base_rate;
+wave_fun(15*Fs:45*Fs) = base_rate + sin((0:1/Fs:30).*2*pi*sin_freq)*sin_amp;
+wave_fun(wave_fun<sin_freq) = sin_freq;
+
+% step_height = 40;
+% slope_dur = 0.5;
+% step_dur = 1;
+% step_start = 0.2;
+% step_slope = (step_height-base_rate)/slope_dur;
+% 
+% wave_fun = @(x) base_rate + ...
+%                 (max([min([(x-step_start),slope_dur]),0]) * step_slope) * (step_dur > (x-step_start));
+
+
+%Move through the trace by half an ISI
+forw_fun = @(x) x-(0.5/wave_fun(min([numel(wave_fun),round(x*Fs)])));
+back_fun = @(x) x+(0.5/wave_fun(min([numel(wave_fun),round(x*Fs)])));
+
+
+start_point = 5;
+end_point = 45;
+
+% Build forwards
+all_locs = start_point;
+curr_loc = back_fun(start_point);
+while curr_loc < end_point
+    err_fun = @(x) (curr_loc - forw_fun(x))^2;
+    next_est = back_fun(curr_loc);
+    next_loc = fminsearch(err_fun,next_est);
+
+    if next_loc <= curr_loc
+        %Bad find advance a bit
+        curr_loc = curr_loc+0.01;
+    else
+        all_locs = [all_locs, next_loc];
+        curr_loc = back_fun(next_loc);
+        disp(curr_loc)
+    end
+end
+
+%Build backward
+% all_locs = 1;
+% curr_loc = forw_fun(1);
+% while curr_loc > -0.5
+%     err_fun = @(x) (curr_loc - back_fun(x))^2;
+%     next_est = forw_fun(curr_loc);
+%     next_loc = fminsearch(err_fun,next_est);
+% 
+%     all_locs = [next_loc, all_locs];
+%     curr_loc = forw_fun(next_loc);
+%     disp(curr_loc)
+% end
+
+
+
+all_locs(all_locs<start_point) = [];
+all_locs(all_locs>end_point) = [];
+
+
+%draw result
+figure; axes;
+hold on
+for ii = 1:numel(all_locs)
+    curr_y = wave_fun(round(all_locs(ii)*Fs));
+    curr_x = [all_locs(ii) - 0.5/curr_y,...
+                all_locs(ii) + 0.5/curr_y];
+
+    line(curr_x, repmat(curr_y,1,2))
+end
+Fs = 20000;
+all_idx = round((all_locs-start_point)*Fs)+1;
+inst_freq = time2rate(all_idx,Fs,(end_point-start_point)+1/Fs);
+plot((1/Fs:1/Fs:((end_point-start_point)+1/Fs))+start_point,inst_freq)
+
+curr_x = start_point:0.001:end_point;
+curr_y = [];
+for ii = 1:numel(curr_x)
+    curr_y(ii) = wave_fun(round(curr_x(ii)*Fs));
+end
+
+plot(curr_x,curr_y,'k')
+hold off
 
 
 
