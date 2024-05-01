@@ -37,7 +37,10 @@ for ii = 1:4
     [all_train_slow_amp_pharma{ii},all_train_slow_HD_pharma{ii},...
         all_train_pause_pharma{ii},all_train_n_spikes_pharma{ii},...
         ~,~,all_train_burst_baseline_pharma{ii},...
-        all_n_spikes_stim_pharma{ii},all_n_spikes_post_pharma{ii}] = ...
+        all_n_spikes_stim_pharma{ii},all_n_spikes_post_pharma{ii},...
+        ~, ~,...
+        all_sum_spikes_stim_pharma{ii},all_sum_spikes_post_pharma{ii},...
+        all_train_half_decay_pharma{ii}] = ...
         get_train_parameters(all_mean_trains_pharma{ii},Fs);
 
     %Get burst traces
@@ -83,9 +86,10 @@ train_pharma_burst_examples_panel
 train_pharma_burst_heatmap_panel
 train_pharma_heatmap_panel
 % 
-train_pharma_summary_panel_peak
+% train_pharma_summary_panel_peak
 train_pharma_summary_panel_stimspikes
 train_pharma_summary_panel_postspikes
+% train_pharma_summary_panel_percentspikes
 % train_pharma_summary_panel
 
 
@@ -95,7 +99,7 @@ fig_opts.FontSize = 10;
 standardFig(f_train_pharma,fig_opts);
 
 %Add labels
-plot_labels = repmat({[]},1,40);
+plot_labels = repmat({[]},1,46);
 plot_labels{19} = 'a';
 plot_labels{2} = 'b';
 % plot_labels{3} = 'c';
@@ -106,6 +110,7 @@ plot_labels{2} = 'b';
 plot_labels{28} = 'c';
 plot_labels{33} = 'd';
 plot_labels{40} = 'e';
+plot_labels{46} = 'f';
 labelPlots(f_train_pharma,plot_labels);
 
 %% other figure

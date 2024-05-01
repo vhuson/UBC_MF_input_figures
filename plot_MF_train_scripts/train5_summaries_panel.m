@@ -173,3 +173,4 @@ for p_idx = 1:num_cols
 
 end
 
+ % ax_train_par{p_idx}.YRuler.MinorTick = 'off';

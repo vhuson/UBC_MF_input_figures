@@ -10,7 +10,7 @@ title_on = false;
 num_cols = 6;
 
 pos_left = 0.1;
-pos_bottom = 0.02;
+pos_bottom = 0.1278;
 full_width = 0.9243-pos_left;
 base_space = 0.017;
 base_height = 0.085;
