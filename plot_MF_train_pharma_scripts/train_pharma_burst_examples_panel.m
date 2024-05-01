@@ -18,26 +18,32 @@ typ_cell_IDs = {'1823','1774'};
 %Set axis position
 num_cells = numel(typ_cell_num);
 num_cols = 1;
-num_rows = num_cells * 4 +1;
+num_rows = num_cells * 4;
 
 pos_bottom = 0.654;
-pos_top = 0.96;
+cell_space = 0.008;
+base_space = 0.011;
+% pos_top = 0.96;
+%Manual first panel
+first_panel_bottom = 0.9461;
+first_panel_height = 0.0139;
+
+pos_top = first_panel_bottom - cell_space;
 pos_height = pos_top - pos_bottom;
 pos_left = 0.1;
 full_width = 0.08;
-base_space = 0.01;
-cell_space = 0.02;
 
 
-base_height = pos_height - base_space * (num_rows-1) - cell_space * num_cells;
+
+base_height = pos_height - base_space * (num_rows-1) - cell_space * (num_cells-1);
 base_height = base_height / num_rows;
 
 all_bottom_edges = (base_height + base_space) .* (0:(num_rows-1));
 all_bottom_edges = all_bottom_edges + pos_bottom;
-all_bottom_edges = all_bottom_edges + floor(0:1/4:num_cells) .* cell_space;
+all_bottom_edges = all_bottom_edges + floor(1/4:1/4:num_cells) .* cell_space;
 all_bottom_edges = fliplr(all_bottom_edges);
 
-all_bottom_edges = all_bottom_edges(1:4:9);
+all_bottom_edges = all_bottom_edges([4,8]);
 
 cell_height = base_height * 4 + base_space *3;
 
@@ -67,7 +73,7 @@ stack_opts.padding = base_space*100;
 
 
 %Plot input trace
-pos_ax = [pos_left  all_bottom_edges(1)  full_width  base_height];
+pos_ax = [pos_left  first_panel_bottom(1)  full_width  first_panel_height];
 
 [input_ax_burst] = plot_stacked_traces(...
     input_train,Fs,1,f_train_pharma,pos_ax,stack_opts);
@@ -77,7 +83,7 @@ pos_ax = [pos_left  all_bottom_edges(1)  full_width  base_height];
 pharma_stack_burst = {};
 for ii = 1:num_cells
     %Set axis position
-    pos_ax = [pos_left  all_bottom_edges(ii+1)  full_width  cell_height];
+    pos_ax = [pos_left  all_bottom_edges(ii)  full_width  cell_height];
 
     %Get data
     plot_traces = cellfun(@(x) {x(typ_cell_idxs(ii),:)},curr_traces);

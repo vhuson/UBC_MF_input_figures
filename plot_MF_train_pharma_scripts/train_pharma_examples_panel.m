@@ -1,7 +1,7 @@
 %% Plot trains stacked pharma
 
-% f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
-%     'Color','w');
+f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
 select_cells = fltr_ONidx_tpharma;
 
@@ -20,32 +20,38 @@ y_labels_on = false;
 %Set axis position
 num_cells = numel(typ_cell_num);
 num_cols = 1;
-num_rows = num_cells * 4 +1;
+num_rows = num_cells * 4; %+1;
 
 pos_bottom = 0.654;
-pos_top = 0.96;
+cell_space = 0.008;
+base_space = 0.011;
+% pos_top = 0.96;
+%Manual first panel
+first_panel_bottom = 0.9461;
+first_panel_height = 0.0139;
+
+pos_top = first_panel_bottom - cell_space;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
 pos_left = 0.1966;
 full_width = 0.5334;
-base_space = 0.01;
-cell_space = 0.02;
+
 
 % pos_left2 = 0.6722;
 % base_width2 = 0.2921;
 pos_left2 = 0.7466;
 base_width2 = 0.2177;
 
-base_height = pos_height - base_space * (num_rows-1) - cell_space * num_cells;
+base_height = pos_height - base_space * (num_rows-1) - cell_space * (num_cells-1);
 base_height = base_height / num_rows;
 
 all_bottom_edges = (base_height + base_space) .* (0:(num_rows-1));
 all_bottom_edges = all_bottom_edges + pos_bottom;
-all_bottom_edges = all_bottom_edges + floor(0:1/4:num_cells) .* cell_space;
+all_bottom_edges = all_bottom_edges + floor(1/4:1/4:num_cells) .* cell_space;
 all_bottom_edges = fliplr(all_bottom_edges);
 
-all_bottom_edges = all_bottom_edges(1:4:9);
+all_bottom_edges = all_bottom_edges([4,8]);
 
 cell_height = base_height * 4 + base_space *3;
 
@@ -84,7 +90,7 @@ stack_opts.padding = base_space*100;
 
 
 %Plot input trace
-pos_ax = [pos_left  all_bottom_edges(1)  full_width  base_height];
+pos_ax = [pos_left  first_panel_bottom(1)  full_width  first_panel_height];
 
 [input_ax] = plot_stacked_traces(...
     input_train,Fs,1,f_train_pharma,pos_ax,stack_opts);
@@ -92,7 +98,7 @@ pos_ax = [pos_left  all_bottom_edges(1)  full_width  base_height];
 stack_opts2 = stack_opts;
 stack_opts2.XLim = [27.5 31];
 
-pos_ax2 = [pos_left2  all_bottom_edges(1)  base_width2  base_height];
+pos_ax2 = [pos_left2  first_panel_bottom(1)  base_width2  first_panel_height];
 [input_ax2] = plot_stacked_traces(...
     input_train,Fs,1,f_train_pharma,pos_ax2,stack_opts2);
 
@@ -102,7 +108,7 @@ pharma_stack = {};
 pharma_stack2 = {};
 for ii = 1:num_cells
     %Set axis position
-    pos_ax = [pos_left  all_bottom_edges(ii+1)  full_width  cell_height];
+    pos_ax = [pos_left  all_bottom_edges(ii)  full_width  cell_height];
 
     %Get data
     plot_traces = cellfun(@(x) {x(typ_cell_idxs(ii),:)},curr_traces);
@@ -115,7 +121,7 @@ for ii = 1:num_cells
 
 
     %Plot pulse 60 zoom in
-    pos_ax2 = [pos_left2  all_bottom_edges(ii+1)  base_width2  cell_height];
+    pos_ax2 = [pos_left2  all_bottom_edges(ii)  base_width2  cell_height];
 
     [pharma_stack2{ii}] = plot_stacked_traces(...
     plot_traces,Fs,1:4,f_train_pharma,pos_ax2,stack_opts2);
@@ -163,9 +169,10 @@ for ii = 1:numel(pharma_stack)
                     all_row_labels{jj}];
         curr_t = text(pharma_stack{ii}{jj},0,0,curr_label,...
             'Units','normalized',...
-            'Position',[0 1 0],'VerticalAlignment','bottom',...
+            'Position',[0 0 0],'VerticalAlignment','top',...
             'HorizontalAlignment','left');
         curr_t.Units = 'data';
+        curr_t.Position(2) = 0;
     end
 end
 % end
@@ -177,8 +184,8 @@ scaled_dist2 = (dist1+1)/diff(stack_opts2.XLim);
 
 xcord1 = pos_left2 + base_width2 * scaled_dist1;
 xcord2 = pos_left2 + base_width2 * scaled_dist2;
-h1 = annotation('line',repmat(xcord1,1,2),[pos_bottom all_bottom_edges(2)+cell_height],'Linewidth',0.5,'LineStyle',':','Color',[1 0 0]);
-h2 = annotation('line',repmat(xcord2,1,2),[pos_bottom all_bottom_edges(2)+cell_height],'Linewidth',0.5,'LineStyle',':','Color',[1 0 0]);
+h1 = annotation('line',repmat(xcord1,1,2),[pos_bottom all_bottom_edges(1)+cell_height],'Linewidth',0.5,'LineStyle',':','Color',[1 0 0]);
+h2 = annotation('line',repmat(xcord2,1,2),[pos_bottom all_bottom_edges(1)+cell_height],'Linewidth',0.5,'LineStyle',':','Color',[1 0 0]);
 
 %Label train input
 text(input_ax{1},0,2,'0','VerticalAlignment','bottom')
