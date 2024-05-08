@@ -3,7 +3,7 @@
 %     'Color','w');
 
 % left_edge = 0.13;
-top_edge = 0.64;
+top_edge = 0.57;
 
 left_edge_mf = 0.13;
 
@@ -31,7 +31,7 @@ ax_mfburst_input.YRuler.Visible = 'off';
 ylabel('Input')
 scale_opts = struct();
 scale_opts.xlabel = 's';
-scale_opts.ylabel = 'Hz';
+scale_opts.ylabel = 'spk/s';
 scale_opts.origin = [28.7246 60];
 add_scale_bar(ax_mfburst_input,[1,50],scale_opts);
 
@@ -76,12 +76,44 @@ ax_fast_mf.Visible = 'off';
 
 scale_opts = struct();
 scale_opts.xlabel = 's';
-scale_opts.ylabel = 'Hz';
+scale_opts.ylabel = 'spk/s';
 add_scale_bar(ax_fast_mf,[0,50],scale_opts);
 
+%% Panel for int cell mf reponse
+curr_cell_data = allData_invivo{4};
+
+mid_scale_bar = [0 20];
 
 
-%% Panel for med cell mf reponse
+curr_mf_resp = reshape(curr_cell_data.freqs{2}{1},[600001,3]);
+
+ax_pos_mf(2) = ax_pos_mf(2)-burst_p_height-height_space;
+ax_int_mf = axes('Position', ax_pos_mf);
+hold on
+if show_individual_traces
+    for ii = 1:3
+        plot(x_time',curr_mf_resp(1:numel(x_time),ii),'Color',[0.85 0.85 0.85])
+    end
+end
+y_data = mean(curr_mf_resp,2);
+if median_fltr
+    y_data = medfilt1(y_data,Fs*0.02);
+end
+
+plot(x_time,y_data(1:numel(x_time)),'k')
+hold off
+ylim(fast_ylim);
+
+t1 = text(ax_int_mf,-1, ax_int_mf.YLim(2)/2,'Mid. cell','Rotation',90,...
+    'HorizontalAlignment','center');
+
+standardAx(ax_int_mf);
+ax_int_mf.Visible = 'off';
+add_scale_bar(ax_int_mf,[0 50],scale_opts);
+
+
+
+%% Panel for slow cell mf reponse
 curr_cell_data = allData_invivo{1};
 curr_freqs = curr_cell_data.freqs{1}(:,1:2);
 mid_ylim = [0 50];

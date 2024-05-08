@@ -179,7 +179,7 @@ standardFig(f_mf_burst,fig_opts);
 plot_labels = repmat({[]},1,17);
 plot_labels{1} = 'a';
 plot_labels{2} = 'b';
-plot_labels{9} = 'c';
+plot_labels{11} = 'c';
 labelPlots(f_mf_burst,plot_labels);
 
 %% other figures
