@@ -1,4 +1,11 @@
-function [fulltrace] = concat_inst_freqs(tracearray1,tracearray2,Fs)
+function [fulltrace] = concat_inst_freqs(tracearray1,tracearray2,Fs,opts)
+base_opts.use_median = false;
+
+if nargin < 4
+    opts = base_opts;
+else
+    opts = merge_structs(base_opts,opts);
+end
 
 if ~iscell(tracearray1)
     tracearray1 = {tracearray1};
@@ -20,12 +27,18 @@ for ii = 1:numel(tracearray1)
         
         if ~isempty(first_nozero) && ~isempty(last_nozero)
             %zero is not appropriate, fill.
-            est_inst_freq = 1/((last_nozero + first_nozero)/Fs);
+            if opts.use_median
+                est_inst_freq = median(filled_baseline);
+            else
+                est_inst_freq = 1/((last_nozero + first_nozero)/Fs);
+            end
+            
 
             filled_trace(1:first_nozero) = est_inst_freq;
             filled_baseline(end-last_nozero:end) = est_inst_freq;
         end
-        
+        % plot_fs([filled_baseline, filled_trace]);
+        % pause
         fulltrace{ii}(jj,:) = [filled_baseline, filled_trace];
     end
 end
