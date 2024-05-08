@@ -39,12 +39,18 @@ all_colors = zeros(5,3);
 
 input_dur = [0.0100    0.0200    0.0500    0.1000    0.2000];
 
-trace_titles = {'1x','2x 100 Hz','5x 100 Hz','10x 100 Hz','20x 100 Hz'};
+trace_titles = {'1x','2x 100 spk/s','5x 100 spk/s','10x 100 spk/s','20x 100 spk/s'};
 
 trace_label = {[]};
 
 ax_burst_typ = {};
 
+%Scale bars
+scale_opts = struct();
+scale_opts.ylabel = 'spk/s';
+
+all_scale_origins = {[2 50], [2 140], [2 7], [1.8 15]};
+all_scale_size = {[0,50], [0,50], [0,10], [0.2,10]};
 
 
 opts = struct();
@@ -100,12 +106,23 @@ for ii = 1:numel(typ_cell_num)
     text(ax_burst_typ{ii,1},0,0,['Cell\newline#',num2str(curr_cell)],...
         'Units','normalized','Position',[0 0.5],...
         'HorizontalAlignment','right','VerticalAlignment','middle');
+
+    %Add scale bar to last
+    
+    if ii == numel(typ_cell_num)
+        scale_opts.xlabel = 'ms';
+        scale_opts.xscale_factor = 1000;
+    end
+    
+    scale_opts.origin = all_scale_origins{ii};
+    add_scale_bar(ax_burst_typ{end,end},all_scale_size{ii},scale_opts)
 end
 
 %Add scale bar to last
-scale_opts = struct();
-scale_opts.xlabel = 'ms';
-scale_opts.xscale_factor = 1000;
-scale_opts.origin = [1.5 15];
-add_scale_bar(ax_burst_typ{end,end},[0.2,0],scale_opts)
+% scale_opts = struct();
+% scale_opts.xlabel = 'ms';
+% scale_opts.ylabel = 'spk/s';
+% scale_opts.xscale_factor = 1000;
+% scale_opts.origin = [1.8 15];
+% add_scale_bar(ax_burst_typ{end,end},[0.2,10],scale_opts)
 

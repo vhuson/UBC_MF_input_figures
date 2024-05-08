@@ -64,7 +64,7 @@ plot_labels{1} = 'a';
 % plot_labels{6} = 'b';
 % plot_labels{11} = 'c';
 plot_labels{21} = 'b';
-plot_labels(26:29) = {'c','d','e','f'};
+plot_labels(26:28) = {'c','d','e'};
 labelPlots(f_burst,plot_labels);
 
 

@@ -3,9 +3,9 @@
 
 left_margin = 0.08;
 bottom_margin = 0.08;
-base_width = 0.14;
+base_width = 0.18;
 bar_width = 0.07;
-base_space = 0.09;
+base_space = 0.11;
 
 graph_height = 0.14;
 ax_burst_par = {};
@@ -35,30 +35,31 @@ fix_powered_ylabels(ax_burst_par{p_idx})
 %Panel 3
 p_idx = 3;
 pos_ax(1) = sum(pos_ax([1,3]))+base_space;
-[ax_burst_par{p_idx}] = UBC_par_line_plot(...
-    ONidx,summary_off,all_burst_slow_HD,[0 1 0],-Inf,f_burst,pos_ax);
+[ax_burst_par{p_idx}, cb1] = UBC_par_line_plot(...
+    ONidx,summary_off,all_burst_slow_HD,[0 1 1],-Inf,f_burst,pos_ax);
 ylabel('Half-width (s)')
 ax_burst_par{p_idx}.YLim(2) = 10;
 fix_powered_ylabels(ax_burst_par{p_idx})
 
 
 %Panel 4
-p_idx = 4;
-pos_ax(1) = sum(pos_ax([1,3]))+base_space;
-pos_ax(3) = base_width; % + bar_width;
-[ax_burst_par{p_idx}, cb1] = UBC_par_line_plot(...
-    ONidx,[],all_burst_pause,[0 1 1],-Inf,f_burst,pos_ax);
-% cb1.Position = [0.9313 0.1078 0.0166 0.0713];
+% p_idx = 4;
+% pos_ax(1) = sum(pos_ax([1,3]))+base_space;
+% pos_ax(3) = base_width; % + bar_width;
+% [ax_burst_par{p_idx}, cb1] = UBC_par_line_plot(...
+%     ONidx,[],all_burst_pause,[0 1 1],0.01,f_burst,pos_ax);
+% % cb1.Position = [0.9313 0.1078 0.0166 0.0713];
+
 %Adjust color bar
-cb1.Position(1) = 0.9313; %Left edge
+cb1.Position(1) = 0.871; %Left edge
 cb1.Units = 'pixels';
 cb1.Position(3:4) = [8.7326 59.5984];
 cb1.Units = 'normalized';
 cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2; 
 
-ylabel('Pause (s)')
-ax_burst_par{p_idx}.YLim(1) = 0.001;
-fix_powered_ylabels(ax_burst_par{p_idx})
+% ylabel('Pause (s)')
+% % ax_burst_par{p_idx}.YLim(1) = 0.001;
+% fix_powered_ylabels(ax_burst_par{p_idx})
 
 
 for ii =1:numel(ax_burst_par)
