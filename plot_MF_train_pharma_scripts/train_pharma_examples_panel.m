@@ -1,7 +1,7 @@
 %% Plot trains stacked pharma
 
-f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
+% f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
 
 select_cells = fltr_ONidx_tpharma;
 

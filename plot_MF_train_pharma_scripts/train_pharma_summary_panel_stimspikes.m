@@ -4,18 +4,20 @@
 select_cells = fltr_ONidx_tpharma;
 
 %Plot options
-title_on = false;
-color_bar_on = false;
-plot_log = true;
+title_on = true;
+color_bar_on = true;
+plot_log = false;
 
 %Set axis position
 num_cols = 6;
 
 pos_left = 0.1;
-pos_bottom = 0.23;
+% pos_bottom = 0.23;
 full_width = 0.9243-pos_left;
 base_space = 0.017;
-base_height = 0.085;
+% base_height = 0.085;
+pos_bottom = 0.21;
+base_height = 0.1;
 
 base_width = full_width - base_space * (num_cols-1);
 base_width = base_width / num_cols;
@@ -30,9 +32,9 @@ all_summary_data = cell(1,8);
 all_summary_data2 = cell(1,8);
 for ii = 1:8
     all_summary_data{ii} = cellfun(@(x) x(ii),all_n_spikes_stim_pharma);
-    % all_summary_data2{ii} = cellfun(@(x) x(ii),all_n_spikes_post_pharma);
-    % 
-    % all_summary_data{ii} =  cellfun(@(x,y) {x+y},all_summary_data{ii},all_summary_data2{ii});
+    all_summary_data2{ii} = cellfun(@(x) x(ii),all_n_spikes_post_pharma);
+
+    all_summary_data{ii} =  cellfun(@(x,y) {x+y},all_summary_data{ii},all_summary_data2{ii});
 end
 if plot_log
     min_val = 1;
@@ -43,8 +45,8 @@ else
     max_val = 150;
     y_scale = 'linear';
 end
-% chosen_plot_ylabel = '\DeltaSpikes (n)';
-chosen_plot_ylabel = '\DeltaSpikes\newlineduring step (n)';
+chosen_plot_ylabel = '\DeltaSpikes (n)';
+% chosen_plot_ylabel = '\DeltaSpikes\newlineduring step (n)';
 % chosen_plot_ylabel = 'Post spikes (n)';
 
 %Plot settings

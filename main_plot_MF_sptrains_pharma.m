@@ -11,6 +11,7 @@ file_match = 'TRAIN5';
 train_pharma_fltr = ~cellfun(@isempty,all_mean_trains_pharma3);
 
 all_mean_trains_pharma = {};
+all_full_trains_pharma = {};
 all_train_slow_amp_pharma = {};
 all_train_slow_HD_pharma = {};
 all_train_pause_pharma = {};
@@ -30,7 +31,7 @@ all_washin = {[1 0 0 0 0];[0 1 0 0 0];[0 1 1 0 0];[0 1 1 1 0]};
 for ii = 1:4
 
     washin = all_washin{ii};
-    [all_mean_trains_pharma{ii},~] = get_mean_by_filecode(...
+    [all_mean_trains_pharma{ii},all_full_trains_pharma{ii}] = get_mean_by_filecode(...
         allData(train_pharma_fltr),file_match,washin);
 
     %Get parameters (train5 hardcoded)
@@ -88,7 +89,7 @@ train_pharma_heatmap_panel
 % 
 % train_pharma_summary_panel_peak
 train_pharma_summary_panel_stimspikes
-train_pharma_summary_panel_postspikes
+% train_pharma_summary_panel_postspikes
 % train_pharma_summary_panel_percentspikes
 % train_pharma_summary_panel
 
@@ -110,7 +111,7 @@ plot_labels{2} = 'b';
 plot_labels{28} = 'c';
 plot_labels{33} = 'd';
 plot_labels{40} = 'e';
-plot_labels{46} = 'f';
+% plot_labels{46} = 'f';
 labelPlots(f_train_pharma,plot_labels);
 
 %% other figure
