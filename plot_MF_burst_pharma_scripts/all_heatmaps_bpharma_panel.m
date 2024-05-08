@@ -40,11 +40,11 @@ all_mean_pharma_bursts_all = {all_mean_pharma_bursts1,...
 
 
 
-%Normalize per cell based on-mGluR2
+%Normalize per cell based on-mGluR2/3
 % norm_on = max(all_mean_pharma_bursts_all{2}{5},[],2);
 norm_on = max(medfilt1(all_mean_pharma_bursts_all{2}{5},Fs*0.16,[],2),[],2);
 
-%Normalize per cell per protocol based on-mGluR2
+%Normalize per cell per protocol based on-mGluR2/3
 per_prot_norm = false;
 all_norm_on = cell(1,5);
 for ii = 1:5
@@ -61,7 +61,7 @@ ax_pharm_hm = {};
 %Setup basic plot options
 all_titles = {'1x', '2x 100 Hz', '5x 100 Hz', '10x 100 Hz', '20x 100 Hz'};
 
-all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+all_row_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;

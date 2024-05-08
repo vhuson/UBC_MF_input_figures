@@ -11,7 +11,7 @@ seed_colors_pharma = [0 0 0;
 
 
 all_colors_pharma = seed_map(seed_colors_pharma,4);
-legend_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 
 
 %Make graphic
@@ -22,7 +22,7 @@ hold on
 plot([0,1],[4,4],'Color',all_colors_pharma(1,:),"LineWidth",1.5)
 text(1.1,4,legend_labels{1},"FontSize",9,"FontName","Arial",...
     "HorizontalAlignment","left","VerticalAlignment","middle")
-%mGlur2
+%mGluR2/3
 plot([1,4],[3,3],'Color',all_colors_pharma(2,:),"LineWidth",1.5)
 text(4.1,3,legend_labels{2},"FontSize",9,"FontName","Arial",...
     "HorizontalAlignment","left","VerticalAlignment","middle")

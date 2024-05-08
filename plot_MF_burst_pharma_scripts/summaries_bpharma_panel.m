@@ -21,7 +21,7 @@ all_left_edges = (base_width + base_gap) .* (0:num_cols-1) + left_edge;
 all_bottom_edges = repmat(bottom_edge,1,num_cols);
 
 
-trace_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+trace_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 % trace_labels = {'1','2','3','4'};
 all_titles = {'1x' '2x' '5x' '10x' '20x'};
 
@@ -129,7 +129,7 @@ same_ylim(ax_pharm_n)
 %Make dummy axis for legend
 dummy_ax = UBC_par_marker_plot([1 1 1 1],f_burst_pharma,[2 2 0.2 0.2]);
 
-legend_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Orientation','vertical',...
     'Box', 'off',...

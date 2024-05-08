@@ -67,11 +67,17 @@ seed_colors_pharma = [0 0 0;
 
 all_colors_pharma = seed_map(seed_colors_pharma,4);
 
-trace_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+trace_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 all_titles = {'1x' '2x' '5x' '10x' '20x'};
 
 opts = struct();
 opts.axis_off = true;
+
+%Scale bar options
+scale_opts = struct();
+scale_opts.ylabel = '\newlinespk/s';
+all_scale_origin = {[2 65],[2 45],[2 50],[2 80],[1 14]};
+all_scale_size = {[0 50], [0 50], [0 50], [0 50], [1 10]};
 
 ax_pharm_typ = {};
 
@@ -115,25 +121,28 @@ for ii = 1:numel(curr_cells)
 
     same_ylim(ax_pharm_typ(ii,:))
 
-    
-
+    if ii == numel(curr_cells)
+        scale_opts.xlabel = 's';
+    end
+    scale_opts.origin = all_scale_origin{ii};
+    add_scale_bar(ax_pharm_typ{ii,end},all_scale_size{ii},scale_opts);
 end
 
-scale_opts = struct();
-scale_opts.xlabel = 's';
-scale_opts.origin = [1 14];
+% scale_opts = struct();
+% scale_opts.xlabel = 's';
+% scale_opts.origin = [1 14];
 % scale_opts.xscale_factor = 1e3;
 % scale_opts.ylabel = 'spk/s';
-add_scale_bar(ax_pharm_typ{ii,end},[1 0],scale_opts);
+% add_scale_bar(ax_pharm_typ{ii,end},[1 0],scale_opts);
 
-% legend_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+% legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 % legend(ax_pharm_typ{1,3},legend_labels,...
 %     'Orientation','horizontal',...
 %     'Box', 'off',...
 %     'NumColumns',2,...
 %     'Units','normalized',...
 %     'Position', [0.1452 0.9435 0.3319 0.0459])
-% legend_labels = {'1: Baseline','2: −mGluR2','3: −AMPAR','4: −mGluR1'};
+% legend_labels = {'1: Baseline','2: −mGluR2/3','3: −AMPAR','4: −mGluR1'};
 
 
 %Separate text labels for legend
