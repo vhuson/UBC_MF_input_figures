@@ -54,11 +54,12 @@ for idx = 1:numel(all_mean_bursts)
     ax_burst_typ{idx}.LineWidth = 1.5;
     %Draw line a little bit above trace
     ax_burst_typ{idx}.YLim(2) = ax_burst_typ{idx}.YLim(2)*1.1;
+    if input_dur ~= 0
     hold on
     line([0 input_dur(idx)],repmat(ax_burst_typ{idx}.YLim(2),1,2),...
         'LineWidth',2,'Color',opts.input_color);
     hold off
-    
+    end
     %Add label if provided
     if ~isempty(trace_labels)
         text(ax_burst_typ{idx},0,0,trace_labels(idx),...

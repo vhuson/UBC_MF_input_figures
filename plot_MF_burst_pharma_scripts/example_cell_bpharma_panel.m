@@ -128,6 +128,17 @@ for ii = 1:numel(curr_cells)
     add_scale_bar(ax_pharm_typ{ii,end},all_scale_size{ii},scale_opts);
 end
 
+%Add input line
+il_opts = struct();
+il_opts.input_color = [0.2 0.7 0.2];
+input_durs = {[0 0.01],[0 0.02],[0 0.05],[0 0.1],[0 0.2]};
+
+for ii = 1:numel(input_durs)
+    input_dur = input_durs{ii};
+
+    cellfun(@(x) add_input_line(x,input_dur,il_opts),ax_pharm_typ(:,ii));
+end
+
 % scale_opts = struct();
 % scale_opts.xlabel = 's';
 % scale_opts.origin = [1 14];

@@ -82,7 +82,7 @@ for ii = 1:numel(typ_cell_num)
 
         [curr_ax] = plot_burst_examples_v2(all_mean_bursts(ax_idx),...
             Fs,all_baseline,ONidx,curr_cell,all_colors(ax_idx,:),...
-            curr_xlim,zerod_x(ax_idx),input_dur(ax_idx),trace_label,opts,...
+            curr_xlim,zerod_x(ax_idx),0,trace_label,opts,...
             f_burst,pos_ax,base_height,base_space);
 
         %Add 0 line
@@ -117,6 +117,18 @@ for ii = 1:numel(typ_cell_num)
     
     scale_opts.origin = all_scale_origins{ii};
     add_scale_bar(ax_burst_typ{end,end},all_scale_size{ii},scale_opts)
+end
+
+
+%Add input line
+il_opts = struct();
+il_opts.input_color = [0.2 0.7 0.2];
+input_durs = {[0 0.01],[0 0.02],[0 0.05],[0 0.1],[0 0.2]};
+
+for ii = 1:numel(input_durs)
+    input_dur = input_durs{ii};
+
+    cellfun(@(x) add_input_line(x,input_dur,il_opts),ax_burst_typ(:,ii));
 end
 
 %Add scale bar to last
