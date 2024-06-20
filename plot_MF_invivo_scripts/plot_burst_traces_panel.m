@@ -21,7 +21,7 @@ ax_burst_input = axes('Position', ax_pos_burst);
 x_time = (1:30*Fs)/Fs;
 dummy_y = zeros(size(x_time));
 dummy_y(5*Fs:5.2*Fs) = 100;
-plot(x_time,dummy_y,'k')
+plot(x_time,dummy_y,'Color',input_color)
 xlim([4.5 4.5+burst_p_width*x_scale_factor])
 ylim([0 150])
 title('20x 100 spk/s Burst')
@@ -41,7 +41,7 @@ add_scale_bar(ax_burst_input,[1,50],scale_opts);
 %% Panel for MF input
 ax_pos_mf = [left_edge_mf top_edge-burst_p_height mf_p_width burst_p_height];
 ax_mfburst_input = axes('Position', ax_pos_mf);
-plot(x_time,time2rate(round(prot_timings{3}*20),Fs,30),'k')
+plot(x_time,time2rate(round(prot_timings{3}*20),Fs,30),'Color',input_color)
 title('In vivo bursting MF')
 xlim([0 mf_p_width*x_scale_factor])
 standardAx(ax_mfburst_input);

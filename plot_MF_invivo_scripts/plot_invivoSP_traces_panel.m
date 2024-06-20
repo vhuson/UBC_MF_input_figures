@@ -19,7 +19,7 @@ height_space = 0.01;
 x_time = (1:30*Fs)/Fs;
 ax_pos_mf = [left_edge_mf top_edge-burst_p_height mf_p_width burst_p_height];
 ax_mfburst_input = axes('Position', ax_pos_mf);
-plot(x_time,time2rate(round(prot_timings{1}*20),Fs,30),'k')
+plot(x_time,time2rate(round(prot_timings{1}*20),Fs,30),'Color',input_color)
 ylim([0 110])
 title('In vivo smooth pursuit MF')
 t1 = text(ax_mfburst_input,-1, ax_mfburst_input.YLim(2)/2,'Input','Rotation',90,...
