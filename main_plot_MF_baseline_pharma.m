@@ -132,13 +132,11 @@ standardFig(f_base_pharma,fig_opts);
 %Add labels
 plot_labels = repmat({[]},1,63);
 plot_labels{1} = 'a';
-plot_labels{13} = 'b';
-plot_labels{25} = 'c';
-plot_labels{37} = 'd';
-plot_labels{49} = 'e';
-plot_labels{61} = 'f';
-plot_labels{62} = 'g';
-plot_labels{63} = 'h';
+plot_labels{25} = 'b';
+plot_labels{49} = 'c';
+plot_labels{61} = 'd';
+plot_labels{62} = 'e';
+plot_labels{63} = 'f';
 labelPlots(f_base_pharma,plot_labels);
 
 
