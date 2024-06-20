@@ -37,6 +37,7 @@ scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
 add_scale_bar(ax_burst_input,[1,50],scale_opts);
 
+add_zero_line(ax_burst_input);
 
 %% Panel for MF input
 ax_pos_mf = [left_edge_mf top_edge-burst_p_height mf_p_width burst_p_height];
@@ -52,7 +53,7 @@ scale_opts.ylabel = 'spk/s';
 scale_opts.xlabel = 's';
 add_scale_bar(ax_mfburst_input,[1,250],scale_opts);
 
-
+add_zero_line(ax_mfburst_input);
 
 
 %% Panel for fast cell burst reponse
@@ -91,7 +92,7 @@ ax_fast_burst.Visible = 'off';
 
 % scale_opts.origin = [9.5683 80];
 add_scale_bar(ax_fast_burst,[0,50],scale_opts);
-
+add_zero_line(ax_fast_burst);
 
 %% Panel for fast cell mf reponse
 % curr_mf_resp = reshape(curr_cell_data.freqs{4},[600000,3]);
@@ -122,7 +123,7 @@ xlim([0 mf_p_width*x_scale_factor])
 standardAx(ax_fast_mf);
 ax_fast_mf.Visible = 'off';
 % add_scale_bar(ax_fast_mf,[1,50]);
-
+add_zero_line(ax_fast_mf);
 
 
 
@@ -162,7 +163,7 @@ ax_int_burst.Visible = 'off';
 
 % scale_opts.origin = [9.5683 80];
 add_scale_bar(ax_int_burst,[0,50],scale_opts);
-
+add_zero_line(ax_int_burst);
 
 %% Panel for intermediate cell mf reponse
 % curr_mf_resp = reshape(curr_cell_data.freqs{4},[600000,3]);
@@ -195,7 +196,7 @@ xlim([0 mf_p_width*x_scale_factor])
 standardAx(ax_int_mf);
 ax_int_mf.Visible = 'off';
 % add_scale_bar(ax_fast_mf,[1,50]);
-
+add_zero_line(ax_int_mf);
 
 
 
@@ -235,7 +236,7 @@ ax_mid_burst.Visible = 'off';
 
 scale_opts.origin = [10.3183 20];
 add_scale_bar(ax_mid_burst,mid_scale_bar,scale_opts);
-
+add_zero_line(ax_mid_burst);
 
 %% Panel for slow cell mf reponse
 curr_mf_resp = reshape(curr_cell_data.freqs{2}{5},[600001,3]);
@@ -260,7 +261,7 @@ xlim([0 mf_p_width*x_scale_factor])
 standardAx(ax_mid_mf);
 ax_mid_mf.Visible = 'off';
 % add_scale_bar(ax_mid_mf,mid_scale_bar);
-
+add_zero_line(ax_mid_mf);
 
 
 
@@ -296,7 +297,7 @@ standardAx(ax_off_burst);
 ax_off_burst.Visible = 'off';
 scale_opts.origin = [10.3183 8];
 add_scale_bar(ax_off_burst,off_scale_bar,scale_opts);
-
+add_zero_line(ax_off_burst);
 
 %% Panel for off cell mf reponse
 curr_mf_resp = reshape(curr_cell_data.freqs{2}{5},[600001,3]);
@@ -323,3 +324,4 @@ ax_off_mf.Visible = 'off';
 scale_opts = struct();
 scale_opts.origin = [27 8];
 % add_scale_bar(ax_off_mf,off_scale_bar,scale_opts);
+add_zero_line(ax_off_mf);

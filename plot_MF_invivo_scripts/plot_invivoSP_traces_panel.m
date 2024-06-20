@@ -35,7 +35,7 @@ scale_opts.ylabel = 'spk/s';
 scale_opts.origin = [28.7246 60];
 add_scale_bar(ax_mfburst_input,[1,50],scale_opts);
 
-
+add_zero_line(ax_mfburst_input);
 
 %% Panel for fast cell mf reponse
 curr_cell_data = allData_invivo{10};
@@ -78,6 +78,7 @@ scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
 add_scale_bar(ax_fast_mf,[0,50],scale_opts);
+add_zero_line(ax_fast_mf);
 
 %% Panel for int cell mf reponse
 curr_cell_data = allData_invivo{4};
@@ -111,7 +112,7 @@ standardAx(ax_int_mf);
 ax_int_mf.Visible = 'off';
 add_scale_bar(ax_int_mf,[0 50],scale_opts);
 
-
+add_zero_line(ax_int_mf);
 
 %% Panel for slow cell mf reponse
 curr_cell_data = allData_invivo{1};
@@ -145,7 +146,7 @@ t1 = text(ax_mid_mf,-1, ax_mid_mf.YLim(2)/2,'Slow cell','Rotation',90,...
 standardAx(ax_mid_mf);
 ax_mid_mf.Visible = 'off';
 add_scale_bar(ax_mid_mf,mid_scale_bar,scale_opts);
-
+add_zero_line(ax_mid_mf);
 
 
 
@@ -183,3 +184,4 @@ ax_off_mf.Visible = 'off';
 % scale_opts = struct();
 % scale_opts.origin = [27 8];
 add_scale_bar(ax_off_mf,off_scale_bar,scale_opts);
+add_zero_line(ax_off_mf);
