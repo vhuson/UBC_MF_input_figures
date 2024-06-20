@@ -16,6 +16,7 @@ typ_cell_IDs = {'1823','1774'};
 
 y_labels_on = false;
 
+input_color = [0.2 0.7 0.2];
 
 %Set axis position
 num_cells = numel(typ_cell_num);
@@ -94,6 +95,9 @@ pos_ax = [pos_left  first_panel_bottom(1)  full_width  first_panel_height];
 
 [input_ax] = plot_stacked_traces(...
     input_train,Fs,1,f_train_pharma,pos_ax,stack_opts);
+input_ax{1}.Children(1).Color = input_color;
+input_ax{1}.Children(1).LineWidth = 1;
+
 %Plot pulse 60 zoom in
 stack_opts2 = stack_opts;
 stack_opts2.XLim = [27.5 31];
@@ -101,7 +105,8 @@ stack_opts2.XLim = [27.5 31];
 pos_ax2 = [pos_left2  first_panel_bottom(1)  base_width2  first_panel_height];
 [input_ax2] = plot_stacked_traces(...
     input_train,Fs,1,f_train_pharma,pos_ax2,stack_opts2);
-
+input_ax2{1}.Children(1).Color = input_color;
+input_ax2{1}.Children(1).LineWidth = 1;
 
 %Loop over cells and plot
 pharma_stack = {};

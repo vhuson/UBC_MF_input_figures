@@ -56,6 +56,7 @@ all_scale_size = {[0,50], [0,50], [0,10], [0.2,10]};
 opts = struct();
 opts.axis_off = true;
 opts.pad = false;
+opts.input_color = [0.2 0.7 0.2];
 
 for ii = 1:numel(typ_cell_num)
     curr_cell = typ_cell_num(ii);

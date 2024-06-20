@@ -16,6 +16,7 @@ typ_cell_IDs = {'1754','1751','1759','1750','1749','1753'};
 % TRAIN10 selection
 % select_cells = select_cells([2,10,14]);
 
+input_color = [0.2 0.7 0.2];
 
 y_labels_on = false;
 
@@ -72,6 +73,8 @@ pos_ax = [pos_left  pos_bottom  full_width  pos_height];
 
 [train_stack_1] = plot_stacked_traces(...
     curr_traces,Fs,select_cells,f_train,pos_ax,stack_opts);
+train_stack_1{1}.Children(1).Color = input_color;
+train_stack_1{1}.Children(1).LineWidth = 1;
 cellfun(@add_zero_line, train_stack_1(2:end));
 
 %Plot pulse 60 zoom in
@@ -81,6 +84,8 @@ pos_ax2 = [pos_left2  pos_bottom  base_width2  pos_height];
 
 [train_stack_2] = plot_stacked_traces(...
     curr_traces,Fs,select_cells,f_train,pos_ax2,stack_opts);
+train_stack_2{1}.Children(1).Color = input_color;
+train_stack_2{1}.Children(1).LineWidth = 1;
 cellfun(@add_zero_line, train_stack_2(2:end));
 
 %add stim onset line

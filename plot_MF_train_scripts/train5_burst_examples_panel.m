@@ -54,6 +54,8 @@ pos_ax = [pos_left  pos_bottom  full_width  pos_height];
 
 [train_stack_burst] = plot_stacked_traces(...
     curr_traces,Fs,select_cells,f_train,pos_ax,stack_opts);
+train_stack_burst{1}.Children(1).Color = input_color;
+train_stack_burst{1}.Children(1).LineWidth = 1;
 cellfun(@add_zero_line, train_stack_burst(2:end));
 
 %Add cell label

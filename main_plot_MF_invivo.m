@@ -163,7 +163,7 @@ f_mf_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
 show_individual_traces = true;
 median_fltr = false;
 % input_color = [0.1608    0.1608    0.7294];
-input_color = [0.4 0.7 0.4];
+input_color = [0.2 0.7 0.2];
 
 plot_burst_traces_panel
 

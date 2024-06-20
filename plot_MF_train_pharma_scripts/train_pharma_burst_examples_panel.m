@@ -77,6 +77,8 @@ pos_ax = [pos_left  first_panel_bottom(1)  full_width  first_panel_height];
 
 [input_ax_burst] = plot_stacked_traces(...
     input_train,Fs,1,f_train_pharma,pos_ax,stack_opts);
+input_ax_burst{1}.Children(1).Color = input_color;
+input_ax_burst{1}.Children(1).LineWidth = 1;
 
 
 %Loop over cells and plot

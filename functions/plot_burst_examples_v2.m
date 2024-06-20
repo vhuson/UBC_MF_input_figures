@@ -12,6 +12,7 @@ base_opts.scale_xlabel = [];
 base_opts.scale_xscale_factor = 1;
 base_opts.scale_ylabel = [];
 base_opts.scale_yscale_factor = 1;
+base_opts.input_color = [0.7 0.7 0.7];
 
 opts = merge_structs(base_opts,opts);
 %UNTITLED19 Summary of this function goes here
@@ -55,7 +56,7 @@ for idx = 1:numel(all_mean_bursts)
     ax_burst_typ{idx}.YLim(2) = ax_burst_typ{idx}.YLim(2)*1.1;
     hold on
     line([0 input_dur(idx)],repmat(ax_burst_typ{idx}.YLim(2),1,2),...
-        'LineWidth',2,'Color',[0.7 0.7 0.7]);
+        'LineWidth',2,'Color',opts.input_color);
     hold off
     
     %Add label if provided
