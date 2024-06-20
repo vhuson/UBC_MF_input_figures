@@ -27,7 +27,7 @@ fix_powered_ylabels(ax_burst_par{p_idx})
 p_idx = 2;
 pos_ax(1) = sum(pos_ax([1,3]))+base_space;
 [ax_burst_par{p_idx}] = UBC_par_line_plot(...
-    ONidx,summary_off,all_burst_n_spikes,[0 1 0],-Inf,f_burst,pos_ax);
+    ONidx,summary_off,all_burst_n_spikes,[0 1 0],0.03,f_burst,pos_ax);
 ylabel("\DeltaSpikes (n)")
 fix_powered_ylabels(ax_burst_par{p_idx})
 
@@ -56,7 +56,9 @@ cb1.Units = 'pixels';
 cb1.Position(3:4) = [8.7326 59.5984];
 cb1.Units = 'normalized';
 cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2; 
-
+cb1.Limits(1) = numel(OFFidx)/numel(ONidx);
+cb1.Ticks(1) = cb1.Limits(1);
+cb1.TickLabels{1} = num2str(numel(ONidx)-numel(OFFidx));
 % ylabel('Pause (s)')
 % % ax_burst_par{p_idx}.YLim(1) = 0.001;
 % fix_powered_ylabels(ax_burst_par{p_idx})
