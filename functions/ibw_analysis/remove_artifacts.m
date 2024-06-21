@@ -68,7 +68,7 @@ if ~isempty(pid2)
     
     pad = opts.pad;
 
-    if ~isempty(pid2_clean) && numel(pid2_clean > pad)
+    if ~isempty(pid2_clean) && numel(pid2_clean) > pad
         
         
         starts = (1:numel(pid2_clean))-pad;

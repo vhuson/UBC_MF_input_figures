@@ -2,24 +2,24 @@
 
 %% Get filenames and unique cell names
 % curr_path = 'data_raw\MF_stim_fastshutdown';
-% curr_path = 'data_raw\MF_stim_trains';
+curr_path = 'data_raw\MF_stim_trains';
 % curr_path = 'data_raw\MF_stim_trains_pharma';
-curr_path = 'data_raw\MF_stim_invivo_pharma\**\*';
+% curr_path = 'data_raw\MF_stim_invivo_pharma\**\*';
 % curr_path = 'data_raw\MF_stim';
 
 [fileNames, allCellNames] = ...
     get_files_and_cellnames(curr_path);
 
 %% Run spike detection
-currCell = allCellNames{4};
+currCell = allCellNames{9};
 
 opts = struct();
 opts.max_peak =1000;
-opts.min_peak = 20;
+opts.min_peak = 80;
 opts.cut_peak = 15;
 opts.cut_peak_max = 500;
 opts.min_width = 0.1e-3;
-opts.use_old = false;
+opts.use_old = true;
 
 opts.prot_start = 1;
 opts.rec_start = 1;
@@ -213,9 +213,9 @@ med_opts.smooth = 10;
 %% Save cell
 
 % cd('data_analyzed\MF_stim_fastshutdown')
-% cd('data_analyzed\MF_stim_train_saved')
+cd('data_analyzed\MF_stim_train_saved')
 % cd('data_analyzed\MF_stim_train_pharma_saved')
-cd('data_analyzed\MF_stim_invivo_all');
+% cd('data_analyzed\MF_stim_invivo_all');
 
 
 saveas(gcf,[currCell,'.png'])
@@ -226,12 +226,11 @@ save([currCell,'_analyzed.mat'],...
     'medianStats')
 cd('..')
 cd('..')
-%{
-currCell = 'Cell1675';
+%
+currCell = 'Cell1755';
 
-cd('MF_stim_prots_pharma_saved_noWashin')
-save([currCell,'_analyzed.mat'],'washinStates','washinConcentrations','washinIDs',...
-    'medianStats','bw_prots','-append')
+cd('data_analyzed\MF_stim_train_saved')
+save([currCell,'_analyzed.mat'],'freqs_prot','spks_prot','-append')
 cd('..')
 %}
 
