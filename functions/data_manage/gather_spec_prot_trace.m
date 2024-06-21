@@ -10,6 +10,7 @@ function [mean_match_traces,all_match_traces,all_idx,all_times] = ...
 % prot_spec_freq = [0 100 0];
 % prot_spec_dur = [2 0.05 9.95];
 base_opts.ignore_first_dur = true;
+base_opts.ignore_washout = true;
 
 if nargin < 5
     %No washin_state given, ignore filtering
@@ -75,7 +76,11 @@ for ii = 1:numel(allData)
         washinIDs = allData{ii}.washinIDs;
         %Filter based on washinID
         curr_washins    = washinIDs(overall_idx,:);
-        washin_fltr     = all(curr_washins == washin_state,2);
+        if opts.ignore_washout
+            washin_fltr     = all(curr_washins(:,1:4) == washin_state(:,1:4),2);
+        else
+            washin_fltr     = all(curr_washins == washin_state,2);
+        end
         split_idx       = split_idx(washin_fltr,:);
         match_times     = match_times(washin_fltr);
     end
