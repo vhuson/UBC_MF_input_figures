@@ -74,7 +74,7 @@ base_w_avg = lim_x_avg(:,2).*base_width*2.5;
 y_scalebar_size = [20 20 20 20 20];
 
 zerod_x = [0 0 0];
-trace_labels = {'1 Hz','2.5 Hz','5 Hz'};
+trace_labels = {'1 spk/s','2.5 spk/s','5 spk/s'};
 
 opts = struct();
 opts.axis_off = true;
@@ -111,16 +111,19 @@ for ii = 1:numel(typ_cell_num)
         add_zero_line(ax_burst_typ_avg{ii}{jj});
         if ii == 1
             title(ax_burst_typ{ii}{jj},trace_labels{jj})
-            if jj ==2
+            if jj == 2
                 % title(ax_burst_typ_ss{ii}{jj},"End of train")
-                title(ax_burst_typ_avg{ii}{jj},"Spike triggered average")
+                title(ax_burst_typ_avg{ii}{jj},["Average response\newline",trace_labels{jj}])
+            else
+                title(ax_burst_typ_avg{ii}{jj},trace_labels{jj})
             end
         end
 
         if jj == 1
             text(ax_burst_typ{ii}{jj},0,0,['#',num2str(curr_cell)],'Units','normalized',...
                 'Position',[-0.01 0.5],'VerticalAlignment','middle',...
-                'HorizontalAlignment','right')
+                'HorizontalAlignment','right');
+
 
         end
 

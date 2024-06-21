@@ -64,7 +64,7 @@ ax_basep_par = {};
 
 
 trace_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
-all_titles = {'1 Hz', '2.5 Hz', '5 Hz'};
+all_titles = {'1 spk/s', '2.5 spk/s', '5 spk/s'};
 
 
 opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[],...

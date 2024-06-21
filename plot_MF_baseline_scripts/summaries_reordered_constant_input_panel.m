@@ -147,7 +147,7 @@ end
 
 opts_ratio = opts;
 opts_ratio.YLabel = "Steady state (ratio)";
-opts_ratio.XLabel = "Constant input (Hz)";
+opts_ratio.XLabel = "Constant input (spk/s)";
 opts_ratio.input_n = input_n(point_0:end);
 opts_ratio.XTickLabel = XTickLabel(point_0:end);
 opts_ratio.min_val = 0.01;

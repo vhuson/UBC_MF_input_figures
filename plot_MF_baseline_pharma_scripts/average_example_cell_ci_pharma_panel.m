@@ -70,7 +70,7 @@ all_colors = zeros(3,3);
 opts = struct();
 opts.axis_off = true;
 
-all_titles = {'1 Hz', '2.5 Hz', '5 Hz'};
+all_titles = {'1 spk/s', '2.5 spk/s', '5 spk/s'};
 
 all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
 seed_colors_pharma = [0 0 0;
@@ -126,7 +126,11 @@ for ii = 1:numel(curr_cells)
 
             %Add title
             if row_idx == 1
-                title(ax_basep_avgtyp{row_idx,kk},all_titles{kk})
+                if kk == 2
+                    title(ax_basep_avgtyp{row_idx,kk},["Average response\newline",all_titles{kk}])
+                else
+                    title(ax_basep_avgtyp{row_idx,kk},all_titles{kk})
+                end
             end
         end
         
