@@ -124,6 +124,8 @@ plot_labels{27} = 'h';
 plot_labels{28} = 'g';
 
 labelPlots(f_train,plot_labels);
+%% calculate correlation
+train5_HDvsHW_corr
 
 %% Other plots
 train5_20s_figure
