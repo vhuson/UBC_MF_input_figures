@@ -77,7 +77,7 @@ for ii = 1:numel(allData)
         %Filter based on washinID
         curr_washins    = washinIDs(overall_idx,:);
         if opts.ignore_washout
-            washin_fltr     = all(curr_washins(:,1:4) == washin_state(:,1:4),2);
+            washin_fltr     = all(curr_washins(:,1:end-1) == washin_state(:,1:end-1),2);
         else
             washin_fltr     = all(curr_washins == washin_state,2);
         end

@@ -2,24 +2,25 @@
 
 %% Get filenames and unique cell names
 % curr_path = 'data_raw\MF_stim_fastshutdown';
-curr_path = 'data_raw\MF_stim_trains';
+% curr_path = 'data_raw\MF_stim_trains';
 % curr_path = 'data_raw\MF_stim_trains_pharma';
 % curr_path = 'data_raw\MF_stim_invivo_pharma\**\*';
 % curr_path = 'data_raw\MF_stim';
+curr_path = 'data_raw\MF_stim_CPP_washin';
 
 [fileNames, allCellNames] = ...
     get_files_and_cellnames(curr_path);
 
 %% Run spike detection
-currCell = allCellNames{9};
+currCell = allCellNames{5};
 
 opts = struct();
 opts.max_peak =1000;
-opts.min_peak = 80;
+opts.min_peak = 40;
 opts.cut_peak = 15;
 opts.cut_peak_max = 500;
 opts.min_width = 0.1e-3;
-opts.use_old = true;
+opts.use_old = false;
 
 opts.prot_start = 1;
 opts.rec_start = 1;
@@ -107,7 +108,7 @@ end
 %% Discard a trace
 %{
 disc_p = 2;
-disc_t = 5;
+disc_t = 6;
 disc_global = get_overall_idx(curr_file_names,[disc_p,disc_t]);
 
 freqs{disc_p}(disc_t) = [];
@@ -131,18 +132,18 @@ par_opts = struct();
 par_opts.OFF = false;
 par_opts.baseRange = 1;
 par_opts.startPoint = 5.0;
-par_opts.endPoint = 10;
-par_opts.smooth = 20;
+par_opts.endPoint = 20;
+par_opts.smooth = 180;
 
 [Amp, HD, baseline,sPause] = get_UBC_HD_and_amp(freqs,Fs,sPause,par_opts);
 
 %% Plot individual
 fig_opts = struct();
-fig_opts.typCell = 3;
+fig_opts.typCell = 5;
 fig_opts.cellRange = [1:numel(freqs{1})];
 fig_opts.startT = 4.5;
 fig_opts.stimEnd = 5.2001;
-fig_opts.endT = 	10;
+fig_opts.endT = 	20;
 % fig_opts.post_stim = [10,19,29,39]+0.5;
 
 [fig1] = plot_individual_UBC(traces,Fs,curr_file_names,Amp,baseline,...
@@ -171,15 +172,22 @@ end
 temp_file_names = fixed_files;
 %}
 
-washinStates = {'Baseline','LY 341495','NBQX',...
-    'JNJ 16259685','Washout','Washout'};
-washinID_states = {[1,0,0,0,0];...
-                    [0,1,0,0,0];...
-                    [0,1,1,0,0];...
-                    [0,1,1,1,0];...
-                    [0,0,0,0,1]};
+% washinStates = {'Baseline','LY 341495','NBQX',...
+%     'JNJ 16259685','Washout','Washout'};
+% washinID_states = {[1,0,0,0,0];...
+%                     [0,1,0,0,0];...
+%                     [0,1,1,0,0];...
+%                     [0,1,1,1,0];...
+%                     [0,0,0,0,1]};
+% 
+% washinConcentrations = {'','5 uM','5 uM','1 uM',''};
 
-washinConcentrations = {'','5 uM','5 uM','1 uM',''};
+washinStates = {'Baseline','R-CPP','Washout'};
+washinID_states = {[1,0,0];...
+                    [0,1,0];...
+                    [0,0,1]};
+
+washinConcentrations = {'','5 uM',''};
 
 
                 
@@ -205,7 +213,9 @@ med_opts.startPoint = 5.0;
 med_opts.stimDur = 0.2;
 med_opts.endPoint = 13;
 med_opts.delay_startPoint = 0.0;
-med_opts.smooth = 10;
+med_opts.smooth = 120;
+
+
 
 [medianStats, smoothFreqs] = get_median_UBC_stats(curr_file_names,freqs,Fs,washinIDs,med_opts);
 
@@ -213,9 +223,10 @@ med_opts.smooth = 10;
 %% Save cell
 
 % cd('data_analyzed\MF_stim_fastshutdown')
-cd('data_analyzed\MF_stim_train_saved')
+% cd('data_analyzed\MF_stim_train_saved')
 % cd('data_analyzed\MF_stim_train_pharma_saved')
 % cd('data_analyzed\MF_stim_invivo_all');
+cd('data_analyzed\MF_stim_CPP_washin_saved');
 
 
 saveas(gcf,[currCell,'.png'])
@@ -226,7 +237,9 @@ save([currCell,'_analyzed.mat'],...
     'medianStats')
 cd('..')
 cd('..')
-%
+
+%% overwrite previously saved data
+%{
 currCell = 'Cell1755';
 
 cd('data_analyzed\MF_stim_train_saved')

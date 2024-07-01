@@ -1,13 +1,21 @@
-function [washinIDs] = get_washinIDs(curr_file_names,washinID_states)
+function [washinIDs] = get_washinIDs(curr_file_names,washinID_states,opts)
 %UNTITLED10 Summary of this function goes here
 %   Detailed explanation goes here
+base_opts.trials_to_ss = 5;
+base_opts.trials_post_protocols = 2;
+
+if nargin < 3
+    opts = base_opts;
+else
+    opts = merge_structs(base_opts,opts);
+end
 
 base_prot_list = find(contains(curr_file_names,'100Hz'));
 base_prot_jumps = diff(base_prot_list) > 2;
 washin_borders = base_prot_list(base_prot_jumps);
-washin_borders = washin_borders(2:end) - 4;
+washin_borders = washin_borders(2:end) - (opts.trials_to_ss-1);
 try
-washin_borders(end+1) = base_prot_list(find(base_prot_jumps,1,'last')+4);
+washin_borders(end+1) = base_prot_list(find(base_prot_jumps,1,'last')+opts.trials_post_protocols+1);
 catch
     disp('No Washout?')
 end
