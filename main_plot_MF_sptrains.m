@@ -23,6 +23,10 @@ train_fltr_5 = ~cellfun(@isempty,all_mean_trains_5);
     all_sum_spikes_stim,all_sum_spikes_post,all_train_half_decay] = ...
     get_train_parameters(all_mean_trains_5(train_fltr_5),Fs);
 
+%Get specific window n_spikes
+spike_windows = {[0.9 1],[3,4]};
+[specific_nspikes, specific_nspikes_base_corr, specific_nspikes_global_basecorr] = ...
+    get_train_nspikes(all_mean_trains_5(train_fltr_5),spike_windows,Fs);
 
 
 [fltr_ONidx_t10] = get_fltr_ONidx(ONidx,find(train_fltr_10));
