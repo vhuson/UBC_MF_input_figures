@@ -123,7 +123,24 @@ plot_labels{26} = 'f';
 plot_labels{27} = 'h';
 plot_labels{28} = 'g';
 
-labelPlots(f_train,plot_labels);
+[~,t_labels] = labelPlots(f_train,plot_labels);
+
+for ii = [2, 3, 5]
+    t_labels{ii}.Position(1) = t_labels{ii}.Position(1)-14;
+end
+for ii = [1,4]
+    t_labels{ii}.Position(1) = 0;
+end
+
+for ii = 5:8
+    t_labels{ii}.Position(2) = t_labels{ii}.Position(2)+10;
+end
+for ii = 6:8
+    t_labels{ii}.Position(1) = -58;
+end
+
+
+% exportgraphics(f_train,'pdf\240711_fig4.pdf','ContentType','vector')
 %% calculate correlation
 train5_HDvsHW_corr
 

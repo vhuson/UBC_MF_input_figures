@@ -13,7 +13,7 @@ num_cols = 3; %Number of different protocols
 num_rows = 4; %Number of washins
 
 left_edge = 0.08;
-bottom_edge = 0.08;
+bottom_edge = 0.07;
 total_width = 0.56;
 total_height = 0.49;
 base_gap = 0.01;
@@ -71,7 +71,7 @@ ax_pharm_hm = {};
 %Setup basic plot options
 all_titles = {'1 Hz', '2.5 Hz', '5 Hz'};
 
-all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+all_row_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
@@ -89,8 +89,9 @@ for ii = 1:num_rows
     curr_mean_pharma_bursts = all_mean_pharma_ci_all{ii};
     
     %Set more options
-    opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
-                    all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    % opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
+    %                 all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    opts.YLabel = {all_row_labels{ii},'Cell #'};
     opts.YTick = false;
     if ii == num_rows
         opts.XTickLabel = arrayfun(@num2str,opts.XTick-1,'UniformOutput',false);
@@ -148,6 +149,10 @@ for ii = 1:4
     else
         [hm_ax] = heatmap_markers(ax_pharm_hm{ii,1},[1 18]);
     end
+
+    %Fix ylabels
+    ax_pharm_hm{ii,1}.YLabel.Units = 'pixels';
+    ax_pharm_hm{ii,1}.YLabel.Position(1) = -13;
 end
 
 

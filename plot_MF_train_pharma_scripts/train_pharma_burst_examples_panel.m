@@ -21,7 +21,7 @@ num_cols = 1;
 num_rows = num_cells * 4;
 
 pos_bottom = 0.654;
-cell_space = 0.008;
+cell_space = 0.018;
 base_space = 0.011;
 % pos_top = 0.96;
 %Manual first panel
@@ -100,30 +100,20 @@ for ii = 1:num_cells
     %Plot pulse 60 zoom in
 
     %Add cell label
-    text(pharma_stack_burst{ii}{2},0,0,['#',num2str(typ_cell_num(ii))],'Units','normalized',...
-                'Position',[-0.55 -0],'VerticalAlignment','middle',...
-                'HorizontalAlignment','center',...
+    if ii == 1
+        label_string = {'Cell\newline',['#',num2str(typ_cell_num(ii))]};
+    else
+        label_string = ['#',num2str(typ_cell_num(ii))];
+    end
+    text(pharma_stack_burst{ii}{2},0,0,label_string,'Units','normalized',...
+                'Position',[-0.2 -0],'VerticalAlignment','middle',...
+                'HorizontalAlignment','right',...
                 'Rotation',0)
     
     %Same ylim
     same_ylim_stack(pharma_stack_burst(ii));
 end
 
-%Add scale bar
-scale_opts = struct();
-scale_opts.xlabel = 's';
-scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [stack_opts.XLim(2)-0.5,20];
-add_scale_bar(pharma_stack_burst{1}{end},[0.5 100],scale_opts);
-for ii = 1:numel(pharma_stack_burst{1})-1
-    add_scale_bar(pharma_stack_burst{1}{ii},[0 100]);
-end
-
-scale_opts.origin = [stack_opts.XLim(2)-0.5,-70];
-add_scale_bar(pharma_stack_burst{2}{end},[0.5 50],scale_opts);
-for ii = 1:numel(pharma_stack_burst{2})-1
-    add_scale_bar(pharma_stack_burst{2}{ii},[0 50]);
-end
 
 %Axis size by ylim
 % cellfun(@axis_height_by_ylim,pharma_stack_burst,'UniformOutput', false);
@@ -136,17 +126,33 @@ for ii = 1:numel(pharma_stack_burst)
         train_ylim = pharma_stack{ii}{jj}.YLim;
         if curr_ylim(2) < train_ylim(2)
             pharma_stack_burst{ii}{jj}.YLim = train_ylim;
+            pharma_stack_burst{ii}{jj}.Position([2,4]) = pharma_stack{ii}{jj}.Position([2,4]);
+        else
+            %Keep YLim but adjust position
+            height_scale = diff(curr_ylim)/diff(train_ylim);
+            pharma_stack_burst{ii}{jj}.Position(2) = pharma_stack{ii}{jj}.Position(2);
+            pharma_stack_burst{ii}{jj}.Position(4) = pharma_stack{ii}{jj}.Position(4)*height_scale;
         end
         
-        % pharma_stack_burst{ii}{jj}.YLim = pharma_stack{ii}{jj}.YLim;
-        % if ii == 1 && jj == 4
-        %     pharma_stack_burst{ii}{jj}.Position([2]) = pharma_stack{ii}{jj}.Position([2]);
-        % else
-            pharma_stack_burst{ii}{jj}.Position([2,4]) = pharma_stack{ii}{jj}.Position([2,4]);
-        % end
     end
 end
 
+
+%Add scale bar
+scale_opts = struct();
+scale_opts.xlabel = 's';
+scale_opts.ylabel = 'spk/s';
+scale_opts.origin = [stack_opts.XLim(2)-0.5,-85];
+add_scale_bar(pharma_stack_burst{1}{end},[0.5 50],scale_opts);
+% for ii = 1:numel(pharma_stack_burst{1})-1
+%     add_scale_bar(pharma_stack_burst{1}{ii},[0 50]);
+% end
+
+scale_opts.origin = [stack_opts.XLim(2)-0.5,-70];
+add_scale_bar(pharma_stack_burst{2}{end},[0.5 50],scale_opts);
+% for ii = 1:numel(pharma_stack_burst{2})-1
+%     add_scale_bar(pharma_stack_burst{2}{ii},[0 50]);
+% end
 
 %Add washin label
 % for ii = 1:numel(pharma_stack_burst)

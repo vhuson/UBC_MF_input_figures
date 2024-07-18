@@ -7,8 +7,8 @@ select_cells = fltr_ONidx_tpharma;
 %Set axis position
 num_rows = 4;
 
-pos_bottom = 0.368;
-pos_top = 0.619;
+pos_bottom = 0.305;
+pos_top = 0.605;
 pos_height = pos_top - pos_bottom;
 pos_left = 0.1;
 full_width = 0.08;
@@ -47,7 +47,7 @@ norm_off = [];
 norm_OFFidx = [];
 
 
-all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+all_row_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
@@ -68,8 +68,9 @@ for ii = 1:num_rows
     curr_plot_data = curr_traces{ii};
 
     %Set more options
-    opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
-                    all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    % opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
+    %                 all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    opts.YLabel = {[all_row_labels{ii},'\newline'],'Cell #'};
     
 
     if ii == num_rows
@@ -107,4 +108,10 @@ for ii = 1:4
     else
         [hm_ax] = heatmap_markers(ax_pharm_sp_burst_hm{ii},[4 6]);
     end
+
+    %Move ylabels
+    ax_pharm_sp_burst_hm{ii}.YLabel.Units = "pixels";
+    ax_pharm_sp_burst_hm{ii}.YLabel.Position(1) = -21;
 end
+
+

@@ -16,7 +16,7 @@ pos_left = 0.1;
 full_width = 0.9243-pos_left;
 base_space = 0.017;
 % base_height = 0.085;
-pos_bottom = 0.21;
+pos_bottom = 0.1327;
 base_height = 0.1;
 
 base_width = full_width - base_space * (num_cols-1);
@@ -62,6 +62,8 @@ opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[],...
 opts.YLabel = chosen_plot_ylabel;
 
 opts.xtick_symbols = {"o","^","square","diamond"};
+opts.markeredgecolor = {[0 0 0], [1 0.6 0], [0.8 0 0], [ 0   0   1]};
+opts.markerfacecolor = cellfun(@(x) {(1-x)*0.8+x},opts.markeredgecolor);
 opts.base_style = '-';
 
 ax_sp_p_par = {};
@@ -122,12 +124,19 @@ end
 
 
 %Make dummy axis for legend
-dummy_ax = UBC_par_marker_plot([1 1 1 1],f_train_pharma,[2 2 0.2 0.2]);
+dummy_opts = struct();
+dummy_opts.markerfacecolor = opts.markerfacecolor;
+dummy_opts.markeredgecolor = opts.markeredgecolor;
+dummy_ax = UBC_par_marker_plot([1 1 1 1],f_train_pharma,[2 2 0.2 0.2],dummy_opts);
 
-legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
+legend_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
 legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Orientation','horizontal',...
     'Box', 'off',...
     'NumColumns',4,...
     'Units','normalized',...
-    'Position', [0.2149 0.1459 0.5702 0.0844])
+    'Position', [0.2149 0.0887 0.5702 0.0390])
+
+%Fix ylabel
+ax_sp_p_par{1}.YLabel.Units = 'pixels';
+ax_sp_p_par{1}.YLabel.Position(1) = -37;

@@ -20,7 +20,7 @@ left_edge = 0.08;
 bottom_edge = 0.6050;
 top_edge = 0.96;
 ax_space = 0.01;
-ax_space_v = 0.020;
+ax_space_v = 0.025;
 cell_space = 0.03;
 total_width = 0.56;
 
@@ -68,7 +68,8 @@ opts.axis_off = true;
 
 all_titles = {'1 spk/s', '2.5 spk/s', '5 spk/s'};
 
-all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+% all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+all_row_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
@@ -129,7 +130,7 @@ for ii = 1:numel(curr_cells)
                     all_row_labels{jj}];
         curr_t = text(ax_basep_typ{row_idx,1},0,0,curr_label,...
             'Units','normalized',...
-            'Position',[0 0.08 0],'VerticalAlignment','top',...
+            'Position',[0 0.01 0],'VerticalAlignment','top',...
             'HorizontalAlignment','left');
         curr_t.Units = 'data';
         
@@ -143,9 +144,15 @@ for ii = 1:numel(curr_cells)
         same_ylim(ax_basep_typ(row_idx,:));
         
         if jj == 2
-            text(ax_basep_typ{row_idx,1},0,0,['#',num2str(curr_cell)],'Units','normalized',...
+            if ii == 1
+                label_string = {'Cell\newline',['#',num2str(curr_cell)]};
+            else
+                label_string = ['#',num2str(curr_cell)];
+            end
+
+            t_cell_label{ii} = text(ax_basep_typ{row_idx,1},0,0,label_string,'Units','normalized',...
                 'Position',[-0.05 -0.1],'VerticalAlignment','middle',...
-                'HorizontalAlignment','right')
+                'HorizontalAlignment','right');
         end
 
     end
@@ -157,11 +164,11 @@ scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
 scale_opts.xscale_factor = 1;
 scale_opts.label_fontsize = 10;
-scale_opts.origin = [9 -25];
+all_origins = {[9 -30],[9 -35]};
 
+cnt = 1;
 for idx = 1:4:num_rows
-    %Add scale bar to last
-    add_scale_bar(ax_basep_typ{idx+3,end},[1,20],scale_opts)
+
     same_ylim(ax_basep_typ(idx+3,:));
 
     [all_graph_heights,all_bottoms] = axis_height_by_ylim(ax_basep_typ(idx:idx+3,1));
@@ -172,9 +179,16 @@ for idx = 1:4:num_rows
             ax_basep_typ{(idx-1)+ii,prot}.Position(4) = all_graph_heights(ii);
         end
     end
+
+    %Add scale bar to last
+    scale_opts.origin = all_origins{cnt};
+    add_scale_bar(ax_basep_typ{idx+3,end},[1,20],scale_opts);
+
+    cnt = cnt+1;
 end
 
 
 
-
+%Fix label position
+t_cell_label{2}.Position = [-0.0500   -0.9021         0];
 

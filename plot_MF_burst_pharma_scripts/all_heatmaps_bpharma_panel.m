@@ -1,6 +1,4 @@
-
-
-% f_burst_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...
+% f_burst_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
 %     'Color','w');
 
 
@@ -14,10 +12,10 @@ num_rows = 4; %Number of washins
 
 left_edge = 0.1;
 % bottom_edge = 0.07;
-bottom_edge = 0.315;
+bottom_edge = 0.29;
 total_width = 0.87;
 % total_height = 0.88;
-total_height = 0.29;
+total_height = 0.32;
 base_gap = 0.01;
 
 %X Lim adjusted graph widths
@@ -59,7 +57,9 @@ norm_OFFidx = [];
 ax_pharm_hm = {};
 
 %Setup basic plot options
-all_titles = {'1x', '2x 100 Hz', '5x 100 Hz', '10x 100 Hz', '20x 100 Hz'};
+% all_titles = {'1x', '2x 100 Hz', '5x 100 Hz', '10x 100 Hz', '20x 100 Hz'};
+all_titles = {'1' '2' '5' '10' '20'};
+
 
 all_row_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 seed_colors_pharma = [0 0 0;
@@ -79,8 +79,11 @@ for ii = 1:num_rows
     curr_mean_pharma_bursts = all_mean_pharma_bursts_all{ii};
     
     %Set more options
-    opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
-                    all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    % opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
+    %                 all_row_labels{ii},'\newline\color{black}Cell #'];
+
+    opts.YLabel = {[all_row_labels{ii},'\newline'],...
+                    'Cell #'};
     opts.YTick = false;
     if ii == num_rows
         opts.XTickLabel = arrayfun(@num2str,opts.XTick-0.5,'UniformOutput',false);
@@ -147,3 +150,18 @@ for ii = 1:4
 end
 
 
+%Fix label position
+for ii = 1:4
+    ax_pharm_hm{ii,1}.YLabel.Units = "pixels";
+    ax_pharm_hm{ii,1}.YLabel.Position(1) = -17;
+end
+
+ax_pharm_hm{4,3}.XLabel.Units = "pixels";
+ax_pharm_hm{4,3}.XLabel.Position(1:2) = [63 -12];
+
+
+
+%Tweak figure
+fig_opts = struct();
+fig_opts.FontSize = 10;
+standardFig(f_burst_pharma,fig_opts);

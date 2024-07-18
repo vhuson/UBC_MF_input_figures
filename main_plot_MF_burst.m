@@ -63,11 +63,16 @@ plot_labels = repmat({[]},1,27);
 plot_labels{1} = 'a';
 % plot_labels{6} = 'b';
 % plot_labels{11} = 'c';
-plot_labels{21} = 'b';
-plot_labels(26:28) = {'c','d','e'};
-labelPlots(f_burst,plot_labels);
+plot_labels{26} = 'b';
+plot_labels(31:33) = {'c','d','e'};
+[~,t_labels] = labelPlots(f_burst,plot_labels);
 
+for ii = 1:numel(t_labels)
+    t_labels{ii}.Position(1) = t_labels{ii}.Position(1)-14;
+    
+end
 
+% exportgraphics(f_burst,'pdf\240717_fig2.pdf','ContentType','vector')
 
 %% Other figure scripts
 

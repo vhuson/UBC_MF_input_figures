@@ -6,10 +6,10 @@
 num_cols = 5;
 
 left_edge = 0.1;
-bottom_edge = 0.1534;
+bottom_edge = 0.1334;
 % bottom_edge2 = 0.32;
 total_width = 0.73;
-total_height = 0.11;
+total_height = 0.095;
 base_gap = 0.03;
 
 bottom_edge2 = bottom_edge - total_height - 0.02;
@@ -23,7 +23,7 @@ all_bottom_edges = repmat(bottom_edge,1,num_cols);
 
 trace_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 % trace_labels = {'1','2','3','4'};
-all_titles = {'1x' '2x' '5x' '10x' '20x'};
+all_titles = {'1' '2' '5' '10' '20'};
 
 % Plot peak
 ax_pharm_p = {};
@@ -31,6 +31,8 @@ ax_pharm_p = {};
 opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[],...
     'XTick',[],'YScale','log','min_val',1);
 opts.xtick_symbols = {"o","^","square","diamond"};
+opts.markeredgecolor = {[0 0 0], [1 0.6 0], [0.8 0 0], [ 0   0   1]};
+opts.markerfacecolor = cellfun(@(x) {(1-x)*0.8+x},opts.markeredgecolor);
 opts.base_style = '-';
 
 opts.YLabel = 'Peak (\Deltaspk/s)';
@@ -78,6 +80,8 @@ opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[],...{trace_labels},
     'XTick',[],'YScale','log','min_val',1,'YLabel','\DeltaSpikes (n)');
 
 opts.xtick_symbols = {"o","^","square","diamond"};
+opts.markeredgecolor = {[0 0 0], [1 0.6 0], [0.8 0 0], [ 0   0   1]};
+opts.markerfacecolor = cellfun(@(x) {(1-x)*0.8+x},opts.markeredgecolor);
 opts.base_style = '-';
 % opts.YLabel = 'Response spikes (n)';
 for input_idx = 1:5
@@ -127,7 +131,10 @@ end
 same_ylim(ax_pharm_n)
 
 %Make dummy axis for legend
-dummy_ax = UBC_par_marker_plot([1 1 1 1],f_burst_pharma,[2 2 0.2 0.2]);
+dummy_opts = struct();
+dummy_opts.markerfacecolor = opts.markerfacecolor;
+dummy_opts.markeredgecolor = opts.markeredgecolor;
+dummy_ax = UBC_par_marker_plot([1 1 1 1],f_burst_pharma,[2 2 0.2 0.2],dummy_opts);
 
 legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
@@ -135,7 +142,7 @@ legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Box', 'off',...
     'NumColumns',1,...
     'Units','normalized',...
-    'Position', [0.8338 0.1805 0.1506 0.0844])
+    'Position', [0.8338 0.1386 0.1506 0.0844])
 
 % same_ylim(ax_pharm_n(1:2))
 % same_ylim(ax_pharm_n(3:5))

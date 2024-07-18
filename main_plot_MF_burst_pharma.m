@@ -140,8 +140,17 @@ plot_labels{77} = 'd';
 plot_labels{97} = 'e';
 plot_labels{102} = 'f';
 % plot_labels{82} = 'e';
-labelPlots(f_burst_pharma,plot_labels);
+[~,t_labels] = labelPlots(f_burst_pharma,plot_labels);
 
+for ii = 1:numel(t_labels)
+    t_labels{ii}.Position(1) = t_labels{ii}.Position(1)-14;
+end
+for ii = [1,4,5,6]
+    t_labels{ii}.Position(1) = -58;
+end
+t_labels{6}.Position(2) = 75.1636;
+
+% exportgraphics(f_burst_pharma,'pdf\240717_fig3.pdf','ContentType','vector')
 %% Supplement heatmap figure
 
 f_burst_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...

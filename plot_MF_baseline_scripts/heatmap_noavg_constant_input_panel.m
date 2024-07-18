@@ -2,8 +2,8 @@
 %     'Color','w');
 
 
-pos_bottom = 0.2150;
-pos_height = 0.355;
+pos_bottom = 0.2050;
+pos_height = 0.345;
 pos_left = 0.07;
 full_width = 0.560;
 base_space = 0.01;
@@ -104,3 +104,7 @@ end
 
 
 % cellfun(@(x) move_tick_labels(x,2),ax_hm);
+
+%Fix ylabel
+ax_hm{1}.YLabel.Units = 'pixels';
+ax_hm{1}.YLabel.Position(1) = -16;

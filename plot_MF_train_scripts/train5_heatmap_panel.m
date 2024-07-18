@@ -4,8 +4,8 @@
 y_labels_on = false;
 
 %Set axis position
-pos_bottom = 0.38;
-pos_top = 0.565;
+pos_bottom = 0.365;
+pos_top = 0.55;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
@@ -110,4 +110,7 @@ line(ax_sp_hm{2},repmat((train5_step_times(7)+1)*Fs,1,2),...
 hold(ax_sp_hm{2},'off')    
 
 
+%Fix xlabel
+ax_sp_hm{1}.XLabel.Units = 'pixels';
+ax_sp_hm{1}.XLabel.Position = [165.8184 -12.7753 -0.8186];
 % cellfun(@(x) move_tick_labels(x,2),ax_sp_hm);

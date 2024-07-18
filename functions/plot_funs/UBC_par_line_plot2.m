@@ -17,6 +17,8 @@ base_opts.input_n = [1, 2, 5, 10, 20];
 base_opts.XTick = base_opts.input_n;
 base_opts.base_style = '-o';
 base_opts.xtick_symbols = false;
+base_opts.markerfacecolor = false;
+base_opts.markeredgecolor = false;
 base_opts.marker_sizes = [6, 6, 7, 6];
 
 
@@ -37,6 +39,12 @@ bar_bol = opts.bar;
 min_val = opts.min_val;
 max_val = opts.max_val;
 input_n = opts.input_n;
+
+if ~islogical(opts.markeredgecolor) || ~islogical(opts.markerfacecolor)
+    if islogical(opts.xtick_symbols)
+        opts.xtick_symbols = repmat({'o'},size(opts.markerfacecolor));
+    end
+end
 
 curr_par_mat = [burst_par{:}];
 
@@ -123,14 +131,24 @@ for cell_n = cell_order
         'Color',all_colors(cell_n,:),'MarkerFaceColor','w')
     
     %Plot separate symbols
+    marker_array = {};
     if ~islogical(opts.xtick_symbols)
         for idx = opts.input_n
-            plot(opts.input_n(idx),curr_par_mat(ONidx(cell_n),idx),...
+            marker_array{idx} = plot(opts.input_n(idx),curr_par_mat(ONidx(cell_n),idx),...
                 opts.xtick_symbols{idx},...
                 'MarkerEdgeColor',all_colors(cell_n,:),'MarkerFaceColor','w',...
-                'MarkerSize',opts.marker_sizes(idx))
+                'MarkerSize',opts.marker_sizes(idx));
         end
-
+    end
+    if ~islogical(opts.markeredgecolor)
+        for idx = opts.input_n
+            marker_array{idx}.MarkerEdgeColor = opts.markeredgecolor{idx};
+        end
+    end
+    if ~islogical(opts.markerfacecolor)
+        for idx = opts.input_n
+            marker_array{idx}.MarkerFaceColor = opts.markerfacecolor{idx};
+        end
     end
     % ax1.YLim(1) = 0;
     % pause

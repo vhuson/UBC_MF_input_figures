@@ -3,8 +3,8 @@
 
 
 %Set axis position
-pos_bottom = 0.38;
-pos_top = 0.565;
+pos_bottom = 0.365;
+pos_top = 0.55;
 pos_height = pos_top - pos_bottom;
 pos_left = 0.1;
 full_width = 0.08;
@@ -86,4 +86,7 @@ for ii = 1
         [hm_ax] = heatmap_markers(ax_sp_burst_hm{ax_idx,1},[4     6    12    15    18    22]);
     end
 end
+
+hm_ax.YLabel.Units = "pixels";
+hm_ax.YLabel.Position(1) = -17;
 % cellfun(@(x) move_tick_labels(x,2),ax_sp_hm);

@@ -22,9 +22,11 @@ num_rows = numel(curr_cells);
 num_cols = 5; %Number of burst types
 
 left_edge = 0.1;
-top_edge = 0.92;
-total_height = 0.28;
-total_width = 0.3289;
+top_edge = 0.91;
+% total_height = 0.28;
+% total_width = 0.3289;
+total_height = 0.25;
+total_width = 0.31;
 height_space = 0.015;
 base_space = 0.01;
 
@@ -68,15 +70,16 @@ seed_colors_pharma = [0 0 0;
 all_colors_pharma = seed_map(seed_colors_pharma,4);
 
 trace_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
-all_titles = {'1x' '2x' '5x' '10x' '20x'};
+all_titles = {'1' '2' '5' '10' '20'};
 
 opts = struct();
 opts.axis_off = true;
 
 %Scale bar options
 scale_opts = struct();
-scale_opts.ylabel = '\newlinespk/s';
-all_scale_origin = {[2 65],[2 45],[2 50],[2 80],[1 14]};
+scale_opts.ylabel = 'spk/s';
+scale_opts.y_2line = true;
+all_scale_origin = {[2.15 90],[2.15 75],[2.15 80],[2.15 110],[1.15 -15.5]};
 all_scale_size = {[0 50], [0 50], [0 50], [0 50], [1 10]};
 
 ax_pharm_typ = {};
@@ -108,14 +111,22 @@ for ii = 1:numel(curr_cells)
 
         if ii == 1
             title(all_titles{pharm_burst_idx})
+            ax_pharm_typ{ii,pharm_burst_idx}.Title.Units = 'pixels';
+            ax_pharm_typ{ii,pharm_burst_idx}.Title.Position(2) = ...
+                ax_pharm_typ{ii,pharm_burst_idx}.Title.Position(2)+5;
         end
 
 
         opts.scale_xlabel = [];
         opts.scale_ylabel = [];
     end
-
-    text(ax_pharm_typ{ii,1},0,0,['Cell\newline#',num2str(curr_cell)],'Units','normalized',...
+    
+    if ii == 1
+        label_string = {'Cell\newline',['#',num2str(curr_cell)]};
+    else
+        label_string = ['#',num2str(curr_cell)];
+    end
+    text(ax_pharm_typ{ii,1},0,0,label_string,'Units','normalized',...
                 'Position',[-0.01 0.5],'VerticalAlignment','middle',...
                 'HorizontalAlignment','right')
 

@@ -120,7 +120,12 @@ for ii = 1:numel(typ_cell_num)
         end
 
         if jj == 1
-            text(ax_burst_typ{ii}{jj},0,0,['#',num2str(curr_cell)],'Units','normalized',...
+            if ii == 1
+                label_string = {'Cell\newline',['#',num2str(curr_cell)]};
+            else
+                label_string = ['#',num2str(curr_cell)];
+            end
+            text(ax_burst_typ{ii}{jj},0,0,label_string,'Units','normalized',...
                 'Position',[-0.01 0.5],'VerticalAlignment','middle',...
                 'HorizontalAlignment','right');
 
@@ -155,19 +160,7 @@ if strcmp(typ_cell_IDs{end},'1678')
     same_ylim([ax_burst_typ{end},ax_burst_typ_avg{end}],'YMaxValue',65);
 end
 
-% Add scale bars
-scale_opts = struct();
-scale_opts.xlabel = 's';
-scale_opts.ylabel = 'spk/s';
-scale_opts.xscale_factor = 1;
-scale_opts.label_fontsize = 10;
-scale_opts.origin = [10 -25];
-add_scale_bar(ax_burst_typ{end}{end},[1,20],scale_opts)
 
-scale_opts.xlabel = 'ms';
-scale_opts.xscale_factor = 1000;
-scale_opts.origin = [0.1 -25];
-add_scale_bar(ax_burst_typ_avg{end}{end},[0.1,0],scale_opts)
 same_ylim([ax_burst_typ{end},ax_burst_typ_avg{end}]);
 
 
@@ -188,25 +181,16 @@ for ii = 1:5
     end
 end
 
+% Add scale bars
+scale_opts = struct();
+scale_opts.xlabel = 's';
+scale_opts.ylabel = 'spk/s';
+scale_opts.xscale_factor = 1;
+scale_opts.label_fontsize = 10;
+scale_opts.origin = [10 -25];
+add_scale_bar(ax_burst_typ{end}{end},[1,20],scale_opts)
 
-% scale_opts = struct();
-% scale_opts.xlabel = 's';
-% scale_opts.ylabel = 'spk/s';
-% scale_opts.xscale_factor = 1;
-% scale_opts.label_fontsize = 10;
-% scale_opts.origin = [9 -25];
-
-% for idx = 1:4:num_rows
-    %Add scale bar to last
-    % add_scale_bar(ax_basep_typ{idx+3,end},[1,20],scale_opts)
-    % same_ylim(ax_basep_typ(idx+3,:));
-% 
-%     [all_graph_heights,all_bottoms] = axis_height_by_ylim(ax_basep_typ(idx:idx+3,1));
-% 
-%     for ii = 1:numel(all_graph_heights)
-%         for prot = 2:3
-%             ax_basep_typ{(idx-1)+ii,prot}.Position(2) = all_bottoms(ii);
-%             ax_basep_typ{(idx-1)+ii,prot}.Position(4) = all_graph_heights(ii);
-%         end
-%     end
-% end
+scale_opts.xlabel = 'ms';
+scale_opts.xscale_factor = 1000;
+scale_opts.origin = [0.1 -25];
+add_scale_bar(ax_burst_typ_avg{end}{end},[0.1,0],scale_opts)

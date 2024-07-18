@@ -112,8 +112,16 @@ plot_labels{28} = 'c';
 plot_labels{33} = 'd';
 plot_labels{40} = 'e';
 % plot_labels{46} = 'f';
-labelPlots(f_train_pharma,plot_labels);
+[~,t_labels] = labelPlots(f_train_pharma,plot_labels);
 
+for ii = [1,4]
+    t_labels{ii}.Position(1) = -6;
+end
+for ii = [2,3,5]
+    t_labels{ii}.Position(1) = -30;
+end
+t_labels{5}.Position(2) = 102;
+% exportgraphics(f_train_pharma,'pdf\240711_fig5.pdf','ContentType','vector')
 %% other figure
 train_pharma_20s_figure
 

@@ -60,22 +60,18 @@ cellfun(@add_zero_line, train_stack_burst(2:end));
 
 %Add cell label
 for ii = 2:numel(train_stack_burst)
-    text(train_stack_burst{ii},0,0,['#',num2str(typ_cell_num(ii-1))],'Units','normalized',...
+    if ii == 2
+        label_string = {'Cell\newline',['#',num2str(typ_cell_num(ii-1))]};
+    else
+        label_string = ['#',num2str(typ_cell_num(ii-1))];
+    end
+    text(train_stack_burst{ii},0,0,label_string,'Units','normalized',...
                 'Position',[-0.05 0.5],'VerticalAlignment','middle',...
                 'HorizontalAlignment','right',...
                 'Rotation',0)
 end
 
-%Add scale bar
-scale_opts = struct();
-scale_opts.xlabel = 's';
-scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [2,-25];
-add_scale_bar(train_stack_burst{end},[0.5 20],scale_opts);
 
-for ii = 2:numel(train_stack_burst)-1
-    add_scale_bar(train_stack_burst{ii},[0 20]);
-end
 
 
 %Axis by ylim
@@ -95,6 +91,19 @@ for ii = 1:numel(train_stack_burst)
 
 end
 
+%Add scale bar
+scale_opts = struct();
+scale_opts.xlabel = 's';
+scale_opts.ylabel = 'spk/s';
+scale_opts.origin = [2,-25];
+add_scale_bar(train_stack_burst{end},[0.5 20],scale_opts);
+
+scale_opts = struct();
+all_origins = {[2.2705 80], [2.2705 50],[2.2705 57],[2.2705 65],[2.2705 29]};
+for ii = 2:numel(train_stack_burst)-1
+    scale_opts.origin = all_origins{ii-1};
+    add_scale_bar(train_stack_burst{ii},[0 20],scale_opts);
+end
 
 %Label train input
 text(train_stack_burst{1},0,2,'0','VerticalAlignment','bottom')

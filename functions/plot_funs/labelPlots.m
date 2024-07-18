@@ -1,4 +1,4 @@
-function [fig1] = labelPlots(fig1,currLabels,opts)
+function [fig1,t_labels] = labelPlots(fig1,currLabels,opts)
 %UNTITLED3 Summary of this function goes here
 base_opts.FontSize = 12;
 
@@ -30,6 +30,7 @@ if numel(currLabels)< numel(ChildAxes_idx)
     currLabels = emptyLabels;
 end
 
+t_labels = {};
 for ii = 1:numel(ChildAxes_idx)
     if ~isempty(currLabels{ii})
         currAx = fig1.Children(ChildAxes_idx(ii));
@@ -39,15 +40,15 @@ for ii = 1:numel(ChildAxes_idx)
         
         hold(currAx,'on')
         
-        t1 = text(currAx,0,0,currLabels{ii},...
+        t_labels{end+1} = text(currAx,0,0,currLabels{ii},...
             'HorizontalAlignment','left',...
             'VerticalAlignment','bottom',...
             'FontName','Arial','FontWeight','bold','FontSize',opts.FontSize);
-        t1.Units = 'normalized';
-        t1.Position = [0 1 0];
-        t1.Units = 'pixels';
-        t1.Position(1) = t1.Position(1)-20;
-        t1.Position(2) = t1.Position(2)+5;
+        t_labels{end}.Units = 'normalized';
+        t_labels{end}.Position = [0 1 0];
+        t_labels{end}.Units = 'pixels';
+        t_labels{end}.Position(1) = t_labels{end}.Position(1)-20;
+        t_labels{end}.Position(2) = t_labels{end}.Position(2)+5;
         hold(currAx,'off')
     end
 end

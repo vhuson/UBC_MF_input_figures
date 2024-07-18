@@ -107,6 +107,16 @@ for ii = 2:numel(train_stack_1)
                 'Rotation',0)
 end
 end
+
+
+
+[all_graph_heights,all_bottoms] = axis_height_by_ylim(train_stack_1);
+
+for ii = 1:numel(train_stack_2)
+    train_stack_2{ii}.Position(2) = all_bottoms(ii);
+    train_stack_2{ii}.Position(4) = all_graph_heights(ii);
+end
+
 %Add scale bar
 scale_opts = struct();
 scale_opts.xlabel = 's';
@@ -116,14 +126,6 @@ add_scale_bar(train_stack_1{end},[3 20],scale_opts);
 
 scale_opts.origin = [30.5,-25];
 add_scale_bar(train_stack_2{end},[0.5 0],scale_opts);
-
-
-[all_graph_heights,all_bottoms] = axis_height_by_ylim(train_stack_1);
-
-for ii = 1:numel(train_stack_2)
-    train_stack_2{ii}.Position(2) = all_bottoms(ii);
-    train_stack_2{ii}.Position(4) = all_graph_heights(ii);
-end
 
 %Label train input
 text(train_stack_1{1},0,2,'0','VerticalAlignment','bottom')

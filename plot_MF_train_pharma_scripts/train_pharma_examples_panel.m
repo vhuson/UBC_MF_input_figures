@@ -24,7 +24,7 @@ num_cols = 1;
 num_rows = num_cells * 4; %+1;
 
 pos_bottom = 0.654;
-cell_space = 0.008;
+cell_space = 0.021;
 base_space = 0.011;
 % pos_top = 0.96;
 %Manual first panel
@@ -35,14 +35,14 @@ pos_top = first_panel_bottom - cell_space;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
-pos_left = 0.1966;
-full_width = 0.5334;
+pos_left = 0.205;
+full_width = 0.5234;
 
 
 % pos_left2 = 0.6722;
 % base_width2 = 0.2921;
-pos_left2 = 0.7466;
-base_width2 = 0.2177;
+pos_left2 = 0.7566;
+base_width2 = 0.2077;
 
 base_height = pos_height - base_space * (num_rows-1) - cell_space * (num_cells-1);
 base_height = base_height / num_rows;
@@ -74,7 +74,8 @@ end
 
 
 %Set plot options
-all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+% all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+all_row_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
@@ -150,15 +151,6 @@ pharma_stack2{1}{1}.YLim(2) = 160;
 pharma_stack2{1}{2}.YLim(2) = 160;
 pharma_stack2{1}{3}.YLim(2) = 160;
 
-%Add scale bar
-scale_opts = struct();
-scale_opts.xlabel = 's';
-scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [33,-70];
-cellfun(@(x) add_scale_bar(x{end},[3 50],scale_opts),pharma_stack);
-
-scale_opts.origin = [30.5,-70];
-cellfun(@(x) add_scale_bar(x{end},[0.5 0],scale_opts),pharma_stack2);
 
 
 %Axis size by ylim
@@ -181,6 +173,22 @@ for ii = 1:numel(pharma_stack)
     end
 end
 % end
+
+
+%Add scale bar
+scale_opts = struct();
+scale_opts.xlabel = 's';
+scale_opts.ylabel = 'spk/s';
+scale_opts.origin = [33,-85];
+cellfun(@(x) add_scale_bar(x{end},[3 50],scale_opts),pharma_stack(1));
+scale_opts.origin = [33,-70];
+cellfun(@(x) add_scale_bar(x{end},[3 50],scale_opts),pharma_stack(2));
+
+scale_opts.origin = [30.5,-85];
+cellfun(@(x) add_scale_bar(x{end},[0.5 0],scale_opts),pharma_stack2(1));
+scale_opts.origin = [30.5,-70];
+cellfun(@(x) add_scale_bar(x{end},[0.5 0],scale_opts),pharma_stack2(2));
+
 
 %annotation line for stim block
 dist1 = train5_step_times(7) - stack_opts2.XLim(1);

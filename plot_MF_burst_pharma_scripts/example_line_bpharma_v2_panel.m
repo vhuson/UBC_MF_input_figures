@@ -18,9 +18,9 @@ num_rows = numel(curr_cells);
 num_cols = 5; %Number of burst types
 
 left_edge = 0.50;
-top_edge = 0.92;
-total_height = 0.28;
-total_width = 0.2;
+top_edge = 0.91;
+total_height = 0.25;
+total_width = 0.195;
 height_space = 0.015;
 base_space = 0.015;
 
@@ -36,16 +36,25 @@ all_bottom_edge = fliplr(all_bottom_edge);
 
 %Specify graph options
 select_cells = fltr_ONidx;
-legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
+% legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
+legend_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
 xtick_symbols = {"o","^","square","diamond"};
 
 xtick_labels = {'1','2','3','4'};
-all_titles = {'1x' '2x' '5x' '10x' '20x'};
+all_titles = {'1' '2' '5' '10' '20'};
 
 ax_pharm_typline = {};
 
+seed_colors_pharma = [0 0 0;
+                1 0.6 0;
+                0.8 0 0;
+                0   0   1];
+
 opts = struct('input_n',[1 2 3 4],'XLabel','','XTickLabel',[],'XTick',[]);
-opts.markerfacecolor = {'w',[0.7 0.7 0.7],'w',[0.7 0.7 0.7]};
+opts.markeredgecolor = {[0 0 0], [1 0.6 0], [0.8 0 0], [ 0   0   1]};
+opts.markerfacecolor = cellfun(@(x) {(1-x)*0.8+x},opts.markeredgecolor);
+% opts.markerfacecolor{1} = [0 0 0];
+% opts.markerfacecolor = {'w',[0.7 0.7 0.7],'w',[0.7 0.7 0.7]};
 
 
 % Set marker colors
@@ -64,7 +73,7 @@ opts.markeredgecolor = {all_colors_pharma(1,:),...
 
 %Use cell marker color
 %
-cell_marker_color = true;
+cell_marker_color = false;
 seed_colors = [1 0 0;
                 1 0.5 0.2;
                 0.4 1 0.4;
@@ -135,10 +144,14 @@ for ii = 1:numel(curr_cells)
 
         if ii == 1
             title(ax_pharm_typline{ii,input_idx},all_titles{input_idx})
+            ax_pharm_typline{ii,input_idx}.Title.Units = 'pixels';
+            ax_pharm_typline{ii,input_idx}.Title.Position(2) = ...
+                ax_pharm_typline{ii,input_idx}.Title.Position(2)+5;
         end
     end
     same_ylim(ax_pharm_typline(ii,:))
 end
+
 
 %Reduce number of YTicks in all panels
 % for ii = 1:numel(ax_pharm_typline)
@@ -147,17 +160,29 @@ end
 
 
 dummy_opts = struct();
-dummy_opts.markerfacecolor = {'w',[0.7 0.7 0.7],'w',[0.7 0.7 0.7]};
+dummy_opts.markerfacecolor = opts.markerfacecolor;
+dummy_opts.markeredgecolor = opts.markeredgecolor;
 dummy_ax = UBC_par_marker_plot([1 1 1 1],f_burst_pharma,[2 2 0.2 0.2],...
     dummy_opts);
 
-legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Orientation','horizontal',...
     'Box', 'off',...
     'NumColumns',2,...
     'Units','normalized',...
     'Position', [0.5647 0.9435 0.3319 0.0459])
+
+
+%Change yticklabels
+for ii = 1:numel(curr_cells)
+    if numel(ax_pharm_typline{ii,1}.YTickLabel) > 2
+        ax_pharm_typline{ii,1}.YTickLabel(2:end-1) = {''};
+    end
+end
+
+%Change ylabel postion
+ax_pharm_typline{3,1}.YLabel.Units = 'pixels';
+ax_pharm_typline{3,1}.YLabel.Position(1) = -30;
 
 %Tweak figure
 fig_opts = struct();

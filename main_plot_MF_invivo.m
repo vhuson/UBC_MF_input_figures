@@ -182,7 +182,13 @@ plot_labels = repmat({[]},1,17);
 plot_labels{1} = 'a';
 plot_labels{2} = 'b';
 plot_labels{11} = 'c';
-labelPlots(f_mf_burst,plot_labels);
+[f_mf_burst,t_labels] = labelPlots(f_mf_burst,plot_labels);
+
+t_labels{1}.Position(1) = -36;
+t_labels{3}.Position(1) = -36;
+t_labels{2}.Position(1) = -9;
+
+% exportgraphics(f_mf_burst,'pdf\240717_fig1.pdf','ContentType','vector')
 
 %% other figures
 

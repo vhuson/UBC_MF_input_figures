@@ -63,8 +63,24 @@ plot_labels{1} = 'a';
 plot_labels{2} = 'b';
 plot_labels{31} = 'c';
 plot_labels(34:36) = {'e','d','f'};
-labelPlots(f_base,plot_labels);
 
+[~,t_labels] = labelPlots(f_base,plot_labels);
+
+
+for ii = [1,3]
+    t_labels{ii}.Position(1) = -29;
+end
+
+for ii = 4:6
+    t_labels{ii}.Position(1) = -67;
+end
+
+for ii = 4:5
+    t_labels{ii}.Position(2) = 89;
+end
+
+
+% exportgraphics(f_base,'pdf\240712_supp1.pdf','ContentType','vector')
 %% Other figures
 stacked_constant_input_figure
 

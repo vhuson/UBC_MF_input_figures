@@ -23,7 +23,7 @@ left_edge = 0.6890;
 bottom_edge = 0.6050;
 top_edge = 0.96;
 ax_space = 0.01;
-ax_space_v = 0.02;
+ax_space_v = 0.025;
 cell_space = 0.03;
 total_width = 0.2900;
 
@@ -139,18 +139,7 @@ for ii = 1:numel(curr_cells)
 end
 
 
-scale_opts = struct();
-scale_opts.xlabel = 'ms';
-% scale_opts.ylabel = 'spk/s';
-scale_opts.xscale_factor = 1000;
-scale_opts.label_fontsize = 10;
-scale_opts.origin = [0.1 -25];
 
-for idx = 1:4:num_rows
-    %Add scale bar to last
-    add_scale_bar(ax_basep_avgtyp{idx+3,end},[0.1,0],scale_opts)
-   
-end
 
 %Homogenize with previous panel
 for ii = 1:numel(ax_basep_typ)
@@ -163,4 +152,17 @@ for ii = 1:numel(ax_basep_typ)
 end
 
 
+scale_opts = struct();
+scale_opts.xlabel = 'ms';
+% scale_opts.ylabel = 'spk/s';
+scale_opts.xscale_factor = 1000;
+scale_opts.label_fontsize = 10;
+all_origins = {[0.1 -30],[0.1 -35]};
 
+cnt = 1;
+for idx = 1:4:num_rows
+    %Add scale bar to last
+    scale_opts.origin = all_origins{cnt};
+    add_scale_bar(ax_basep_avgtyp{idx+3,end},[0.1,0],scale_opts);
+    cnt = cnt +1;
+end

@@ -32,7 +32,7 @@ ylabel('Input')
 scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [28.7246 60];
+scale_opts.origin = [28.7246 80];
 add_scale_bar(ax_mfburst_input,[1,50],scale_opts);
 
 add_zero_line(ax_mfburst_input);
@@ -67,7 +67,7 @@ hold off
 ylim(fast_ylim);
 
 
-t1 = text(ax_fast_mf,-1, ax_fast_mf.YLim(2)/2,'Fast cell','Rotation',90,...
+t1 = text(ax_fast_mf,-1, ax_fast_mf.YLim(2)/2,'Fast','Rotation',90,...
     'HorizontalAlignment','center');
 
 
@@ -105,7 +105,7 @@ plot(x_time,y_data(1:numel(x_time)),'k')
 hold off
 ylim(fast_ylim);
 
-t1 = text(ax_int_mf,-1, ax_int_mf.YLim(2)/2,'Mid. cell','Rotation',90,...
+t1 = text(ax_int_mf,-1, ax_int_mf.YLim(2)/2,'Mid-range','Rotation',90,...
     'HorizontalAlignment','center');
 
 standardAx(ax_int_mf);
@@ -140,11 +140,12 @@ plot(x_time,y_data(1:numel(x_time)),'k')
 hold off
 ylim(mid_ylim);
 
-t1 = text(ax_mid_mf,-1, ax_mid_mf.YLim(2)/2,'Slow cell','Rotation',90,...
+t1 = text(ax_mid_mf,-1, ax_mid_mf.YLim(2)/2,'Slow','Rotation',90,...
     'HorizontalAlignment','center');
 
 standardAx(ax_mid_mf);
 ax_mid_mf.Visible = 'off';
+scale_opts.origin = [29.7246 34];
 add_scale_bar(ax_mid_mf,mid_scale_bar,scale_opts);
 add_zero_line(ax_mid_mf);
 
@@ -176,12 +177,21 @@ plot(x_time,y_data(1:numel(x_time)),'k')
 hold off
 ylim(off_ylim);
 
-t1 = text(ax_off_mf,-1, ax_off_mf.YLim(2)/2,'OFF cell','Rotation',90,...
+t1 = text(ax_off_mf,-1, ax_off_mf.YLim(2)/2,'OFF','Rotation',90,...
     'HorizontalAlignment','center');
 
 standardAx(ax_off_mf);
 ax_off_mf.Visible = 'off';
 % scale_opts = struct();
-% scale_opts.origin = [27 8];
+scale_opts.origin = [29.7246 44];
 add_scale_bar(ax_off_mf,off_scale_bar,scale_opts);
 add_zero_line(ax_off_mf);
+
+%% Add UBC label
+
+
+t_base = text(ax_off_mf,0, 0,'UBC response','Rotation',90,...
+    'HorizontalAlignment','center','Units','normalized');
+t_base.Units = "pixels";
+t_base.Position(2) = 124;
+t_base.Position(1) = -42;

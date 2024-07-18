@@ -3,11 +3,11 @@
 
 left_margin = 0.08;
 bottom_margin = 0.08;
-base_width = 0.18;
+base_width = 0.1515;
 bar_width = 0.07;
-base_space = 0.11;
+base_space = 0.17;
 
-graph_height = 0.14;
+graph_height = 0.13;
 ax_burst_par = {};
 
 summary_off = OFFidx;
@@ -51,7 +51,7 @@ fix_powered_ylabels(ax_burst_par{p_idx})
 % % cb1.Position = [0.9313 0.1078 0.0166 0.0713];
 
 %Adjust color bar
-cb1.Position(1) = 0.871; %Left edge
+cb1.Position(1) = 0.8967; %Left edge
 cb1.Units = 'pixels';
 cb1.Position(3:4) = [8.7326 59.5984];
 cb1.Units = 'normalized';
@@ -67,3 +67,14 @@ cb1.TickLabels{1} = num2str(numel(ONidx)-numel(OFFidx));
 for ii =1:numel(ax_burst_par)
     ax_burst_par{ii}.XTickLabelRotation = 0;
 end
+
+
+%Fix ylabels
+ax_burst_par{1}.YLabel.Units = "pixels";
+ax_burst_par{1}.YLabel.Position(1:2) = [-29.5, 52.4];
+
+ax_burst_par{2}.YLabel.Units = "pixels";
+ax_burst_par{2}.YLabel.Position(1) = -34;
+
+ax_burst_par{3}.YLabel.Units = "pixels";
+ax_burst_par{3}.YLabel.Position(1) = -34;

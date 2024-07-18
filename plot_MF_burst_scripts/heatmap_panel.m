@@ -1,6 +1,6 @@
 
 
-pos_bottom = 0.277;
+pos_bottom = 0.272;
 pos_left = 0.07;
 pos_height = 0.4425;
 full_width = 0.790;
@@ -84,3 +84,11 @@ if exist("typ_cell_num","var")
 else
     [hm_ax] = heatmap_markers(ax_hm{1},[19 37 51]);
 end
+
+
+%Fix label position
+ax_hm{1}.YLabel.Units = "pixels";
+ax_hm{1}.YLabel.Position(1) = -15;
+
+ax_hm{3}.XLabel.Units = "pixels";
+ax_hm{3}.XLabel.Position(1:2) = [59.4728 -14.6487];

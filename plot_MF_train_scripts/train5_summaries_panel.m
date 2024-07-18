@@ -1,5 +1,5 @@
-% f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
-%     'Color','w');
+f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
 %Plot options
 peak_log = false;
@@ -9,19 +9,20 @@ num_cols = 3;
 num_rows = 1;
 
 left_margin = 0.1;
-bottom_margin = 0.1964;
-total_width = 0.6850;
+bottom_margin = 0.1764;
+% total_width = 0.6850;
+total_width = 0.8643;
 
-base_space = 0.1;
+base_space = 0.12;
 
 graph_height = 0.1143;
 
-base_width = total_width / num_cols - base_space;
+base_width = (total_width-base_space*num_cols) / (num_cols+1);
 
-all_left_edges = (base_width + base_space) .* (0:(num_cols-1)) + left_margin;
+all_left_edges = (base_width + base_space) .* (0:num_cols) + left_margin;
 
-%Shift right most panel manually
-all_left_edges(3) = 0.8007;
+%remove extra panel for now
+all_left_edges(3) = [];
 
 
 
@@ -44,9 +45,17 @@ all_left_edges(3) = 0.8007;
 %                     all_n_spikes_stim,...
 %                     cellfun(@(x,y) {(x)./(x+y).*100},all_sum_spikes_stim,all_sum_spikes_post)};
 
-all_plot_par = {all_n_spikes_stim,...
-                all_n_spikes_post,...                    
+% all_plot_par = {all_n_spikes_stim,...
+%                 all_n_spikes_post,...                    
+%                     all_train_half_decay};
+
+all_plot_par = {specific_nspikes_base_corr{1},...
+                specific_nspikes_base_corr{2},...                    
                     all_train_half_decay};
+
+% all_plot_par = {specific_nspikes_global_basecorr{1},...
+%                 specific_nspikes_global_basecorr{2},...                    
+%                     all_train_half_decay};
 
 % all_plot_par = {all_train_slow_amp,...
 %                     all_n_spikes_stim_global_base,...
@@ -60,8 +69,13 @@ all_plot_par = {all_n_spikes_stim,...
 % all_ylabels = {'Peak (\Deltaspk/s)',...
 %                 '\DeltaSpikes during step (n)',...
 %                 '\DeltaSpikes after step (n)'};
-all_ylabels = {'\DeltaSpikes during step (n)',...
-                '\DeltaSpikes after step (n)',...
+
+% all_ylabels = {'\DeltaSpikes during step (n)',...
+%                 '\DeltaSpikes after step (n)',...
+%                 'Step half-decay (s)'};
+
+all_ylabels = {'\DeltaSpikes during step 0.9-1s (n)',...
+                '\DeltaSpikes after step 2-3s (n)',...
                 'Step half-decay (s)'};
 
 % all_ylabels = {'Peak (\Deltaspk/s)',...
@@ -138,13 +152,19 @@ for p_idx = 1:num_cols
     opts.XTick = opts.input_n;
     opts.XTickLabel = step_size(plot_steps);
 
-    if p_idx == num_cols
+    if p_idx == 2
         opts.bar = true;
+    else
+        opts.bar = false;
     end
    
     [ax_train_par{p_idx},cb1] = UBC_par_line_plot2(...
         summary_on,summary_off,all_plot_par{p_idx}(plot_steps),f_train,pos_ax,opts);
     xlim([opts.input_n(1) opts.input_n(end)])
+
+    if p_idx == 2
+        cb1.Position = [0.7008 0.2090 0.0128 0.0695];
+    end
     
     %Turn off OFF stuff
     % summary_off = [];

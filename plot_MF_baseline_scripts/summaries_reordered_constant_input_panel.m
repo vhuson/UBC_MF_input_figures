@@ -3,7 +3,7 @@
 
 
 left_edge = 0.7607;
-bottom_edge = 0.2150;
+bottom_edge = 0.2050;
 total_width = 0.1629;
 panel_gap = 0.02;
 total_height = 0.355;

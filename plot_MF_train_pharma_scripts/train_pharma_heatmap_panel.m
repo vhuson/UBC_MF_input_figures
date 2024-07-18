@@ -8,20 +8,17 @@ y_labels_on = false;
 %Set axis position
 num_rows = 4;
 
-pos_bottom = 0.368;
-pos_top = 0.619;
+pos_bottom = 0.305;
+pos_top = 0.605;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
-pos_left = 0.1966;
-full_width = 0.5334;
+pos_left = 0.205;
+full_width = 0.5234;
 base_space = 0.01;
 
-% pos_left2 = 0.6722;
-% base_width2 = 0.2921;
-pos_left2 = 0.7466;
-base_width2 = 0.2177;
-
+pos_left2 = 0.7566;
+base_width2 = 0.2077;
 
 
 base_height = (pos_height - base_space * (num_rows-1)) / num_rows;
@@ -130,3 +127,5 @@ for ii = 1:num_rows
 
 end
 
+ax_pharm_sp_hm{end}.XLabel.Units = 'pixels';
+ax_pharm_sp_hm{end}.XLabel.Position = [165.8184 -12.7753 -0.8186];

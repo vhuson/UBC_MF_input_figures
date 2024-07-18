@@ -18,11 +18,11 @@ num_cols = numel(all_line_plot_par);
 num_rows = 1;
 
 
-bottom_margin = 0.1964;
-base_width = 0.1283;
+bottom_margin = 0.1764;
+base_width = 0.1261;
 base_space = 0.14;
-% left_margin = 0.9643-base_width;
-left_margin = 0.5567;
+left_margin = 0.5703;
+% left_margin = 0.5567;
 
 graph_height = 0.1143;
 

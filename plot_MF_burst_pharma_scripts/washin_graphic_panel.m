@@ -11,7 +11,7 @@ seed_colors_pharma = [0 0 0;
 
 
 all_colors_pharma = seed_map(seed_colors_pharma,4);
-legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
+legend_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
 
 
 %Make graphic
