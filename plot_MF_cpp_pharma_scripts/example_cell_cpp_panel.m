@@ -7,7 +7,8 @@
 % typ_cell_IDs = {'1686','1694','1776','1774','1709'};
 
 % curr_cells = [8, 10, 13, 18, 24];
-typ_cell_IDs = {'1854','1859'};
+% typ_cell_IDs = {'1854','1859'};
+typ_cell_IDs = {'1862','1859'};
 [typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
 
 

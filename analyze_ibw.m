@@ -12,7 +12,7 @@ curr_path = 'data_raw\MF_stim_CPP_washin';
     get_files_and_cellnames(curr_path);
 
 %% Run spike detection
-currCell = allCellNames{5};
+currCell = allCellNames{8};
 
 opts = struct();
 opts.max_peak =1000;
@@ -107,8 +107,8 @@ end
 %}
 %% Discard a trace
 %{
-disc_p = 2;
-disc_t = 6;
+disc_p = 1;
+disc_t = 33;
 disc_global = get_overall_idx(curr_file_names,[disc_p,disc_t]);
 
 freqs{disc_p}(disc_t) = [];
@@ -133,7 +133,7 @@ par_opts.OFF = false;
 par_opts.baseRange = 1;
 par_opts.startPoint = 5.0;
 par_opts.endPoint = 20;
-par_opts.smooth = 180;
+par_opts.smooth = 80;
 
 [Amp, HD, baseline,sPause] = get_UBC_HD_and_amp(freqs,Fs,sPause,par_opts);
 
@@ -213,7 +213,7 @@ med_opts.startPoint = 5.0;
 med_opts.stimDur = 0.2;
 med_opts.endPoint = 13;
 med_opts.delay_startPoint = 0.0;
-med_opts.smooth = 120;
+med_opts.smooth = 80;
 
 
 

@@ -6,7 +6,8 @@ f_train_cpp = figure('Position', [488 1.8000 680.3150 857.9636],...
 select_cells = fltr_ONidx_tcpp;
 
 % TRAIN5 selection
-typ_cell_IDs = {'1854','1859'};
+% typ_cell_IDs = {'1854','1859'};
+typ_cell_IDs = {'1862','1859'};
 
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_cpp_fltr),...
     typ_cell_IDs,select_cells);
@@ -140,12 +141,12 @@ for ii = 1:num_cells
     %Same ylim
     same_ylim_stack({cpp_stack{ii}, cpp_stack2{ii}});
 end
-% cpp_stack{1}{1}.YLim(2) = 160;
-% cpp_stack{1}{2}.YLim(2) = 160;
+cpp_stack{1}{1}.YLim(2) = 200;
+cpp_stack{1}{2}.YLim(2) = 200;
 % cpp_stack{1}{3}.YLim(2) = 160;
-% cpp_stack2{1}{1}.YLim(2) = 160;
-% cpp_stack2{1}{2}.YLim(2) = 160;
-% cpp_stack2{1}{3}.YLim(2) = 160;
+cpp_stack2{1}{1}.YLim(2) = 200;
+cpp_stack2{1}{2}.YLim(2) = 200;
+% cpp_stack2{1}{3}.YLim(2) = 220;
 
 %Add scale bar
 scale_opts = struct();
