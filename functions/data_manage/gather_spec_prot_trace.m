@@ -11,6 +11,7 @@ function [mean_match_traces,all_match_traces,all_idx,all_times] = ...
 % prot_spec_dur = [2 0.05 9.95];
 base_opts.ignore_first_dur = true;
 base_opts.ignore_washout = true;
+base_opts.get_median = false;
 
 if nargin < 5
     %No washin_state given, ignore filtering
@@ -96,7 +97,11 @@ for ii = 1:numel(allData)
     
 
     %fill in outputs
-    mean_match_traces(ii,:) = mean(match_traces,1);
+    if opts.get_median
+        mean_match_traces(ii,:) = median(match_traces,1);
+    else
+        mean_match_traces(ii,:) = mean(match_traces,1);
+    end
     all_match_traces{ii}    = match_traces;
     all_idx{ii}             = split_idx;
     all_times{ii}           = match_times;

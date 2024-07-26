@@ -1,20 +1,34 @@
 function [all_mean_traces,all_full_traces] = ...
     get_burst_data(allData,Fs,all_burst_durs, all_burst_tails,...
-    washin_state)
+    washin_state,opts)
 %UNTITLED Summary of this function goes here
 %   Detailed explanation goes here
 % all_burst_durs      = [0.01 0.02 0.05 0.10 0.2];
 % all_burst_tails     = [2.9    3    10   10   10];
 
+base_opts.get_median = false;
+base_opts.pretime = 0.5;
+base_opts.get_1s = true;
+base_opts.alt_tail = 1;
+base_opts.fix_20x100 = true;
+
+if nargin < 6
+    opts = base_opts;
+else
+    opts = merge_structs(base_opts,opts);
+end
+
+
+
 %amount of time to get prior to stimulation
-pretime = 0.5;
+pretime = opts.pretime;
 
 %Get alternative single stimuli
-get_1s = true;
-alt_tail = 1;
+get_1s = opts.get_1s;
+alt_tail = opts.alt_tail;
 
 %Selective about 20x 100Hz
-fix_20x100 = true;
+fix_20x100 = opts.fix_20x100;
 
 
 all_full_traces     = cell(1,numel(all_burst_durs));
@@ -37,9 +51,11 @@ for ii = 1:numel(all_burst_durs)
 
 
     %Extract right traces
+    prot_opts = struct();
+    prot_opts.get_median = opts.get_median;
     [mean_match_traces,all_match_traces,all_match_idx] = ...
         gather_spec_prot_trace(allData,Fs,...
-        prot_spec_freq,prot_spec_dur,washin_state,pretime);
+        prot_spec_freq,prot_spec_dur,washin_state,pretime,prot_opts);
 
 
     all_mean_traces{ii} = mean_match_traces;
@@ -59,7 +75,7 @@ if get_1s
     %Extract right traces
     [mean_match_traces,all_match_traces,all_match_idx] = ...
         gather_spec_prot_trace(allData,Fs,...
-        prot_spec_freq,prot_spec_dur,washin_state,0);
+        prot_spec_freq,prot_spec_dur,washin_state,0,prot_opts);
 
     idx_1s = all_burst_durs == 0.01;
     idx_nan = isnan(all_mean_traces{idx_1s}(:,1));

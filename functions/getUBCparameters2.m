@@ -1,4 +1,4 @@
-function [main_pars,supp_pars,smoothTrace] = getUBCparameters2(avgTrace,baseTrace,stim_end,Fs)
+function [main_pars,supp_pars,smoothTrace] = getUBCparameters2(avgTrace,baseTrace,stim_end,Fs,opts)
 %getUBCparameters Calculates basic UBC response parameters
 %   Takes in an average trace where 0 is the time of stimulation, 
 %   to do the calculations on
@@ -13,8 +13,18 @@ scatter(fast_tpeak,fast_amp)
 scatter([firstHalf lastHalf],repmat(slow_amp/2,1,2))
 scatter([firstHalf_fast lastHalf_fast],repmat(fast_amp/2,1,2))
 %}
+
+base_opts.restrict_nspikes = false; %passing num_samples replaces HD_x2
+base_opts.restrict_peak = false; %pass a 2 sample indexes to define window
+
 if nargin < 4
     Fs = 20000;
+end
+
+if nargin < 5
+    opts = base_opts;
+else
+    opts = merge_structs(base_opts,opts);
 end
 
 %Baseline
@@ -29,16 +39,23 @@ smoothTrace = interp1(logMarks,smooth_log_freqs,(1:numel(avgTrace))/Fs);
 smoothTrace(isnan(smoothTrace)) = baseline;
 
 
-%Fast peak
+%Fast peak (always unrestricted)
 overhang = round((0.1+stim_end)*Fs);
 fast_window = 1:overhang;
 [fast_amp, fast_tpeak] = max(smoothTrace(fast_window));
 
-%Slow peak
-overhang =fast_tpeak+Fs*0.05;
-slow_window = overhang:numel(avgTrace);
+%Slow peak (can be restricted)
+if ~islogical(opts.restrict_peak)
+    overhang = opts.restrict_peak(1);
+    slow_window = overhang:opts.restrict_peak(2);
+else
+    overhang =fast_tpeak+Fs*0.05;
+    slow_window = overhang:numel(avgTrace);
+end
+
 [slow_amp, slow_tpeak] = max(smoothTrace(slow_window));
-if slow_tpeak == 1
+
+if slow_tpeak == 1 && islogical(opts.restrict_peak)
     slow_amp = fast_amp;
     slow_tpeak = fast_tpeak;
 else
@@ -95,13 +112,18 @@ HD_fast = (lastHalf_fast - firstHalf_fast)/Fs;
 
 
 %Number of spikes
-if (slow_amp-baseline) > 1
-    HD_x2 = max([round(lastHalf+(HD*Fs)),round(lastHalf_fast+(HD_fast*Fs))]);
-    HD_x2 = min([HD_x2, numel(avgTrace)]);
+if ~islogical(opts.restrict_nspikes)
+    HD_x2 = opts.restrict_nspikes;
 else
-    HD_x2 = min([10*Fs, numel(avgTrace)]);
+    if (slow_amp-baseline) > 1
+        HD_x2 = max([round(lastHalf+(HD*Fs)),round(lastHalf_fast+(HD_fast*Fs))]);
+        HD_x2 = min([HD_x2, numel(avgTrace)]);
+    else
+        HD_x2 = min([10*Fs, numel(avgTrace)]);
+    end
 end
 n_spikes = (sum(avgTrace(1:HD_x2))-baseline*HD_x2)/Fs;
+n_spikes_not_normalized = sum(avgTrace(1:HD_x2))/Fs;
 
 % 
 % %Check to see if trace makes sense
@@ -160,7 +182,8 @@ supp_pars = struct('freqThres', freqThres, 'freqStart', freqStart,...
                     'lastHalf_fast', lastHalf_fast,...
                     'fast_peak',fast_amp,'slow_peak',slow_amp,...
                     'fast_tpeak_samples', fast_tpeak,...
-                    'slow_tpeak_samples', slow_tpeak);       
+                    'slow_tpeak_samples', slow_tpeak,...
+                    'HD_x2',HD_x2,'n_spikes_not_normalized',n_spikes_not_normalized);       
 
 
 end
