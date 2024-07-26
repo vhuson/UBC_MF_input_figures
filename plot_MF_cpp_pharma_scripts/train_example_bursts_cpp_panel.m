@@ -8,7 +8,8 @@ select_cells = fltr_ONidx_tcpp;
 
 % TRAIN5 selection
 % typ_cell_IDs = {'1854','1859'};
-typ_cell_IDs = {'1862','1859'};
+% typ_cell_IDs = {'1862','1859'};
+typ_cell_IDs = {'1865','1859'};
 
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_cpp_fltr),...
     typ_cell_IDs,select_cells);
@@ -99,7 +100,12 @@ for ii = 1:num_cells
     %Plot pulse 60 zoom in
 
     %Add cell label
-    text(cpp_stack_burst{ii}{1},0,0,['#',num2str(typ_cell_num(ii))],'Units','normalized',...
+    if ii == 1
+        label_string = {'Cell',['#',num2str(typ_cell_num(ii))]};
+    else
+        label_string = ['#',num2str(typ_cell_num(ii))];
+    end
+    text(cpp_stack_burst{ii}{1},0,0,label_string,'Units','normalized',...
                 'Position',[-0.55 -0],'VerticalAlignment','middle',...
                 'HorizontalAlignment','center',...
                 'Rotation',0)
@@ -135,13 +141,13 @@ end
 scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [stack_opts.XLim(2)-0.5,-70];
+scale_opts.origin = [stack_opts.XLim(2)-0.5,-40];
 add_scale_bar(cpp_stack_burst{1}{end},[0.5 0],scale_opts);
 % for ii = 1:numel(cpp_stack_burst{1})-1
 %     add_scale_bar(cpp_stack_burst{1}{ii},[0 50]);
 % end
 
-scale_opts.origin = [stack_opts.XLim(2)-0.5,-70];
+scale_opts.origin = [stack_opts.XLim(2)-0.5,-40];
 add_scale_bar(cpp_stack_burst{2}{end},[0.5 0],scale_opts);
 % for ii = 1:numel(cpp_stack_burst{2})-1
 %     add_scale_bar(cpp_stack_burst{2}{ii},[0 50]);
@@ -164,5 +170,5 @@ add_scale_bar(cpp_stack_burst{2}{end},[0.5 0],scale_opts);
 
 
 %Label train input
-text(input_ax_burst{1},0,2,'0','VerticalAlignment','bottom')
+text(input_ax_burst{1},-0.2,2,'0','VerticalAlignment','bottom')
 text(input_ax_burst{1},0.6,102,'100','VerticalAlignment','bottom','HorizontalAlignment','center')

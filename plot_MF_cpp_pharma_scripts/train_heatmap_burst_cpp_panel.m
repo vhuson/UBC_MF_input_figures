@@ -68,8 +68,9 @@ for ii = 1:num_rows
     curr_plot_data = curr_traces{ii};
 
     %Set more options
-    opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
-                    all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    % opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
+    %                 all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    opts.YLabel = {all_row_labels{ii},'Cell #'};
     
 
     if ii == num_rows
@@ -108,3 +109,9 @@ for ii = 1:2
         [hm_ax] = heatmap_markers(ax_cpp_sp_burst_hm{ii},[4 6]);
     end
 end
+
+%Fix label position
+ax_cpp_sp_burst_hm{1}.YLabel.Units = "pixels";
+ax_cpp_sp_burst_hm{1}.YLabel.Position(1) = -15;
+ax_cpp_sp_burst_hm{2}.YLabel.Units = "pixels";
+ax_cpp_sp_burst_hm{2}.YLabel.Position(1) = -15;

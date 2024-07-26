@@ -1,13 +1,14 @@
 %% Plot trains stacked pharma
 
-f_train_cpp = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
+% f_train_cpp = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
 
 select_cells = fltr_ONidx_tcpp;
 
 % TRAIN5 selection
 % typ_cell_IDs = {'1854','1859'};
-typ_cell_IDs = {'1862','1859'};
+% typ_cell_IDs = {'1862','1859'};
+typ_cell_IDs = {'1865','1859'};
 
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_cpp_fltr),...
     typ_cell_IDs,select_cells);
@@ -24,7 +25,7 @@ num_washin = 2;
 num_rows = num_cells * num_washin; %+1;
 
 pos_bottom = 0.654;
-cell_space = 0.014;
+cell_space = 0.027;
 base_space = 0.006;
 % pos_top = 0.96;
 %Manual first panel
@@ -53,6 +54,7 @@ all_bottom_edges = all_bottom_edges + floor(1/num_washin:1/num_washin:num_cells)
 all_bottom_edges = fliplr(all_bottom_edges);
 
 all_bottom_edges = all_bottom_edges([2,4]);
+all_bottom_edges = all_bottom_edges + 0.015;
 
 cell_height = base_height * num_washin + base_space *(num_washin-1);
 
@@ -74,7 +76,7 @@ end
 
 
 %Set plot options
-all_row_labels = {'Baseline','−NMDAR'};
+all_row_labels = {'Baseline','NMDAR blocked'};
 seed_colors_pharma = [0 0 0;
                 1 0.0 0.9];
 all_colors_pharma = seed_map(seed_colors_pharma,2);
@@ -133,6 +135,11 @@ for ii = 1:num_cells
 
     if y_labels_on
     %Add cell label
+    if ii == 1
+        label_string = {'Cell',['#',num2str(typ_cell_num(ii))]};
+    else
+        label_string = ['#',num2str(typ_cell_num(ii))];
+    end
     text(cpp_stack{ii}{2},0,0,['#',num2str(typ_cell_num(ii))],'Units','normalized',...
                 'Position',[-0.05 -0],'VerticalAlignment','middle',...
                 'HorizontalAlignment','center',...
@@ -141,28 +148,29 @@ for ii = 1:num_cells
     %Same ylim
     same_ylim_stack({cpp_stack{ii}, cpp_stack2{ii}});
 end
-cpp_stack{1}{1}.YLim(2) = 200;
-cpp_stack{1}{2}.YLim(2) = 200;
-% cpp_stack{1}{3}.YLim(2) = 160;
-cpp_stack2{1}{1}.YLim(2) = 200;
-cpp_stack2{1}{2}.YLim(2) = 200;
+cpp_stack{1}{1}.YLim(2) = 163.6085;
+cpp_stack{1}{2}.YLim(2) = 163.6085;
+% % cpp_stack{1}{3}.YLim(2) = 160;
+cpp_stack2{1}{1}.YLim(2) = 163.6085;
+cpp_stack2{1}{2}.YLim(2) = 163.6085;
 % cpp_stack2{1}{3}.YLim(2) = 220;
 
-%Add scale bar
-scale_opts = struct();
-scale_opts.xlabel = 's';
-scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [33,-70];
-cellfun(@(x) add_scale_bar(x{end},[3 50],scale_opts),cpp_stack);
 
-scale_opts.origin = [30.5,-70];
-cellfun(@(x) add_scale_bar(x{end},[0.5 0],scale_opts),cpp_stack2);
 
 
 %Axis size by ylim
 cellfun(@axis_height_by_ylim,cpp_stack,'UniformOutput', false);
 cellfun(@axis_height_by_ylim,cpp_stack2,'UniformOutput', false);
 
+%Add scale bar
+scale_opts = struct();
+scale_opts.xlabel = 's';
+scale_opts.ylabel = 'spk/s';
+scale_opts.origin = [33,-30];
+cellfun(@(x) add_scale_bar(x{end},[3 20],scale_opts),cpp_stack);
+
+scale_opts.origin = [30.5,-30];
+cellfun(@(x) add_scale_bar(x{end},[0.5 0],scale_opts),cpp_stack2);
 
 %Add washin label
 % if y_labels_on

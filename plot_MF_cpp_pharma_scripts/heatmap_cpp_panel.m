@@ -77,8 +77,9 @@ for ii = 1:num_rows
     curr_mean_cpp_bursts = all_mean_cpp_bursts_all{ii};
     
     %Set more options
-    opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
-                    all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    % opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
+    %                 all_row_labels{ii},'\newline\color{black}Cell (#)'];
+    opts.YLabel = {all_row_labels{ii},'Cell #'};
     opts.YTick = false;
     if ii == num_rows
         opts.XTickLabel = arrayfun(@num2str,opts.XTick-0.5,'UniformOutput',false);
@@ -111,7 +112,7 @@ for ii = 1:num_rows
         end
 
         opts.XLabel = '';
-        if ii == num_rows && jj == round(num_cols/2)
+        if ii == num_rows && jj == round(num_cols/2)+1
             opts.XLabel = 'Time (s)';
         end
         
@@ -145,3 +146,12 @@ for ii = 1:num_rows
 end
 
 
+
+%Fix label position
+ax_cpp_hm{1,1}.YLabel.Units = "pixels";
+ax_cpp_hm{1,1}.YLabel.Position(1) = -15;
+ax_cpp_hm{2,1}.YLabel.Units = "pixels";
+ax_cpp_hm{2,1}.YLabel.Position(1) = -15;
+
+ax_cpp_hm{2,4}.XLabel.Units = "pixels";
+ax_cpp_hm{2,4}.XLabel.Position(1:2) = [67.3819  -16.3946];

@@ -23,7 +23,7 @@ all_bottom_edges = repmat(bottom_edge,1,num_cols);
 
 trace_labels = {'Baseline','−NMDAR'};
 % trace_labels = {'1','2','3','4'};
-all_titles = {'1x' '2x' '5x' '10x' '20x'};
+all_titles = {'1' '2' '5' '10' '20'};
 
 % Plot peak
 ax_cpp_p = {};
@@ -128,7 +128,7 @@ opts.xtick_symbols = {"o","x"};
 opts.input_n = [1,2];
 dummy_ax = UBC_par_marker_plot([1 1],f_burst_cpp,[2 2 0.2 0.2],opts);
 
-legend_labels = {'Baseline','−NMDAR'};
+legend_labels = {'Baseline','NMDAR\newlineblocked'};
 legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Orientation','vertical',...
     'Box', 'off',...

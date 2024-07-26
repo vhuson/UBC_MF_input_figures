@@ -169,14 +169,22 @@ standardFig(f_burst_cpp,fig_opts);
 %Add labels
 plot_labels = repmat({[]},1,120);
 plot_labels{1} = 'a';
-plot_labels{11} = 'b';
-plot_labels{21} = 'c';
-plot_labels{26} = 'd';
+plot_labels{16} = 'b';
+plot_labels{26} = 'c';
+plot_labels{31} = 'd';
 % plot_labels{97} = 'e';
 % plot_labels{102} = 'f';
 % plot_labels{82} = 'e';
-labelPlots(f_burst_cpp,plot_labels);
+[~,t_labels] = labelPlots(f_burst_cpp,plot_labels);
 
+
+for ii = 1:numel(t_labels)
+    t_labels{ii}.Position(1) = -41;
+end
+
+t_labels{4}.Position(2) = 93.2545;
+
+% exportgraphics(f_burst_cpp,'pdf\240722_supp_cpp1.pdf','ContentType','vector')
 
 %% Main cpp train figure
 f_train_cpp = figure('Position', [488 1.8000 680.3150 857.9636],...
@@ -199,18 +207,21 @@ standardFig(f_train_cpp,fig_opts);
 
 %Add labels
 plot_labels = repmat({[]},1,46);
-plot_labels{19} = 'a';
+plot_labels{11} = 'a';
 plot_labels{2} = 'b';
-% plot_labels{3} = 'c';
-% plot_labels{7} = 'd';
-% plot_labels{24} = 'c';
-% plot_labels{11} = 'f';
-% plot_labels{15} = 'g';
-plot_labels{28} = 'c';
-plot_labels{33} = 'd';
-plot_labels{40} = 'e';
+plot_labels{16} = 'c';
+plot_labels{19} = 'd';
+plot_labels{22} = 'e';
 % plot_labels{46} = 'f';
-labelPlots(f_train_cpp,plot_labels);
+[~,t_labels] = labelPlots(f_train_cpp,plot_labels);
+for ii = 2:numel(t_labels)
+    t_labels{ii}.Position(1) = -41;
+end
+
+for ii = [1,4]
+    t_labels{ii}.Position(1) = -1;
+end
+% exportgraphics(f_train_cpp,'pdf\240722_supp_cpp2.pdf','ContentType','vector')
 
 %% Supplement heatmap figure
 

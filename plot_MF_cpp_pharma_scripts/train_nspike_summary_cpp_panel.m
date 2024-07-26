@@ -16,7 +16,7 @@ pos_left = 0.1;
 full_width = 0.9243-pos_left;
 base_space = 0.017;
 % base_height = 0.085;
-pos_bottom = 0.21;
+pos_bottom = 0.2053;
 base_height = 0.1;
 
 base_width = full_width - base_space * (num_cols-1);
@@ -136,7 +136,7 @@ opts.input_n = [1,2];
 opts.xtick_symbols = {"o","x"};
 dummy_ax = UBC_par_marker_plot([1 1],f_train_cpp,[2 2 0.2 0.2],opts);
 
-legend_labels = {'Baseline','−NMDAR'};
+legend_labels = {'Baseline','NMDAR blocked'};
 legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Orientation','horizontal',...
     'Box', 'off',...

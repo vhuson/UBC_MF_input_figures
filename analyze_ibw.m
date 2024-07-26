@@ -12,7 +12,7 @@ curr_path = 'data_raw\MF_stim_CPP_washin';
     get_files_and_cellnames(curr_path);
 
 %% Run spike detection
-currCell = allCellNames{8};
+currCell = allCellNames{10};
 
 opts = struct();
 opts.max_peak =1000;
@@ -108,7 +108,7 @@ end
 %% Discard a trace
 %{
 disc_p = 1;
-disc_t = 33;
+disc_t = 27;
 disc_global = get_overall_idx(curr_file_names,[disc_p,disc_t]);
 
 freqs{disc_p}(disc_t) = [];
@@ -129,11 +129,11 @@ end
 Fs = 20000;
 
 par_opts = struct();
-par_opts.OFF = false;
+par_opts.OFF = true;
 par_opts.baseRange = 1;
 par_opts.startPoint = 5.0;
 par_opts.endPoint = 20;
-par_opts.smooth = 80;
+par_opts.smooth = 170;
 
 [Amp, HD, baseline,sPause] = get_UBC_HD_and_amp(freqs,Fs,sPause,par_opts);
 
@@ -143,7 +143,7 @@ fig_opts.typCell = 5;
 fig_opts.cellRange = [1:numel(freqs{1})];
 fig_opts.startT = 4.5;
 fig_opts.stimEnd = 5.2001;
-fig_opts.endT = 	20;
+fig_opts.endT = 	10;
 % fig_opts.post_stim = [10,19,29,39]+0.5;
 
 [fig1] = plot_individual_UBC(traces,Fs,curr_file_names,Amp,baseline,...
@@ -213,7 +213,7 @@ med_opts.startPoint = 5.0;
 med_opts.stimDur = 0.2;
 med_opts.endPoint = 13;
 med_opts.delay_startPoint = 0.0;
-med_opts.smooth = 80;
+med_opts.smooth = 170;
 
 
 
