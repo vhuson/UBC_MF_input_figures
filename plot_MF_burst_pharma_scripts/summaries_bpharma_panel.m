@@ -6,13 +6,13 @@
 num_cols = 5;
 
 left_edge = 0.1;
-bottom_edge = 0.1334;
+bottom_edge = 0.1557;
 % bottom_edge2 = 0.32;
 total_width = 0.73;
 total_height = 0.095;
 base_gap = 0.03;
 
-bottom_edge2 = bottom_edge - total_height - 0.02;
+% bottom_edge2 = bottom_edge - total_height - 0.02;
 
 base_width = (total_width - base_gap * (num_cols-1)) / num_cols;
 base_height = total_height;
@@ -34,44 +34,44 @@ opts.xtick_symbols = {"o","^","square","diamond"};
 opts.markeredgecolor = {[0 0 0], [1 0.6 0], [0.8 0 0], [ 0   0   1]};
 opts.markerfacecolor = cellfun(@(x) {(1-x)*0.8+x},opts.markeredgecolor);
 opts.base_style = '-';
-
-opts.YLabel = 'Peak (\Deltaspk/s)';
-for input_idx = 1:5
-    % Set ax pos
-    pos_ax = [all_left_edges(input_idx), all_bottom_edges(input_idx),...
-        base_width, base_height];
-
-    %Gather data
-    all_pharma_currpar = {all_pharma_slow_amp1{input_idx},...
-                    all_pharma_slow_amp2{input_idx},...
-                    all_pharma_slow_amp3{input_idx},...
-                    all_pharma_slow_amp4{input_idx}};
-
-
-    [ax_pharm_p{input_idx}] = UBC_par_line_plot2(...
-            fltr_ONidx,[],all_pharma_currpar,f_burst_pharma,pos_ax,...
-            opts);
-    title(ax_pharm_p{input_idx},all_titles{input_idx})
-
-    fix_powered_ylabels(ax_pharm_p{input_idx});
-
-    ax_pharm_p{input_idx}.XLim(1) = ax_pharm_p{input_idx}.XLim(1) - ...
-                        diff(ax_pharm_p{input_idx}.XLim)*0.05;
-    ax_pharm_p{input_idx}.YLim(1) = ax_pharm_p{input_idx}.YLim(1) * 0.85;
-
-    if input_idx > 1
-            ax_pharm_p{input_idx}.YTickLabel = '';
-    end
-
-    opts.YLabel = '';
-    % opts.YRulerVis = 'off';
-
-end
-same_ylim(ax_pharm_p)
+% 
+% opts.YLabel = 'Peak (\Deltaspk/s)';
+% for input_idx = 1:5
+%     % Set ax pos
+%     pos_ax = [all_left_edges(input_idx), all_bottom_edges(input_idx),...
+%         base_width, base_height];
+% 
+%     %Gather data
+%     all_pharma_currpar = {all_pharma_slow_amp1{input_idx},...
+%                     all_pharma_slow_amp2{input_idx},...
+%                     all_pharma_slow_amp3{input_idx},...
+%                     all_pharma_slow_amp4{input_idx}};
+% 
+% 
+%     [ax_pharm_p{input_idx}] = UBC_par_line_plot2(...
+%             fltr_ONidx,[],all_pharma_currpar,f_burst_pharma,pos_ax,...
+%             opts);
+%     title(ax_pharm_p{input_idx},all_titles{input_idx})
+% 
+%     fix_powered_ylabels(ax_pharm_p{input_idx});
+% 
+%     ax_pharm_p{input_idx}.XLim(1) = ax_pharm_p{input_idx}.XLim(1) - ...
+%                         diff(ax_pharm_p{input_idx}.XLim)*0.05;
+%     ax_pharm_p{input_idx}.YLim(1) = ax_pharm_p{input_idx}.YLim(1) * 0.85;
+% 
+%     if input_idx > 1
+%             ax_pharm_p{input_idx}.YTickLabel = '';
+%     end
+% 
+%     opts.YLabel = '';
+%     % opts.YRulerVis = 'off';
+% 
+% end
+% same_ylim(ax_pharm_p)
 
 
 %Plot n-Spikes
-all_bottom_edges = repmat(bottom_edge2,1,num_cols);
+% all_bottom_edges = repmat(bottom_edge2,1,num_cols);
 
 
 ax_pharm_n = {};
@@ -102,6 +102,7 @@ for input_idx = 1:5
     [ax_pharm_n{input_idx},cb1] = UBC_par_line_plot2(...
             fltr_ONidx,[],all_pharma_currpar,f_burst_pharma,pos_ax,...
             opts);
+     title(ax_pharm_n{input_idx},all_titles{input_idx})
 
     if input_idx == 5
         % cb1.Position = [0.8688 0.0503 0.0151 0.0743];
@@ -142,7 +143,7 @@ legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Box', 'off',...
     'NumColumns',1,...
     'Units','normalized',...
-    'Position', [0.8338 0.1386 0.1506 0.0844])
+    'Position', [0.8338 0.0412 0.1506 0.0844])
 
 % same_ylim(ax_pharm_n(1:2))
 % same_ylim(ax_pharm_n(3:5))

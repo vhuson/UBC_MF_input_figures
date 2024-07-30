@@ -255,6 +255,7 @@ example_line_bpharma_nspikes_panel
 all_heatmaps_bpharma_panel
 
 summaries_bpharma_panel
+summaries_bpharm_component_panel
 % summaries_bpharma_singlerow_panel
 
 %Tweak figure
@@ -265,13 +266,15 @@ standardFig(f_burst_pharma,fig_opts);
 washin_graphic_panel
 
 %Add labels
-plot_labels = repmat({[]},1,102);
+plot_labels = repmat({[]},1,106);
 plot_labels{1} = 'a';
 plot_labels{26} = 'b';
 plot_labels{52} = 'c';
 plot_labels{77} = 'd';
 plot_labels{97} = 'e';
-plot_labels{102} = 'f';
+plot_labels{103} = 'f';
+plot_labels{105} = 'g';
+plot_labels{106} = 'h';
 % plot_labels{82} = 'e';
 [~,t_labels] = labelPlots(f_burst_pharma,plot_labels);
 
@@ -281,9 +284,13 @@ end
 for ii = [1,4,5,6]
     t_labels{ii}.Position(1) = -58;
 end
-t_labels{6}.Position(2) = 75.1636;
+t_labels{6}.Position(2) = 81;
 
-% exportgraphics(f_burst_pharma,'pdf\240719_fig3_onlymGluR1restricted.pdf','ContentType','vector')
+for ii = [7,8]
+    t_labels{ii}.Position(1:2) = [-71 81];
+end
+
+% exportgraphics(f_burst_pharma,'pdf\240726_fig3.pdf','ContentType','vector')
 %% Supplement heatmap figure
 
 f_burst_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...

@@ -12,10 +12,10 @@ num_rows = 4; %Number of washins
 
 left_edge = 0.1;
 % bottom_edge = 0.07;
-bottom_edge = 0.29;
+bottom_edge = 0.3020;
 total_width = 0.87;
 % total_height = 0.88;
-total_height = 0.32;
+total_height = 0.308;
 base_gap = 0.01;
 
 %X Lim adjusted graph widths

@@ -16,7 +16,7 @@ pos_left = 0.1;
 full_width = 0.9243-pos_left;
 base_space = 0.017;
 % base_height = 0.085;
-pos_bottom = 0.1327;
+pos_bottom = 0.1557;
 base_height = 0.1;
 
 base_width = full_width - base_space * (num_cols-1);
@@ -129,13 +129,14 @@ dummy_opts.markerfacecolor = opts.markerfacecolor;
 dummy_opts.markeredgecolor = opts.markeredgecolor;
 dummy_ax = UBC_par_marker_plot([1 1 1 1],f_train_pharma,[2 2 0.2 0.2],dummy_opts);
 
-legend_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
+% legend_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
+legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
 legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
     'Orientation','horizontal',...
     'Box', 'off',...
-    'NumColumns',4,...
+    'NumColumns',1,...
     'Units','normalized',...
-    'Position', [0.2149 0.0887 0.5702 0.0390])
+    'Position', [0.8326 0.0412 0.1647 0.0844])
 
 %Fix ylabel
 ax_sp_p_par{1}.YLabel.Units = 'pixels';

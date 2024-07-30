@@ -8,7 +8,7 @@ y_labels_on = false;
 %Set axis position
 num_rows = 4;
 
-pos_bottom = 0.305;
+pos_bottom = 0.3132;
 pos_top = 0.605;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;

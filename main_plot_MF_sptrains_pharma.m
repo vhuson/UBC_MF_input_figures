@@ -89,6 +89,7 @@ train_pharma_heatmap_panel
 % 
 % train_pharma_summary_panel_peak
 train_pharma_summary_panel_stimspikes
+summaries_tpharm_component_panel
 % train_pharma_summary_panel_postspikes
 % train_pharma_summary_panel_percentspikes
 % train_pharma_summary_panel
@@ -111,17 +112,23 @@ plot_labels{2} = 'b';
 plot_labels{28} = 'c';
 plot_labels{33} = 'd';
 plot_labels{40} = 'e';
-% plot_labels{46} = 'f';
+plot_labels{47} = 'f';
+plot_labels{49} = 'g';
+plot_labels{50} = 'h';
 [~,t_labels] = labelPlots(f_train_pharma,plot_labels);
 
 for ii = [1,4]
     t_labels{ii}.Position(1) = -6;
 end
-for ii = [2,3,5]
-    t_labels{ii}.Position(1) = -30;
+for ii = [2,3,5,6]
+    t_labels{ii}.Position(1) = -47;
 end
 t_labels{5}.Position(2) = 102;
-% exportgraphics(f_train_pharma,'pdf\240711_fig5.pdf','ContentType','vector')
+for ii = [7,8]
+    t_labels{ii}.Position(1:2) = [-69 80];
+end
+t_labels{6}.Position(2) = 80;
+% exportgraphics(f_train_pharma,'pdf\240726_fig5.pdf','ContentType','vector')
 %% other figure
 train_pharma_20s_figure
 
