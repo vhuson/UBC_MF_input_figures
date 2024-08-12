@@ -1,5 +1,5 @@
 %% Plot trains stacked pharma
-
+% 
 % f_train_pharma = figure('Position', [488 1.8000 680.3150 857.9636],...
 %     'Color','w');
 
@@ -36,13 +36,16 @@ pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
 pos_left = 0.205;
-full_width = 0.5234;
+% full_width = 0.5234;
+both_width = 0.6650;
+zoom_gap = 0.0282;
+full_width = (both_width-zoom_gap)/1.4;
 
 
 % pos_left2 = 0.6722;
 % base_width2 = 0.2921;
-pos_left2 = 0.7566;
-base_width2 = 0.2077;
+pos_left2 = pos_left+full_width+zoom_gap;
+base_width2 = full_width*0.4;
 
 base_height = pos_height - base_space * (num_rows-1) - cell_space * (num_cells-1);
 base_height = base_height / num_rows;
@@ -75,7 +78,10 @@ end
 
 %Set plot options
 % all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
-all_row_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
+% all_row_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
+all_row_labels = {{'Baseline'},{'mGluR2/3','block'},{'+ AMPAR' 'block'},...
+    {'+ mGluR1' 'block'}};
+
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
@@ -160,16 +166,46 @@ cellfun(@axis_height_by_ylim,pharma_stack2,'UniformOutput', false);
 
 %Add washin label
 % if y_labels_on
+plus_offset = 16.5;
 for ii = 1:numel(pharma_stack)
     for jj = 1:4
-        curr_label = ['\color[rgb]{',num2str(all_colors_pharma(jj,:)),'}',...
-                    all_row_labels{jj}];
-        curr_t = text(pharma_stack{ii}{jj},0,0,curr_label,...
-            'Units','normalized',...
-            'Position',[0 0 0],'VerticalAlignment','top',...
-            'HorizontalAlignment','left');
-        curr_t.Units = 'data';
-        curr_t.Position(2) = 0;
+        % curr_label = ['\color[rgb]{',num2str(all_colors_pharma(jj,:)),'}',...
+        %             all_row_labels{jj}];
+        curr_label = all_row_labels{jj};
+
+        if numel(curr_label) == 1
+            curr_t = text(pharma_stack2{ii}{jj},1,0.5,curr_label,...
+                'Units','normalized',...
+                'Position',[1 0.5 0],'VerticalAlignment','middle',...
+                'HorizontalAlignment','left');
+            curr_t.Units = 'pixels';
+            curr_t.Position(1) = curr_t.Position(1)+plus_offset;
+            curr_t.Units = 'normalized';
+        else
+            curr_t1 = text(pharma_stack2{ii}{jj},1,0.5,curr_label{1},...
+                'Units','normalized',...
+                'Position',[1 0.5 0],'VerticalAlignment','bottom',...
+                'HorizontalAlignment','left');
+            curr_t2 = text(pharma_stack2{ii}{jj},1,0.5,curr_label{2},...
+                'Units','normalized',...
+                'Position',[1 0.5 0],'VerticalAlignment','top',...
+                'HorizontalAlignment','left');
+
+            curr_t1.Units = 'pixels';
+            curr_t2.Units = 'pixels';
+            curr_t1.Position(2) = curr_t1.Position(2)-2.5;
+            curr_t2.Position(2) = curr_t2.Position(2)+2.5;
+            
+            if strcmp(curr_label{1}(1),'+')
+                curr_t1.Position(1) = curr_t1.Position(1)+5;
+            else
+                curr_t1.Position(1) = curr_t1.Position(1)+plus_offset;
+            end
+            curr_t2.Position(1) = curr_t2.Position(1)+plus_offset;
+            curr_t1.Units = 'normalized';
+            curr_t2.Units = 'normalized';
+
+        end
     end
 end
 % end
@@ -197,8 +233,8 @@ scaled_dist2 = (dist1+1)/diff(stack_opts2.XLim);
 
 xcord1 = pos_left2 + base_width2 * scaled_dist1;
 xcord2 = pos_left2 + base_width2 * scaled_dist2;
-h1 = annotation('line',repmat(xcord1,1,2),[pos_bottom all_bottom_edges(1)+cell_height],'Linewidth',0.5,'LineStyle',':','Color',[1 0 0]);
-h2 = annotation('line',repmat(xcord2,1,2),[pos_bottom all_bottom_edges(1)+cell_height],'Linewidth',0.5,'LineStyle',':','Color',[1 0 0]);
+h1 = annotation('line',repmat(xcord1,1,2),[pos_bottom all_bottom_edges(1)+cell_height],'Linewidth',1,'LineStyle',':','Color',[1 0 0]);
+h2 = annotation('line',repmat(xcord2,1,2),[pos_bottom all_bottom_edges(1)+cell_height],'Linewidth',1,'LineStyle',':','Color',[1 0 0]);
 
 %Label train input
 text(input_ax{1},0,2,'0','VerticalAlignment','bottom')
@@ -214,3 +250,8 @@ text(input_ax{1},32.5,22,'20','VerticalAlignment','bottom','HorizontalAlignment'
 text(input_ax2{1},27.5,7,'5','VerticalAlignment','bottom')
 text(input_ax2{1},28.5,62,'60','VerticalAlignment','bottom','HorizontalAlignment','center')
 text(input_ax2{1},29.1,7,'5','VerticalAlignment','bottom')
+
+% %Tweak figure
+% fig_opts = struct();
+% fig_opts.FontSize = 10;
+% standardFig(f_train_pharma,fig_opts);

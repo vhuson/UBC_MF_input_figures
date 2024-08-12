@@ -22,14 +22,15 @@ plot_units = 9;
 bottom_edge = 0.0363;
 left_edge = 0.1;
 base_gap = 0.11;
-total_width = 0.75;
+extra_gap = 0.08;
+total_width = 0.87;
 graph_height = 0.095;
 
-base_width = (total_width - base_gap*2) / plot_units;
+base_width = (total_width - base_gap*2 - extra_gap) / plot_units;
 
 left_edges = [left_edge ...
-    left_edge + base_width*5 + base_gap ...
-    left_edge + base_width*7 + base_gap*2];
+    left_edge + base_width*5 + base_gap + extra_gap ...
+    left_edge + base_width*7 + base_gap*2+ extra_gap];
 
 sub_divide = 1;
 
@@ -74,7 +75,8 @@ settings.axPos = [left_edges(1) bottom_edge base_width*5 graph_height];
 % settings.Label = all_double_ylabels(double_range);
 settings.Label = repmat({'Baseline','−mGluR2/3'},1,numel(plot_range));
 settings.ylabel = 'Response (norm.)';
-settings.violColor = repmat(seed_colors_pharma(1:2,:),numel(plot_range),1);
+% settings.violColor = repmat(seed_colors_pharma(1:2,:),numel(plot_range),1);
+settings.violColor = ones(numel(plot_range)*2,3);
 settings.violBandwidth = 0.15;
 
 norm_60_base = all_sum_spikes_stim_pharma{1}{6}+all_sum_spikes_post_pharma{1}{6};
@@ -103,8 +105,9 @@ all_alphas1 = cellfun(@(x,y) signrank(x,y),all_pharma_currpar(1:2:end),all_pharm
 median_diff1 = cellfun(@(x,y) median(y-x),all_pharma_currpar(1:2:end),all_pharma_currpar(2:2:end));
 
 subgroups = repmat({floor((1:numel(all_pharma_currpar{1}))/sub_divide) },size(all_pharma_currpar));
+settings.ylim = [0 2.5];
 ax_component1 = ephysBoxPlot(all_pharma_currpar,subgroups,settings);
-
+settings.ylim = 'auto';
 
 
 recolor_opts = struct();
@@ -140,20 +143,46 @@ ax_component1.XTick(3:end) = ax_component1.XTick(3:end)+all_space(1:end-2);
 %burst Text positions
 burst_t_pos = mean([ax_component1.XTick(1:2:end);ax_component1.XTick(2:2:end)]);
 
-ax_component1.XTick(end-1) = [];
-ax_component1.XTickLabels(end-1) = [];
-delete(ax_component1.Children(3:4))
+% ax_component1.XTick(end-1) = [];
+% ax_component1.XTickLabels(end-1) = [];
+delete(ax_component1.Children(4))
+
+%Reduce normalized to single dot
+ax_component1.Children(3).XData = mean(ax_component1.Children(3).XData);
+ax_component1.Children(3).YData = 1;
+ax_component1.Children(3).CData = [0 0 0];
+ax_component1.Children(3).MarkerFaceColor = 'flat';
+ax_component1.Children(3).SizeData = 30;
+
 
 %Shift last to the middle since it doesn't have a partner
-shift_dist = burst_t_pos(end)-mean(curr_patch.XData);
-curr_patch.XData = curr_patch.XData + shift_dist;
-curr_scatter.XData = curr_scatter.XData + shift_dist;
-ax_component1.XTick(end) = burst_t_pos(end);
+% shift_dist = burst_t_pos(end)-mean(curr_patch.XData);
+% curr_patch.XData = curr_patch.XData + shift_dist;
+% curr_scatter.XData = curr_scatter.XData + shift_dist;
+% ax_component1.XTick(end) = burst_t_pos(end);
 
 ax_component1.XLim(2) = ax_component1.XLim(2) + curr_space - gap_space;
 hold(ax_component1,'on')
 plot(ax_component1.XLim,[1 1],'k:')
 hold(ax_component1,'off')
+
+%add stars
+for ii = 1:numel(all_alphas1)
+    if all_alphas1(ii) < 0.01
+        hold(ax_component1,'on')
+        curr_x = burst_t_pos(ii);
+        curr_y = ax_component1.YLim(2);
+        line([-1 1]+curr_x,[curr_y,curr_y],'color','k','LineWidth',1)
+        t_start = text(curr_x,curr_y,'*','HorizontalAlignment',...
+            'center','VerticalAlignment','baseline');
+        t_start.Units = 'pixels';
+        t_start.Position(2) = t_start.Position(2)-3;
+        t_start.Units = 'data';
+
+        hold(ax_component1,'off')
+    end
+end
+
 
 %add burst text
 burst_t = {};
@@ -162,21 +191,23 @@ for ii = 1:numel(burst_t_pos)
     burst_t{ii} = text(ax_component1,burst_t_pos(ii),1,burst_labels{ii},...
         'HorizontalAlignment','center');
     burst_t{ii}.Units = 'normalized';
-    burst_t{ii}.Position(2) = -0.25; %1.1;%
+    burst_t{ii}.Position(2) = -0.2623;%1.0739; % -0.25; %1.1;%
     burst_t{ii}.Units = 'data';
 
 end
 
 %Set symbols as tick labels
-xlabel_opts.xtick_symbols = repmat({"o","^"},1,5);
-xlabel_opts.xtick_symbols(end-1) = [];
-xlabel_opts.markeredgecolor = repmat({[0 0 0], [1 0.6 0]},1,5);
-xlabel_opts.markeredgecolor(end-1) = [];
+xlabel_opts.xtick_symbols = repmat({"_","+"},1,5);
+% xlabel_opts.xtick_symbols(end-1) = [];
+xlabel_opts.markeredgecolor = repmat({[0 0 0], [0 0 0]},1,5);
+% xlabel_opts.markeredgecolor(end-1) = [];
 xlabel_opts.markerfacecolor = cellfun(@(x) {(1-x)*0.8+x},xlabel_opts.markeredgecolor);
 xlabel_opts.offset = 0.12;
 
 set_xlabel_symbols(ax_component1,xlabel_opts);
-
+xlabel_text = text(1,-0.0683,{'mGluR2/3','block'},...
+    'FontSize',10,'FontName','Arial',...
+    'Units','normalized');
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -231,7 +262,8 @@ end
 all_median2 = cellfun(@nanmedian,all_pharma_currpar);
 all_mean2 = cellfun(@nanmean,all_pharma_currpar);
 
-settings.violColor = repmat(seed_colors_pharma(3,:),numel(plot_range),1);
+% settings.violColor = repmat(seed_colors_pharma(3,:),numel(plot_range),1);
+settings.violColor = ones(numel(plot_range),3);
 settings.violBandwidth = 15;
 settings.Label = all_ylabels(plot_range);
 settings.axPos = [left_edges(2) bottom_edge base_width*2 graph_height];
@@ -291,7 +323,8 @@ end
 all_median3 = cellfun(@nanmedian,all_pharma_currpar);
 all_mean3 = cellfun(@nanmean,all_pharma_currpar);
 
-settings.violColor = repmat(seed_colors_pharma(4,:),numel(plot_range),1);
+% settings.violColor = repmat(seed_colors_pharma(4,:),numel(plot_range),1);
+settings.violColor = ones(numel(plot_range),3);
 settings.violBandwidth = 15;
 settings.Label = all_ylabels(plot_range);
 settings.axPos = [left_edges(3) bottom_edge base_width*2 graph_height];

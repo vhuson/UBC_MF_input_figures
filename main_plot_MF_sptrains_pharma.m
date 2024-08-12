@@ -101,7 +101,7 @@ fig_opts.FontSize = 10;
 standardFig(f_train_pharma,fig_opts);
 
 %Add labels
-plot_labels = repmat({[]},1,46);
+plot_labels = repmat({[]},1,51);
 plot_labels{19} = 'a';
 plot_labels{2} = 'b';
 % plot_labels{3} = 'c';
@@ -112,9 +112,9 @@ plot_labels{2} = 'b';
 plot_labels{28} = 'c';
 plot_labels{33} = 'd';
 plot_labels{40} = 'e';
-plot_labels{47} = 'f';
-plot_labels{49} = 'g';
-plot_labels{50} = 'h';
+plot_labels{48} = 'f';
+plot_labels{50} = 'g';
+plot_labels{51} = 'h';
 [~,t_labels] = labelPlots(f_train_pharma,plot_labels);
 
 for ii = [1,4]
@@ -128,7 +128,7 @@ for ii = [7,8]
     t_labels{ii}.Position(1:2) = [-69 80];
 end
 t_labels{6}.Position(2) = 80;
-% exportgraphics(f_train_pharma,'pdf\240726_fig5.pdf','ContentType','vector')
+% exportgraphics(f_train_pharma,'pdf\240809_fig5.pdf','ContentType','vector')
 %% other figure
 train_pharma_20s_figure
 
