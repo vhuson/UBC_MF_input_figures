@@ -1,9 +1,10 @@
-% show_individual_traces = true;
+% % show_individual_traces = true;
 % f_mf_burst = figure('Position', [488 1.8000 680.3150 857.9636],...
 %     'Color','w');
 
 % left_edge = 0.13;
-top_edge = 0.57;
+% top_edge = 0.57;
+top_edge = 0.39;
 
 left_edge_mf = 0.13;
 

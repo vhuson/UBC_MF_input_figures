@@ -4,7 +4,7 @@
 % show_individual_traces = true;
 
 left_edge = 0.13;
-top_edge = 0.95;
+top_edge = 0.77;
 
 left_edge_mf = 0.32;
 
@@ -119,7 +119,7 @@ manual_labels = true;
 
 %Label positions with 3 spike minimum
 man_label_pos = [0.535000000000002	924.576271186440	1.42108547152020e-14;
-0.845000000000001	449.576271186440	1.42108547152020e-14;
+0.9002          	449.576271186440	1.42108547152020e-14;
 2.89500000000000	852.259887005649	1.42108547152020e-14;
 3.28018092105263	55.5790960451983	1.42108547152020e-14;
 4.99500000000000	788.629943502825	1.42108547152020e-14;
@@ -257,7 +257,7 @@ t1 = text(ax_fast_burst,3.5, ax_fast_burst.YLim(2)/2,'Fast','Rotation',90,...
 standardAx(ax_fast_burst);
 ax_fast_burst.Visible = 'off';
 
-% scale_opts.origin = [9.5683 80];
+scale_opts.origin = [10.3183 80];
 add_scale_bar(ax_fast_burst,[0,50],scale_opts);
 add_zero_line(ax_fast_burst);
 
@@ -289,7 +289,9 @@ ylim(fast_ylim);
 xlim([0 mf_p_width*x_scale_factor])
 standardAx(ax_fast_mf);
 ax_fast_mf.Visible = 'off';
-% add_scale_bar(ax_fast_mf,[1,50]);
+
+scale_opts.origin = [22.5996 80];
+add_scale_bar(ax_fast_mf,[0,50],scale_opts);
 add_zero_line(ax_fast_mf);
 
 
@@ -328,7 +330,7 @@ t1 = text(ax_int_burst,3.5, ax_int_burst.YLim(2)/2,'Mid-range','Rotation',90,...
 standardAx(ax_int_burst);
 ax_int_burst.Visible = 'off';
 
-% scale_opts.origin = [9.5683 80];
+scale_opts.origin = [10.3183 100];
 add_scale_bar(ax_int_burst,[0,50],scale_opts);
 add_zero_line(ax_int_burst);
 
@@ -362,7 +364,8 @@ ylim(fast_ylim);
 xlim([0 mf_p_width*x_scale_factor])
 standardAx(ax_int_mf);
 ax_int_mf.Visible = 'off';
-% add_scale_bar(ax_fast_mf,[1,50]);
+scale_opts.origin = [22.5996 100];
+add_scale_bar(ax_int_mf,[0,50],scale_opts);
 add_zero_line(ax_int_mf);
 
 
@@ -401,7 +404,7 @@ t1 = text(ax_mid_burst,3.5, ax_mid_burst.YLim(2)/2,'Slow','Rotation',90,...
 standardAx(ax_mid_burst);
 ax_mid_burst.Visible = 'off';
 
-scale_opts.origin = [10.3183 20];
+scale_opts.origin = [10.3183 25];
 add_scale_bar(ax_mid_burst,mid_scale_bar,scale_opts);
 add_zero_line(ax_mid_burst);
 
@@ -427,7 +430,8 @@ ylim(mid_ylim);
 xlim([0 mf_p_width*x_scale_factor])
 standardAx(ax_mid_mf);
 ax_mid_mf.Visible = 'off';
-% add_scale_bar(ax_mid_mf,mid_scale_bar);
+scale_opts.origin = [22.5996 25];
+add_scale_bar(ax_mid_mf,mid_scale_bar,scale_opts);
 add_zero_line(ax_mid_mf);
 
 
@@ -462,7 +466,7 @@ t1 = text(ax_off_burst,3.5, ax_off_burst.YLim(2)/2,'OFF','Rotation',90,...
 
 standardAx(ax_off_burst);
 ax_off_burst.Visible = 'off';
-scale_opts.origin = [10.3183 10];
+scale_opts.origin = [10.3183 15];
 add_scale_bar(ax_off_burst,off_scale_bar,scale_opts);
 add_zero_line(ax_off_burst);
 
@@ -488,9 +492,9 @@ ylim(off_ylim);
 xlim([0 mf_p_width*x_scale_factor])
 standardAx(ax_off_mf);
 ax_off_mf.Visible = 'off';
-scale_opts = struct();
-scale_opts.origin = [27 8];
-% add_scale_bar(ax_off_mf,off_scale_bar,scale_opts);
+
+scale_opts.origin = [22.5996 15];
+add_scale_bar(ax_off_mf,off_scale_bar,scale_opts);
 add_zero_line(ax_off_mf);
 
 %% Add UBC label
