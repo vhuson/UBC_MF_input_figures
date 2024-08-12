@@ -2,24 +2,14 @@
 mfile_name          = mfilename('fullpath');
 [pathstr,name,ext]  = fileparts(mfile_name);
 cd(pathstr);
+cd('..')
 
 addpath(genpath('functions'))
-addpath(genpath('plot_MF_baseline_pharma_scripts'))
-addpath(genpath('plot_MF_baseline_scripts'))
-addpath(genpath('plot_MF_burst_pharma_scripts'))
-addpath(genpath('plot_MF_burst_scripts'))
-addpath(genpath('plot_MF_train_pharma_scripts'))
-addpath(genpath('plot_MF_train_scripts'))
 
 %% Get files
 %
 Fs = 20000;
 
-fileNames = dir('data_analyzed\MF_stim_prots_pharma_saved\*');
-fileNames = fileNames(contains({fileNames(:).name},'.mat'));
-
-fileNames2 = dir('data_analyzed\MF_stim_prots_pharma_saved_noWashin\*');
-fileNames2 = fileNames2(contains({fileNames2(:).name},'.mat'));
 
 fileNames3 = dir('data_analyzed\MF_stim_train_saved\*');
 fileNames3 = fileNames3(contains({fileNames3(:).name},'.mat'));
@@ -27,7 +17,7 @@ fileNames3 = fileNames3(contains({fileNames3(:).name},'.mat'));
 fileNames4 = dir('data_analyzed\MF_stim_train_pharma_saved\*');
 fileNames4 = fileNames4(contains({fileNames4(:).name},'.mat'));
 
-fileNames = [fileNames; fileNames2; fileNames3; fileNames4];
+fileNames = [fileNames3; fileNames4];
 
 badCellNames = {'Cell1747_analyzed.mat', 'Cell1748_analyzed.mat','Cell1835_analyzed.mat'};
 removeCells = find(cellfun(@(x) ismember(x,badCellNames),{fileNames(:).name}));

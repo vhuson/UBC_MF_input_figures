@@ -2,13 +2,31 @@
 mfile_name          = mfilename('fullpath');
 [pathstr,name,ext]  = fileparts(mfile_name);
 cd(pathstr);
+cd('..')
 
 addpath(genpath('functions'))
+addpath(genpath('plot_MF_baseline_pharma_scripts'))
+addpath(genpath('plot_MF_baseline_scripts'))
+addpath(genpath('plot_MF_burst_pharma_scripts'))
+addpath(genpath('plot_MF_burst_scripts'))
+addpath(genpath('plot_MF_train_pharma_scripts'))
+addpath(genpath('plot_MF_train_scripts'))
 
+
+
+if exist('alldata_workspace','var') && alldata_workspace
+    %Preserve workspace for later?
+    disp('Data already loaded in workspace')
+else %No workspace setup time to load
 %% Get files
 %
 Fs = 20000;
 
+fileNames = dir('data_analyzed\MF_stim_prots_pharma_saved\*');
+fileNames = fileNames(contains({fileNames(:).name},'.mat'));
+
+fileNames2 = dir('data_analyzed\MF_stim_prots_pharma_saved_noWashin\*');
+fileNames2 = fileNames2(contains({fileNames2(:).name},'.mat'));
 
 fileNames3 = dir('data_analyzed\MF_stim_train_saved\*');
 fileNames3 = fileNames3(contains({fileNames3(:).name},'.mat'));
@@ -16,7 +34,7 @@ fileNames3 = fileNames3(contains({fileNames3(:).name},'.mat'));
 fileNames4 = dir('data_analyzed\MF_stim_train_pharma_saved\*');
 fileNames4 = fileNames4(contains({fileNames4(:).name},'.mat'));
 
-fileNames = [fileNames3; fileNames4];
+fileNames = [fileNames; fileNames2; fileNames3; fileNames4];
 
 badCellNames = {'Cell1747_analyzed.mat', 'Cell1748_analyzed.mat','Cell1835_analyzed.mat'};
 removeCells = find(cellfun(@(x) ismember(x,badCellNames),{fileNames(:).name}));
@@ -77,3 +95,5 @@ OFFidx = ONidx(end-numel(OFFidx)+1:end);
 % badCells = [120    40    14    49   31];
 % ONidx(ismember(ONidx,badCells)) = [];
 %}
+alldata_workspace = true;
+end

@@ -2,10 +2,15 @@
 mfile_name          = mfilename('fullpath');
 [pathstr,name,ext]  = fileparts(mfile_name);
 cd(pathstr);
+cd('..')
 
 addpath(genpath('functions'))
 addpath(genpath('plot_MF_cpp_pharma_scripts'))
 
+if exist('cpp_workspace','var') && cpp_workspace
+    %Preserve workspace for later?
+    disp('CPP data already loaded in workspace')
+else %No workspace setup time to load
 %% Get files
 %
 Fs = 20000;
@@ -73,3 +78,5 @@ OFFidx = ONidx(end-numel(OFFidx)+1:end);
 % badCells = [120    40    14    49   31];
 % ONidx(ismember(ONidx,badCells)) = [];
 %}
+cpp_workspace = true;
+end

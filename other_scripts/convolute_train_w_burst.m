@@ -1,6 +1,6 @@
 %% Get files, general means, and ONidx
 
-setup_workspace_alltrain
+run('load_data_scripts\setup_workspace_alltrain.m')
 
 %% Gather traces
 all_burst_durs      = [0.01 0.02 0.05 0.10 0.2];
