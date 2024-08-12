@@ -125,7 +125,7 @@ if bar_bol
     cb1.Ticks = [0 1];
     % cb1.TickLabels = {'Slow' 'Fast'};
     cb1.TickLabels = {num2str(numel(ONidx)) '1'};
-    cb1.Label.String = 'Cell (#)';
+    cb1.Label.String = 'Cell #';
     cb1.Label.Rotation = 270;
     cb1.Label.Units = 'normalized';
     cb1.Label.Position(1) = 3.7;
