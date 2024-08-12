@@ -26,7 +26,7 @@ num_cols = 5; %Number of burst types
 left_edge = 0.1;
 top_edge = 1.02;
 total_height = 0.27;
-total_width = 0.87;
+total_width = 0.77;
 height_space = 0.015;
 base_space = 0.01;
 input_height = 0.02;
@@ -175,60 +175,50 @@ for ii = 1:numel(curr_cells)+1
     
 end
 
-%Add input line
-% il_opts = struct();
-% il_opts.input_color = [0.2 0.7 0.2];
-% input_durs = {[0 0.01],[0 0.02],[0 0.05],[0 0.1],[0 0.2]};
-% 
-% for ii = 1:numel(input_durs)
-%     input_dur = input_durs{ii};
-% 
-%     cellfun(@(x) add_input_line(x,input_dur,il_opts),ax_cpp_typ(:,ii));
-% end
 
-% scale_opts = struct();
-% scale_opts.xlabel = 's';
-% scale_opts.origin = [1 14];
-% scale_opts.xscale_factor = 1e3;
-% scale_opts.ylabel = 'spk/s';
-% add_scale_bar(ax_pharm_typ{ii,end},[1 0],scale_opts);
+%add legend
 
-% legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
-% legend(ax_pharm_typ{1,3},legend_labels,...
-%     'Orientation','horizontal',...
-%     'Box', 'off',...
-%     'NumColumns',2,...
-%     'Units','normalized',...
-%     'Position', [0.1452 0.9435 0.3319 0.0459])
-% legend_labels = {'1: Baseline','2: −mGluR2/3','3: −AMPAR','4: −mGluR1'};
+legend_labels = {{'Baseline'},{'NMDAR','block'}};
+legend_pos = [0.8818 0.8291 0.0205 0.0326];
+cl_ax = axes(f_burst_cpp,'Position',legend_pos);
+plus_offset = 5;
+hold(cl_ax,'on')
+for ii = 1:size(seed_colors_pharma,1)
+    plot([0 1],-[ii ii],'Color',seed_colors_pharma(ii,:))
 
+    curr_label = legend_labels{ii};
 
-%Separate text labels for legend
-%{
-legend_positions = {[-186.6364 -33.0378 0],...
-        [-104.0764 -33.0378 0],...
-        [-21.5164 -33.0378 0],...
-        [61.0436 -33.0378 0]};
+    if numel(curr_label) == 1
+        curr_t = text(cl_ax,1,-ii,curr_label,...
+            'VerticalAlignment','middle',...
+            'HorizontalAlignment','left');
+        curr_t.Units = 'pixels';
+        curr_t.Position(1) = curr_t.Position(1)+plus_offset;
+        curr_t.Units = 'data';
+    else
+        curr_t1 = text(cl_ax,1,-ii,curr_label{1},...
+            'VerticalAlignment','bottom',...
+            'HorizontalAlignment','left');
+        curr_t2 = text(cl_ax,1,-ii,curr_label{2},...
+            'VerticalAlignment','top',...
+            'HorizontalAlignment','left');
 
+        curr_t1.Units = 'pixels';
+        curr_t2.Units = 'pixels';
+        curr_t1.Position(2) = curr_t1.Position(2)-2.5;
+        curr_t2.Position(2) = curr_t2.Position(2)+2.5;
 
-for ii = 1:numel(legend_labels)
-    text(ax_pharm_typ{end,end},0,0,legend_labels{ii},...
-        'Units','pixels',...
-        'HorizontalAlignment','center',...
-        'Position',legend_positions{ii})
+        if strcmp(curr_label{1}(1),'+')
+            curr_t1.Position(1) = curr_t1.Position(1)+5;
+        else
+            curr_t1.Position(1) = curr_t1.Position(1)+plus_offset;
+        end
+        curr_t2.Position(1) = curr_t2.Position(1)+plus_offset;
+        curr_t1.Units = 'data';
+        curr_t2.Units = 'data';
+
+    end
 
 end
-%}
-
-
-
-legend_labels = {'Baseline','NMDAR\newlineblocked'};
-legend(ax_cpp_typ{ii-1,1},legend_labels,...
-    'Orientation','vertical',...
-    'Box', 'off',...
-    'NumColumns',1,...
-    'Units','normalized',...
-    'Position', [0.8340 0.9089 0.1570 0.0683])
-
-curr_ax{1}.XLim(2) = curr_ax{1}.XLim(1) + diff(curr_ax{1}.XLim) * 0.6;
-curr_ax{1}.Position(3) = curr_ax{1}.Position(3) * 0.6;
+hold(cl_ax,'off')
+axis off

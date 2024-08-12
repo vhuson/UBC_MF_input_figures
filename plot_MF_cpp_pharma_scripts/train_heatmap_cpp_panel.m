@@ -13,14 +13,19 @@ pos_top = 0.619;
 pos_height = pos_top - pos_bottom;
 % pos_left = 0.1;
 % full_width = 0.55;
-pos_left = 0.1966;
-full_width = 0.5334;
+pos_left = 0.205;
+% full_width = 0.5334;
 base_space = 0.01;
+both_width = 0.6650;
+zoom_gap = 0.0282;
+full_width = (both_width-zoom_gap)/1.4;
 
 % pos_left2 = 0.6722;
 % base_width2 = 0.2921;
-pos_left2 = 0.7466;
-base_width2 = 0.2177;
+% pos_left2 = 0.7466;
+% base_width2 = 0.2177;
+pos_left2 = pos_left+full_width+zoom_gap;
+base_width2 = full_width*0.4;
 
 
 
@@ -47,7 +52,8 @@ norm_off = [];
 norm_OFFidx = [];
 
 
-all_row_labels = {'Baseline','−NMDAR'};
+% all_row_labels = {'Baseline','−NMDAR'};
+all_row_labels = {{'Baseline'},{'NMDAR','block'}};
 seed_colors_pharma = [0 0 0;
                 1 0.0 0.9];
 all_colors_pharma = seed_map(seed_colors_pharma,2);
@@ -106,7 +112,7 @@ for ii = 1:num_rows
     hold(ax_cpp_sp_hm{ii},'on')
     for curr_step_time = train5_step_times(2:8)
         line(ax_cpp_sp_hm{ii},repmat(curr_step_time*Fs,1,2),...
-            ax_cpp_sp_hm{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+            ax_cpp_sp_hm{ii}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
     end
     hold(ax_cpp_sp_hm{ii},'off')
 
@@ -120,15 +126,58 @@ for ii = 1:num_rows
     hold(ax_cpp_sp_hm2{ii},'on')
 
     line(ax_cpp_sp_hm2{ii},repmat(train5_step_times(7)*Fs,1,2),...
-        ax_cpp_sp_hm2{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+        ax_cpp_sp_hm2{ii}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
     line(ax_cpp_sp_hm2{ii},repmat((train5_step_times(7)+1)*Fs,1,2),...
-        ax_cpp_sp_hm2{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+        ax_cpp_sp_hm2{ii}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
     hold(ax_cpp_sp_hm2{ii},'off')
 
 
 end
 
 
+
+%Add washin label
+% if y_labels_on
+plus_offset = 16.5;
+for jj = 1:2
+    % curr_label = ['\color[rgb]{',num2str(all_colors_pharma(jj,:)),'}',...
+    %             all_row_labels{jj}];
+    curr_label = all_row_labels{jj};
+
+    if numel(curr_label) == 1
+        curr_t = text(ax_cpp_sp_hm2{jj},1,0.5,curr_label,...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','middle',...
+            'HorizontalAlignment','left');
+        curr_t.Units = 'pixels';
+        curr_t.Position(1) = curr_t.Position(1)+plus_offset;
+        curr_t.Units = 'normalized';
+    else
+        curr_t1 = text(ax_cpp_sp_hm2{jj},1,0.5,curr_label{1},...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','bottom',...
+            'HorizontalAlignment','left');
+        curr_t2 = text(ax_cpp_sp_hm2{jj},1,0.5,curr_label{2},...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','top',...
+            'HorizontalAlignment','left');
+
+        curr_t1.Units = 'pixels';
+        curr_t2.Units = 'pixels';
+        curr_t1.Position(2) = curr_t1.Position(2)-2.5;
+        curr_t2.Position(2) = curr_t2.Position(2)+2.5;
+
+        if strcmp(curr_label{1}(1),'+')
+            curr_t1.Position(1) = curr_t1.Position(1)+5;
+        else
+            curr_t1.Position(1) = curr_t1.Position(1)+plus_offset;
+        end
+        curr_t2.Position(1) = curr_t2.Position(1)+plus_offset;
+        curr_t1.Units = 'normalized';
+        curr_t2.Units = 'normalized';
+
+    end
+end
 
 ax_cpp_sp_hm{2}.XLabel.Units = "pixels";
 ax_cpp_sp_hm{2}.XLabel.Position(2) = -17.3753;

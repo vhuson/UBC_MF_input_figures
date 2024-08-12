@@ -15,7 +15,7 @@ num_rows = 2; %Number of washins
 left_edge = 0.1;
 % bottom_edge = 0.07;
 bottom_edge = 0.4279;
-total_width = 0.87;
+total_width = 0.77;
 % total_height = 0.88;
 total_height = 0.29;
 base_gap = 0.01;
@@ -60,7 +60,7 @@ ax_cpp_hm = {};
 % all_titles = {'1x', '2x 100 Hz', '5x 100 Hz', '10x 100 Hz', '20x 100 Hz'};
 all_titles = {'', '', '', '', ''};
 
-all_row_labels = {'Baseline','−NMDAR'};
+all_row_labels = {{'Baseline'},{'NMDAR','block'}};
 eed_colors_pharma = [0 0 0;
                 1 0.0 0.9];
 
@@ -79,7 +79,8 @@ for ii = 1:num_rows
     %Set more options
     % opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
     %                 all_row_labels{ii},'\newline\color{black}Cell (#)'];
-    opts.YLabel = {all_row_labels{ii},'Cell #'};
+    % opts.YLabel = {all_row_labels{ii},'Cell #'};
+    opts.YLabel = {'Cell #'};
     opts.YTick = false;
     if ii == num_rows
         opts.XTickLabel = arrayfun(@num2str,opts.XTick-0.5,'UniformOutput',false);
@@ -123,7 +124,7 @@ for ii = 1:num_rows
         %Add stim start line
         hold(ax_cpp_hm{ii,jj},'on')
         line(ax_cpp_hm{ii,jj},repmat(ax_cpp_hm{ii,jj}.XTick(1),1,2),...
-            ax_cpp_hm{ii,jj}.YLim,'Color',[1 0.0 0],'LineWidth',0.5,'LineStyle',':')
+            ax_cpp_hm{ii,jj}.YLim,'Color',[1 0.0 0],'LineWidth',1,'LineStyle',':')
         hold(ax_cpp_hm{ii,jj},'off')
 
         %Add titles
@@ -135,13 +136,56 @@ for ii = 1:num_rows
 end
 
 
+%Add washin label
+% if y_labels_on
+plus_offset = 16.5;
+for jj = 1:2
+    % curr_label = ['\color[rgb]{',num2str(all_colors_pharma(jj,:)),'}',...
+    %             all_row_labels{jj}];
+    curr_label = all_row_labels{jj};
+
+    if numel(curr_label) == 1
+        curr_t = text(ax_cpp_hm{jj,end},1,0.5,curr_label,...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','middle',...
+            'HorizontalAlignment','left');
+        curr_t.Units = 'pixels';
+        curr_t.Position(1) = curr_t.Position(1)+plus_offset;
+        curr_t.Units = 'normalized';
+    else
+        curr_t1 = text(ax_cpp_hm{jj,end},1,0.5,curr_label{1},...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','bottom',...
+            'HorizontalAlignment','left');
+        curr_t2 = text(ax_cpp_hm{jj,end},1,0.5,curr_label{2},...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','top',...
+            'HorizontalAlignment','left');
+
+        curr_t1.Units = 'pixels';
+        curr_t2.Units = 'pixels';
+        curr_t1.Position(2) = curr_t1.Position(2)-2.5;
+        curr_t2.Position(2) = curr_t2.Position(2)+2.5;
+
+        if strcmp(curr_label{1}(1),'+')
+            curr_t1.Position(1) = curr_t1.Position(1)+5;
+        else
+            curr_t1.Position(1) = curr_t1.Position(1)+plus_offset;
+        end
+        curr_t2.Position(1) = curr_t2.Position(1)+plus_offset;
+        curr_t1.Units = 'normalized';
+        curr_t2.Units = 'normalized';
+
+    end
+end
+
 
 
 for ii = 1:num_rows
     if exist("curr_cells","var")
         [hm_ax] = heatmap_markers(ax_cpp_hm{ii,1},curr_cells);
     else
-        [hm_ax] = heatmap_markers(ax_cpp_hm{ii,1},[8    10    13    18    24]);
+        [hm_ax] = heatmap_markers(ax_cpp_hm{ii,1},[2 8]);
     end
 end
 

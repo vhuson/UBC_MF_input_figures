@@ -70,7 +70,8 @@ for ii = 1:num_rows
     %Set more options
     % opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
     %                 all_row_labels{ii},'\newline\color{black}Cell (#)'];
-    opts.YLabel = {all_row_labels{ii},'Cell #'};
+    % opts.YLabel = {all_row_labels{ii},'Cell #'};
+    opts.YLabel = 'Cell #';
     
 
     if ii == num_rows
@@ -95,7 +96,7 @@ for ii = 1:num_rows
     %add stim onset line
     hold(ax_cpp_sp_burst_hm{ii},'on')
     line(ax_cpp_sp_burst_hm{ii},repmat(ax_cpp_sp_burst_hm{ii}.XTick(1),1,2),...
-        ax_cpp_sp_burst_hm{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+        ax_cpp_sp_burst_hm{ii}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
     hold(ax_cpp_sp_burst_hm{ii},'off')
 
 end

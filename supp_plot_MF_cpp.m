@@ -28,10 +28,9 @@ washin_state = [1 0 0];
 
 %Get UBC parameters 1
 [all_cpp_slow_amp1,all_cpp_slow_HD1,all_cpp_pause1,...
-    all_cpp_n_spikes1] = get_allburst_parameters(...
-    all_mean_cpp_bursts1,washin_base_rates{1}(washin_fltr),Fs);
-
-%Get UBC parameters
+    all_cpp_n_spikes1,~,~,~,~,all_cpp_supp_pars1] = get_allburst_parameters(...
+    all_mean_cpp_bursts1,washin_base_rates{1}(washin_fltr),Fs,...
+    struct('post_stim_amp',true, 'post_stim_par', true));
 
 
 washin_state = [0 1 0];
@@ -43,8 +42,9 @@ washin_state = [0 1 0];
 
 %Get UBC parameters 2
 [all_cpp_slow_amp2,all_cpp_slow_HD2,all_cpp_pause2,...
-    all_cpp_n_spikes2] = get_allburst_parameters(...
-    all_mean_cpp_bursts2,washin_base_rates{2}(washin_fltr),Fs);
+    all_cpp_n_spikes2,~,~,~,~,all_cpp_supp_pars2] = get_allburst_parameters(...
+    all_mean_cpp_bursts2,washin_base_rates{2}(washin_fltr),Fs,...
+    struct('post_stim_amp',true, 'post_stim_par', true));
 
 
 
@@ -77,6 +77,23 @@ for jj = 1:numel(all_mean_cpp_bursts_all)
 end
 all_mean_cpp_bursts1 = all_mean_cpp_bursts_all{1};
 all_mean_cpp_bursts2 = all_mean_cpp_bursts_all{2};
+%% Calculate fractional increases and decreases
+
+
+nmdar_cpp_normalized_to_20base = zeros(numel(all_cpp_supp_pars1{1}),numel(all_cpp_supp_pars1));
+base_cpp_normalized_to_20base = nmdar_cpp_normalized_to_20base;
+
+
+for ii = 1:numel(all_cpp_supp_pars1)
+    for jj = 1:numel(all_cpp_supp_pars1{1})
+        
+        nmdar_cpp_normalized_to_20base(jj,ii) = all_cpp_supp_pars2{ii}{jj}.n_spikes_not_normalized...
+                            ./ all_cpp_supp_pars1{5}{jj}.n_spikes_not_normalized;
+        base_cpp_normalized_to_20base(jj,ii) = all_cpp_supp_pars1{ii}{jj}.n_spikes_not_normalized...
+                            ./ all_cpp_supp_pars1{5}{jj}.n_spikes_not_normalized;
+    end
+end
+
 
 %% Gather all pharma train data
 washin = [0 1 0];
@@ -157,7 +174,8 @@ example_cell_cpp_panel
 
 heatmap_cpp_panel
 
-summaries_cpp_panel
+% summaries_cpp_panel
+summaries_component_cpp_panel
 % summaries_bpharma_singlerow_panel
 
 %Tweak figure
@@ -169,9 +187,9 @@ standardFig(f_burst_cpp,fig_opts);
 %Add labels
 plot_labels = repmat({[]},1,120);
 plot_labels{1} = 'a';
-plot_labels{16} = 'b';
-plot_labels{26} = 'c';
-plot_labels{31} = 'd';
+plot_labels{17} = 'b';
+plot_labels{27} = 'c';
+% plot_labels{31} = 'd';
 % plot_labels{97} = 'e';
 % plot_labels{102} = 'f';
 % plot_labels{82} = 'e';
@@ -182,9 +200,9 @@ for ii = 1:numel(t_labels)
     t_labels{ii}.Position(1) = -41;
 end
 
-t_labels{4}.Position(2) = 93.2545;
+t_labels{3}.Position(2) = 115.1273;
 
-% exportgraphics(f_burst_cpp,'pdf\240722_supp_cpp1.pdf','ContentType','vector')
+% exportgraphics(f_burst_cpp,'pdf\240801_supp_cpp1.pdf','ContentType','vector')
 
 %% Main cpp train figure
 f_train_cpp = figure('Position', [488 1.8000 680.3150 857.9636],...
@@ -197,7 +215,8 @@ train_example_bursts_cpp_panel
 train_heatmap_burst_cpp_panel
 train_heatmap_cpp_panel
 
-train_nspike_summary_cpp_panel
+train_component_cpp_panel
+% train_nspike_summary_cpp_panel
 
 
 %Tweak figure
@@ -221,7 +240,7 @@ end
 for ii = [1,4]
     t_labels{ii}.Position(1) = -1;
 end
-% exportgraphics(f_train_cpp,'pdf\240722_supp_cpp2.pdf','ContentType','vector')
+% exportgraphics(f_train_cpp,'pdf\240801_supp_cpp2.pdf','ContentType','vector')
 
 %% Supplement heatmap figure
 
