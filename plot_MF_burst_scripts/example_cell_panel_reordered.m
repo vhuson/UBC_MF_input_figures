@@ -125,6 +125,14 @@ for ii = 1:numel(typ_cell_num)+1
         if ii == 1
             curr_ax{1}.Title.String = trace_titles{ax_idx};
             curr_ax{1}.Title.Position(1) = mean(input_times{ax_idx});
+            if ax_idx == 5
+                left_extent = curr_ax{1}.Title.Extent(1);
+                curr_ax{1}.Title.HorizontalAlignment = 'left';
+                curr_ax{1}.Title.Position(1) = left_extent;
+                curr_ax{1}.Title.String = [curr_ax{1}.Title.String,...
+                                            ' stimuli']; % at 100 spk/s
+
+            end
         end
 
     end

@@ -66,12 +66,15 @@ for ax_idx = 1:5
     if ax_idx == 3
         opts.XLabel = 'Time (s)';
     end
+    if ax_idx == 5
+        opts.colorbar = true;
+    end
     makeUBCHeatmap(ax_hm{ax_idx}, norm_traces, Fs, opts);
     % ax_hm{ax_idx}.Title.String = all_titles{ax_idx};
-    
+    ax_hm{1}.YLabel.String = 'Cell # (sorted by width)';
     hold(ax_hm{ax_idx},'on')
     line(ax_hm{ax_idx},repmat(ax_hm{ax_idx}.XTick(1),1,2),...
-        ax_hm{ax_idx}.YLim,'Color',[1 0.0 0],'LineWidth',0.5,'LineStyle',':')
+        ax_hm{ax_idx}.YLim,'Color',[1 0.0 0],'LineWidth',1,'LineStyle',':')
     hold(ax_hm{ax_idx},'off')
 
 
