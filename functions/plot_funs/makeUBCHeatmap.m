@@ -1,4 +1,4 @@
-function [ax] = makeUBCHeatmap(ax, currTraces, Fs, opts)
+function [ax,cb1] = makeUBCHeatmap(ax, currTraces, Fs, opts)
 %MAKEUBCHEATMAP Takes in a matrix of traces and plots a heatmap UBC style
 %   Detailed explanation goes here
 base_opts.XLim = [0 size(currTraces,2)/Fs];
@@ -9,6 +9,7 @@ base_opts.YLabel = 'Cell #';
 base_opts.XLabel = 'Time (s)';
 base_opts.XTickLabelRotation = 0;
 base_opts.colormap = "gray";
+base_opts.colorbar = false;
 
 if nargin < 4 
     opts = base_opts;
@@ -54,8 +55,17 @@ xticklabels(x_tick_labels)
 set(ax,'TickDir','out','FontName','Arial','FontSize',8.0,'LineWidth',1,...
     'XTickLabelRotation',opts.XTickLabelRotation)
 box off
-standardAx(ax);
+% standardAx(ax);
 % title('Firing rate')
 colormap(ax,opts.colormap);
+cb1 = [];
+if opts.colorbar
+    cb1 = colorbar();
+    cb1.Color = [1 1 1];
+    cb1.Position = [sum(ax.Position([1,3]))-0.0478, sum(ax.Position([2,4]))-0.0431,...
+        0.014 0.0281];
+    cb1.Ticks = cb1.Limits;
+    cb1.TickLabels = {'0' '1'};
+end
 end
 
