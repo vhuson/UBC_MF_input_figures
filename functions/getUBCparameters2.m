@@ -16,6 +16,7 @@ scatter([firstHalf_fast lastHalf_fast],repmat(fast_amp/2,1,2))
 
 base_opts.restrict_nspikes = false; %passing num_samples replaces HD_x2
 base_opts.restrict_peak = false; %pass a 2 sample indexes to define window
+base_opts.post_stim_pars = false;
 
 if nargin < 4
     Fs = 20000;
@@ -38,6 +39,10 @@ smooth_log_freqs = medfilt1(logFreqs,round(Fs*0.1));
 smoothTrace = interp1(logMarks,smooth_log_freqs,(1:numel(avgTrace))/Fs);
 smoothTrace(isnan(smoothTrace)) = baseline;
 
+%First peak after stimulation
+start_point = round((stim_end - 0.01)*Fs) +1;
+[post_stim_amp, post_stim_tpeak] = max(smoothTrace(start_point:end));
+post_stim_tpeak = post_stim_tpeak + start_point -1;
 
 %Fast peak (always unrestricted)
 overhang = round((0.1+stim_end)*Fs);
@@ -62,11 +67,17 @@ else
     slow_tpeak = slow_tpeak + overhang;
 end
 
-
+if opts.post_stim_pars %post_stim_tpeak
+    par_amp = post_stim_amp;
+    par_tpeak = post_stim_tpeak;
+else
+    par_amp = slow_amp;
+    par_tpeak = slow_tpeak;
+end
 
 %Pause
-freqThres = min([6, max([slow_amp, fast_amp])/2]);
-freqStart = find(smoothTrace(1:slow_tpeak)<freqThres,1,'last');
+freqThres = min([6, max([par_amp, fast_amp])/2]);
+freqStart = find(smoothTrace(1:par_tpeak)<freqThres,1,'last');
 if isempty(freqStart)
     freqStart = 0;
 end
@@ -75,8 +86,8 @@ pause = freqStart/Fs;
 
 
 %Pause for excitatory UBCs
-freqThres_exc = (slow_amp-baseline)/3+baseline;
-freqStart_exc = find(smoothTrace(1:slow_tpeak)<freqThres_exc,1,'last');
+freqThres_exc = (par_amp-baseline)/3+baseline;
+freqStart_exc = find(smoothTrace(1:par_tpeak)<freqThres_exc,1,'last');
 if isempty(freqStart_exc)
     freqStart = 0;
 end
@@ -85,11 +96,11 @@ pause_exc = freqStart_exc/Fs;
     
 
 %Half-width
-if (slow_amp-baseline) > 1
-    [firstHalf] = findUBChalfWidth(smoothTrace(1:slow_tpeak)-baseline,...
-        slow_amp-baseline,'first');
-    [lastHalf] = findUBChalfWidth(smoothTrace(slow_tpeak:end)-baseline,...
-        slow_amp-baseline,'last')+slow_tpeak-1;
+if (par_amp-baseline) > 1
+    [firstHalf] = findUBChalfWidth(smoothTrace(1:par_tpeak)-baseline,...
+        par_amp-baseline,'first');
+    [lastHalf] = findUBChalfWidth(smoothTrace(par_tpeak:end)-baseline,...
+        par_amp-baseline,'last')+par_tpeak-1;
 else
     firstHalf = 0;
     lastHalf = 0;
@@ -168,10 +179,11 @@ n_spikes_not_normalized = sum(avgTrace(1:HD_x2))/Fs;
 
 
 
-
 main_pars = struct('baseline',baseline,'fast_amp',fast_amp-baseline,...
             'fast_tpeak',fast_tpeak/Fs,'slow_amp',slow_amp-baseline,...
-            'slow_tpeak',slow_tpeak/Fs, 'pause',pause,'pause_exc',pause_exc,...
+            'slow_tpeak',slow_tpeak/Fs, 'post_stim_amp',post_stim_amp-baseline,...
+            'post_stim_tpeak',post_stim_tpeak/Fs,...
+            'pause',pause,'pause_exc',pause_exc,...
             'n_spikes',n_spikes,'HD',HD,'HD_fast',HD_fast);
         
 
@@ -181,6 +193,7 @@ supp_pars = struct('freqThres', freqThres, 'freqStart', freqStart,...
                     'firstHalf_fast',firstHalf_fast,...
                     'lastHalf_fast', lastHalf_fast,...
                     'fast_peak',fast_amp,'slow_peak',slow_amp,...
+                    'post_stim_peak',post_stim_amp,'post_stim_tpeak_samples',post_stim_tpeak,...
                     'fast_tpeak_samples', fast_tpeak,...
                     'slow_tpeak_samples', slow_tpeak,...
                     'HD_x2',HD_x2,'n_spikes_not_normalized',n_spikes_not_normalized);       
