@@ -151,17 +151,36 @@ opts_ratio.XLabel = "Constant input (spk/s)";
 opts_ratio.input_n = input_n(point_0:end);
 opts_ratio.XTickLabel = XTickLabel(point_0:end);
 opts_ratio.min_val = 0.01;
-opts_ratio.bar = true;
+opts_ratio.bar = false;
 
 [ax_base_par{p_idx},cb1] = UBC_par_line_plot2(...
     ONidx,[],base_ratio_ss_uncorr(point_0:end),f_base,pos_ax,opts_ratio);
 
 %Adjust color bar
-cb1.Position(1) = 0.9397; %Left edge
-cb1.Units = 'pixels';
-cb1.Position(3:4) = [8.7326 59.5984];
-cb1.Units = 'normalized';
-cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2; 
+% cb1.Position(1) = 0.9397; %Left edge
+% cb1.Units = 'pixels';
+% cb1.Position(3:4) = [8.7326 59.5984];
+% cb1.Units = 'normalized';
+% cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2; 
+
+
+% add legend line color bar
+seed_colors = [1 0 0;
+                1 0.5 0.2;
+                0.4 1 0.4;
+                0.2 0.5 1;
+                0 0 1];
+
+legend_colors = seed_map(seed_colors,numel(ONidx));
+legend_colors = legend_colors(1:(numel(ONidx)),:);
+
+legend_pos = [0.9393 0.4648 0.0128 0.0695];
+
+legend_opts = struct();
+legend_opts.n_shown = 5;
+legend_opts.n_pos =[1 20 35 55 70];
+[cl_ax] = colorline_legend(legend_colors,legend_pos,f_base,legend_opts);
+
 
 %Offset XLim a little bit
 ax_base_par{p_idx}.XLim(1) = ax_base_par{p_idx}.XLim(1)...
