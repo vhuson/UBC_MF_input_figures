@@ -2,11 +2,12 @@ function [all_slow_amp,all_slow_HD,all_pause,all_delta_spikes,...
     all_fast_amp,all_fast_HD,all_burst_baseline,...
     all_delta_spikes_stim,all_delta_spikes_post,...
     all_delta_spikes_stim_global_base, all_delta_spikes_post_global_base,...
-    all_sum_spikes_stim,all_sum_spikes_post,all_train_half_decay] = ...
+    all_sum_spikes_stim,all_sum_spikes_post,all_train_half_decay,all_60_fits] = ...
                                 get_train_parameters(mean_train_traces,Fs,opts)
 %get_train_parameters: Get UBC instant frequency response parameters
 %Note fast parameters are rarely meaningful in the train responses
 base_opts.global_basetrace = false;
+base_opts.do_fit = false;
 
 if nargin < 2
     Fs = 20000;
@@ -46,7 +47,7 @@ all_burst_baseline = all_fast_amp;
 all_sum_spikes_stim = all_fast_amp;
 all_sum_spikes_post = all_fast_amp;
 all_train_half_decay = all_fast_amp;
-
+all_60_fits = cell(size(find(~empty_fltr')));
 
 
 if plot_on
@@ -100,7 +101,44 @@ for ii = find(~empty_fltr')
             main_pars.slow_tpeak,main_pars.slow_amp,main_pars.baseline,Fs);
 
         
+        %Try log gaussian fit
+        if opts.do_fit && jj == 7
+            plot_on_fit = false;
+            % perform log gaussian fit
+            start_fit = 1;
+            Fs2 = 20000;
+            yData = clean_trace_segment-mean(clean_base_trace);
+            yData = medfilt1(yData,0.1*Fs);
+            
+            yData = yData(round(start_fit*Fs):end);
+            yData(yData<0) = 0;
 
+            yData2 = curr_trace(curr_start:curr_end)-mean(clean_base_trace);
+            yData2 = yData2(round(start_fit*Fs):end);
+            yData2(yData2<0) = 0;
+            % yData = yData(1:100:end);
+            xData = (1:numel(yData))/Fs2;            
+            if yData(end) == 14.424377049964264 %This one has trouble fitting
+                %Remove a funky bit at the end of the trace
+                yData(end-round(0.5*Fs):end) = [];
+                yData2(end-round(0.5*Fs):end) = [];
+                xData(end-round(0.5*Fs):end) = [];
+            end
+            rng(1);
+            [fit_amp,fit_peak_x,fit_halfwidth,fit_distwidth,f1] = ...
+                log_gausian_ubc_fit(yData,xData,Fs2,plot_on_fit);
+            fit_par = [fit_amp,fit_peak_x,fit_halfwidth,fit_distwidth];
+
+            if plot_on_fit
+            hold(f1.Children(end),'on')
+            plot(xData,yData2);
+            hold(f1.Children(end),'off')
+            title(ii)
+            pause
+            close(f1);
+            end
+            all_60_fits{ii} = fit_par;
+        end
 
         %Recalculate n_spikes
         main_pars.n_spikes = sum(curr_trace(curr_start:curr_end)) /Fs - ...
