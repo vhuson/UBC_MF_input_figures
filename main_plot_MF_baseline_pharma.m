@@ -135,23 +135,24 @@ plot_labels{1} = 'a';
 plot_labels{25} = 'b';
 plot_labels{49} = 'c';
 plot_labels{61} = 'd';
-plot_labels{62} = 'e';
-plot_labels{63} = 'f';
+% plot_labels{62} = 'e';
+% plot_labels{63} = 'f';
 
 [~,t_labels] = labelPlots(f_base_pharma,plot_labels);
 
 
-for ii = [1,3]
+for ii = [1,3,4]
     t_labels{ii}.Position(1) = -29;
 end
+t_labels{4}.Position(2) = 94;
 
 t_labels{2}.Position(1) = -13;
-for ii = 4:6
-    t_labels{ii}.Position(1) = -49;
-    t_labels{ii}.Position(2) = 115;
-end
+% for ii = 4:6
+%     t_labels{ii}.Position(1) = -49;
+%     t_labels{ii}.Position(2) = 115;
+% end
 
-% exportgraphics(f_base_pharma,'pdf\240712_supp2.pdf','ContentType','vector')
+% exportgraphics(f_base_pharma,'pdf\240801_supp2.pdf','ContentType','vector')
 %% Supplement heatmap figure
 
 f_base_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...

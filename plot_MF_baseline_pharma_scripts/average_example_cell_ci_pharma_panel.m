@@ -19,13 +19,13 @@ diff_lim_x = cellfun(@diff, all_XLim);
 num_cols = 3; %Number of different protocols
 num_rows = 4 * numel(curr_cells); %Number of washins * number of cells to plot
 
-left_edge = 0.6890;
-bottom_edge = 0.6050;
+left_edge = 0.6890/1.1829;
+bottom_edge = 0.96-(0.96-0.6050)*0.8596;
 top_edge = 0.96;
-ax_space = 0.01;
-ax_space_v = 0.025;
-cell_space = 0.03;
-total_width = 0.2900;
+ax_space = 0.01/1.1829;
+ax_space_v = 0.025*0.8596;
+cell_space = 0.03*0.8596;
+total_width = 0.2900/1.1829;
 
 base_height = (top_edge - bottom_edge) - ax_space_v * (num_rows-1)...
                                 - cell_space * (numel(curr_cells)-1);
@@ -72,7 +72,10 @@ opts.axis_off = true;
 
 all_titles = {'1 spk/s', '2.5 spk/s', '5 spk/s'};
 
-all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+% all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+all_row_labels = {{'Baseline'},{'mGluR2/3','block'},{'+ AMPAR' 'block'},...
+    {'+ mGluR1' 'block'}};
+
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
@@ -157,7 +160,7 @@ scale_opts.xlabel = 'ms';
 % scale_opts.ylabel = 'spk/s';
 scale_opts.xscale_factor = 1000;
 scale_opts.label_fontsize = 10;
-all_origins = {[0.1 -30],[0.1 -35]};
+all_origins = {[0.1 -60],[0.1 -65]};
 
 cnt = 1;
 for idx = 1:4:num_rows
@@ -165,4 +168,51 @@ for idx = 1:4:num_rows
     scale_opts.origin = all_origins{cnt};
     add_scale_bar(ax_basep_avgtyp{idx+3,end},[0.1,0],scale_opts);
     cnt = cnt +1;
+end
+
+
+
+%Add washin label
+% if y_labels_on
+plus_offset = 16.5;
+for ii = [0,4]
+    for jj = 1:4
+        % curr_label = ['\color[rgb]{',num2str(all_colors_pharma(jj,:)),'}',...
+        %             all_row_labels{jj}];
+        curr_label = all_row_labels{jj};
+
+        if numel(curr_label) == 1
+            curr_t = text(ax_basep_avgtyp{ii+jj,3},1,0.5,curr_label,...
+                'Units','normalized',...
+                'Position',[1 0.5 0],'VerticalAlignment','middle',...
+                'HorizontalAlignment','left');
+            curr_t.Units = 'pixels';
+            curr_t.Position(1) = curr_t.Position(1)+plus_offset;
+            curr_t.Units = 'normalized';
+        else
+            curr_t1 = text(ax_basep_avgtyp{ii+jj,3},1,0.5,curr_label{1},...
+                'Units','normalized',...
+                'Position',[1 0.5 0],'VerticalAlignment','bottom',...
+                'HorizontalAlignment','left');
+            curr_t2 = text(ax_basep_avgtyp{ii+jj,3},1,0.5,curr_label{2},...
+                'Units','normalized',...
+                'Position',[1 0.5 0],'VerticalAlignment','top',...
+                'HorizontalAlignment','left');
+
+            curr_t1.Units = 'pixels';
+            curr_t2.Units = 'pixels';
+            curr_t1.Position(2) = curr_t1.Position(2)-2.5;
+            curr_t2.Position(2) = curr_t2.Position(2)+2.5;
+            
+            if strcmp(curr_label{1}(1),'+')
+                curr_t1.Position(1) = curr_t1.Position(1)+5;
+            else
+                curr_t1.Position(1) = curr_t1.Position(1)+plus_offset;
+            end
+            curr_t2.Position(1) = curr_t2.Position(1)+plus_offset;
+            curr_t1.Units = 'normalized';
+            curr_t2.Units = 'normalized';
+
+        end
+    end
 end

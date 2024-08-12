@@ -13,9 +13,9 @@ num_cols = 3; %Number of different protocols
 num_rows = 4; %Number of washins
 
 left_edge = 0.08;
-bottom_edge = 0.07;
-total_width = 0.56;
-total_height = 0.49;
+bottom_edge = 0.96-(0.96-0.07)*0.8596;
+total_width = 0.76;
+total_height = 0.48*0.8596;
 base_gap = 0.01;
 
 %X Lim adjusted graph widths
@@ -69,9 +69,11 @@ norm_OFFidx = [];
 ax_pharm_hm = {};
 
 %Setup basic plot options
-all_titles = {'1 Hz', '2.5 Hz', '5 Hz'};
+all_titles = {'1 spk/s', '2.5 spk/s', '5 spk/s'};
 
-all_row_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
+% all_row_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
+all_row_labels = {{'Baseline'},{'mGluR2/3','block'},{'+ AMPAR' 'block'},...
+    {'+ mGluR1' 'block'}};
 seed_colors_pharma = [0 0 0;
                 1 0.6 0;
                 0.8 0 0;
@@ -91,7 +93,7 @@ for ii = 1:num_rows
     %Set more options
     % opts.YLabel = ['\color[rgb]{',num2str(all_colors_pharma(ii,:)),'}',...
     %                 all_row_labels{ii},'\newline\color{black}Cell (#)'];
-    opts.YLabel = {all_row_labels{ii},'Cell #'};
+    opts.YLabel = 'Cell #';
     opts.YTick = false;
     if ii == num_rows
         opts.XTickLabel = arrayfun(@num2str,opts.XTick-1,'UniformOutput',false);
@@ -134,9 +136,9 @@ for ii = 1:num_rows
         
 
         %Add titles
-        % if ii == 1
-        %     title(ax_pharm_hm{ii,jj},all_titles{jj})
-        % end
+        if ii == 1
+            title(ax_pharm_hm{ii,jj},all_titles{jj})
+        end
 
     end
 end
@@ -156,3 +158,46 @@ for ii = 1:4
 end
 
 
+
+%Add washin label
+% if y_labels_on
+plus_offset = 16.5;
+for jj = 1:4
+    % curr_label = ['\color[rgb]{',num2str(all_colors_pharma(jj,:)),'}',...
+    %             all_row_labels{jj}];
+    curr_label = all_row_labels{jj};
+
+    if numel(curr_label) == 1
+        curr_t = text(ax_pharm_hm{jj,3},1,0.5,curr_label,...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','middle',...
+            'HorizontalAlignment','left');
+        curr_t.Units = 'pixels';
+        curr_t.Position(1) = curr_t.Position(1)+plus_offset;
+        curr_t.Units = 'normalized';
+    else
+        curr_t1 = text(ax_pharm_hm{jj,3},1,0.5,curr_label{1},...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','bottom',...
+            'HorizontalAlignment','left');
+        curr_t2 = text(ax_pharm_hm{jj,3},1,0.5,curr_label{2},...
+            'Units','normalized',...
+            'Position',[1 0.5 0],'VerticalAlignment','top',...
+            'HorizontalAlignment','left');
+
+        curr_t1.Units = 'pixels';
+        curr_t2.Units = 'pixels';
+        curr_t1.Position(2) = curr_t1.Position(2)-2.5;
+        curr_t2.Position(2) = curr_t2.Position(2)+2.5;
+
+        if strcmp(curr_label{1}(1),'+')
+            curr_t1.Position(1) = curr_t1.Position(1)+5;
+        else
+            curr_t1.Position(1) = curr_t1.Position(1)+plus_offset;
+        end
+        curr_t2.Position(1) = curr_t2.Position(1)+plus_offset;
+        curr_t1.Units = 'normalized';
+        curr_t2.Units = 'normalized';
+
+    end
+end

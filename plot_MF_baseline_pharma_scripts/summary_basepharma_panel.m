@@ -3,19 +3,20 @@
 
 
 % Specify ax positions
-left_edge = 0.7427;
-bottom_edge = 0.07;
-total_width = 0.1809;
-panel_gap = 0.04;
-total_height = 0.49;
+left_edge = 0.08;
+bottom_edge = 0.035;
+total_width = 0.56;
+panel_gap = 0.08;
+total_height = 0.1;
 
 num_panels = 3;
-base_width = total_width;
-graph_height = (total_height - (panel_gap*(num_panels-1))) / num_panels;
+base_width = (total_width - (panel_gap*(num_panels-1))) / num_panels;
+% graph_height = (total_height - (panel_gap*(num_panels-1))) / num_panels;
+graph_height = total_height;
 
-all_left_edges = repmat(left_edge,1,num_panels);
-all_bottom_edges = (graph_height + panel_gap) .* (0:(num_panels-1)) + bottom_edge;
-all_bottom_edges = fliplr(all_bottom_edges);
+all_left_edges = (base_width + panel_gap) .* (0:(num_panels-1)) + left_edge;
+all_bottom_edges = repmat(bottom_edge,1,num_panels);
+
 
 
 % Gather data
@@ -89,24 +90,24 @@ for ii = 1:num_panels
     all_pharma_currpar = cellfun(@(x) x(ii),chosen_plot_par);
     
 
-    if ii == 3
-        opts.bar = true;
-    end
+    % if ii == 3
+    %     opts.bar = true;
+    % end
 
     %Plot
     [ax_basep_par{ii},cb1] = UBC_par_line_plot2(...
             fltr_ONidx,[],all_pharma_currpar,f_base_pharma,pos_ax,...
             opts);
 
-    if ii == 3
-        % cb1.Position = [0.9397 0.1140 0.0151 0.0743];
-        %Adjust color bar
-        cb1.Position(1) = 0.9397; %Left edge
-        cb1.Units = 'pixels';
-        cb1.Position(3:4) = [8.7326 59.5984];
-        cb1.Units = 'normalized';
-        cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2;
-    end
+    % if ii == 3
+    %     % cb1.Position = [0.9397 0.1140 0.0151 0.0743];
+    %     %Adjust color bar
+    %     cb1.Position(1) = 0.9397; %Left edge
+    %     cb1.Units = 'pixels';
+    %     cb1.Position(3:4) = [8.7326 59.5984];
+    %     cb1.Units = 'normalized';
+    %     cb1.Position(2) = pos_ax(2)+pos_ax(4)/2-cb1.Position(4)/2;
+    % end
 
     %Add and tweak labels
     title(ax_basep_par{ii},all_titles{ii})
@@ -117,26 +118,59 @@ for ii = 1:num_panels
     ax_basep_par{ii}.XLim(1) = ax_basep_par{ii}.XLim(1) - ...
                         diff(ax_basep_par{ii}.XLim)*0.05;
     ax_basep_par{ii}.YLim(1) = ax_basep_par{ii}.YLim(1) * 0.85;
-
+    opts.YLabel = '';
 end
 
 same_ylim(ax_basep_par);
 
 
-%Make dummy axis for legend
-dummy_opts = struct();
-dummy_opts.markerfacecolor = opts.markerfacecolor;
-dummy_opts.markeredgecolor = opts.markeredgecolor;
-dummy_ax = UBC_par_marker_plot([1 1 1 1],f_base_pharma,[2 2 0.2 0.2],dummy_opts);
+ax_pos = [0.6736 0.0478 0.0257 0.0777];
 
-legend_labels = {'Baseline','−mGluR2/3','−AMPAR','−mGluR1'};
-% legend_labels = {'','','',''};
-legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
-    'Orientation','Horizontal',...
-    'Box', 'off',...
-    'NumColumns',2,...
-    'Units','normalized',...
-    'Position', [0.6773 0.0174 0.2986 0.0477])
+legend_labels = {{'Baseline'},{'mGluR2/3 block'},{'+ AMPAR block'},{'+ mGluR1 block'}};
+
+ax_prot_markers = axes(f_base_pharma,"Position",ax_pos);
+xtick_symbols = {"o","^","square","diamond"};
+seed_colors_pharma = [0 0 0;
+                1 0.6 0;
+                0.8 0 0;
+                0   0   1];
+prot_markeredgecolor = {[0 0 0], [1 0.6 0], [0.8 0 0], [ 0   0   1]};
+prot_markerfacecolor = cellfun(@(x) {(1-x)*0.8+x},opts.markeredgecolor);
+prot_marker_sizes = [6, 6, 7, 6];
+hold on
+t_ml = {};
+for ii = 1:4
+    plot(0,5-ii,...
+        xtick_symbols{ii},...
+        'MarkerEdgeColor',prot_markeredgecolor{ii},'MarkerFaceColor',prot_markerfacecolor{ii},...
+        'MarkerSize',prot_marker_sizes(ii));
+    t_ml{ii} = text(0.5,5-ii,legend_labels{ii},...
+        'FontSize',9,'FontName','Arial');
+    t_ml{ii}.Units = 'pixels';
+    t_ml{ii}.Position(1) = t_ml{ii}.Position(1)+3;
+     t_ml{ii}.Units = 'data';
+end
+hold off
+axis off
+
+
+% add legend line color bar
+seed_colors = [1 0 0;
+    1 0.5 0.2;
+    0.4 1 0.4;
+    0.2 0.5 1;
+    0 0 1];
+
+legend_colors = seed_map(seed_colors,numel(select_cells));
+% legend_colors = legend_colors(1:(numel(ONidx)-numel(OFFidx)),:);
+
+legend_pos = [0.8595 0.0479 0.0128 0.0695];
+
+legend_opts = struct();
+% legend_opts.n_shown = 5;
+legend_opts.n_pos =[1 15 29];
+[cl_ax] = colorline_legend(legend_colors,legend_pos,f_base_pharma,legend_opts);
+
 % 
 % legend_labels = {'Baseline','−mGluR2','−AMPAR','−mGluR1'};
 % t_l_labels = {};
