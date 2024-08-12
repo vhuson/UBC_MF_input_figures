@@ -77,14 +77,14 @@ end
 
 %setup axes and plot
 ax_sp_hm{ax_idx} = axes(f_train,'Position',pos_ax);
-
-makeUBCHeatmap(ax_sp_hm{ax_idx}, norm_traces, Fs, opts);
+opts.colorbar = false;
+[~,cb1_thm] = makeUBCHeatmap(ax_sp_hm{ax_idx}, norm_traces, Fs, opts);
 
 %add stim onset line
 hold(ax_sp_hm{ax_idx},'on')
 for curr_step_time = train5_step_times(2:8)
 line(ax_sp_hm{ax_idx},repmat(curr_step_time*Fs,1,2),...
-    ax_sp_hm{ax_idx}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+    ax_sp_hm{ax_idx}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
 end
 hold(ax_sp_hm{ax_idx},'off')
 
@@ -94,6 +94,7 @@ opts.XTick = [28:31];
 opts.YTick = [];
 opts.YLabel = '';
 opts.XLabel = '';
+opts.colorbar = false;
 %setup axes and plot
 pos_ax2 = [pos_left2   pos_bottom    base_width2    pos_height];
 ax_sp_hm{2} = axes(f_train,'Position',pos_ax2);
@@ -104,9 +105,9 @@ makeUBCHeatmap(ax_sp_hm{2}, norm_traces, Fs, opts);
 hold(ax_sp_hm{2},'on')
 
 line(ax_sp_hm{2},repmat(train5_step_times(7)*Fs,1,2),...
-    ax_sp_hm{2}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+    ax_sp_hm{2}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
 line(ax_sp_hm{2},repmat((train5_step_times(7)+1)*Fs,1,2),...
-    ax_sp_hm{2}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+    ax_sp_hm{2}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
 hold(ax_sp_hm{2},'off')    
 
 

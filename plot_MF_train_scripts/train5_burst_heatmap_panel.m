@@ -70,13 +70,14 @@ norm_traces = norm_traces(select_cells,:);
 
 %setup axes and plot
 ax_sp_burst_hm{ax_idx} = axes(f_train,'Position',pos_ax);
-
-makeUBCHeatmap(ax_sp_burst_hm{ax_idx}, norm_traces, Fs, opts);
+% opts.colorbar = true;
+[~,cb_thm] = makeUBCHeatmap(ax_sp_burst_hm{ax_idx}, norm_traces, Fs, opts);
+% cb_thm.Position(1) = 0.215;
 
 %add stim onset line
 hold(ax_sp_burst_hm{ax_idx},'on')
 line(ax_sp_burst_hm{ax_idx},repmat(ax_sp_burst_hm{ax_idx}.XTick(1),1,2),...
-    ax_sp_burst_hm{ax_idx}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
+    ax_sp_burst_hm{ax_idx}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
 hold(ax_sp_burst_hm{ax_idx},'off')
 
 for ii = 1

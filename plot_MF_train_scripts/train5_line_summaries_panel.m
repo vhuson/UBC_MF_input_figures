@@ -34,7 +34,7 @@ all_left_edges = (base_width + base_space) .* (0:(num_cols-1)) + left_margin;
 
 select_cells = fltr_ONidx_t5;
 
-curr_xlabel = 'Cell (#)';
+curr_xlabel = 'Cell #';
 
 seed_colors = [1 0 0;
                 1 0.5 0.2;

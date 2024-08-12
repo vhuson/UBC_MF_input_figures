@@ -9,7 +9,7 @@ select_cells = fltr_ONidx_t5;
 % [4,6,15,19,22] 
 % typ_cell_IDs = {'1754','1751','1750','1765','1753'};
 % [4,6,12,15,18,22] 
-typ_cell_IDs = {'1754','1751','1759','1750','1749','1753'};
+typ_cell_IDs = {'1754','1751','1759','1750','1749','1753','1834'};
 
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_fltr_5),...
     typ_cell_IDs,select_cells);
@@ -82,7 +82,7 @@ end
 for ii = 1:numel(train_stack_burst)
         curr_ylim = train_stack_burst{ii}.YLim;
         train_ylim = train_stack_1{ii}.YLim;
-        if curr_ylim(2) < train_ylim(2)
+        if curr_ylim(2) < train_ylim(2) || round(curr_ylim(2),13) == 142.3700872953875
             train_stack_burst{ii}.YLim = train_ylim;
         end
 
@@ -95,11 +95,11 @@ end
 scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [2,-25];
+scale_opts.origin = [2,-30];
 add_scale_bar(train_stack_burst{end},[0.5 20],scale_opts);
 
 scale_opts = struct();
-all_origins = {[2.2705 80], [2.2705 50],[2.2705 57],[2.2705 65],[2.2705 29]};
+all_origins = {[2.2705 80], [2.2705 50],[2.2705 57],[2.2705 65],[2.2705 29],[2.2705 25]};
 for ii = 2:numel(train_stack_burst)-1
     scale_opts.origin = all_origins{ii-1};
     add_scale_bar(train_stack_burst{ii},[0 20],scale_opts);

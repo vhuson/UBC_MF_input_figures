@@ -20,8 +20,8 @@ train_fltr_5 = ~cellfun(@isempty,all_mean_trains_5);
 [all_train_slow_amp,all_train_slow_HD,all_train_pause,all_train_n_spikes,...
     ~,~,all_train_burst_baseline,all_n_spikes_stim,all_n_spikes_post,...
     all_n_spikes_stim_global_base, all_n_spikes_post_global_base,...
-    all_sum_spikes_stim,all_sum_spikes_post,all_train_half_decay] = ...
-    get_train_parameters(all_mean_trains_5(train_fltr_5),Fs);
+    all_sum_spikes_stim,all_sum_spikes_post,all_train_half_decay,all_60_fit] = ...
+    get_train_parameters(all_mean_trains_5(train_fltr_5),Fs,struct('do_fit',true));
 
 %Get specific window n_spikes
 spike_windows = {[0.9 1],[3,4]};
@@ -104,11 +104,13 @@ f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
 train5_examples_panel
 train5_burst_examples_panel
 
-train5_burst_heatmap_panel
+
 train5_heatmap_panel
+train5_burst_heatmap_panel
 
 train5_summaries_panel
-train5_line_summaries_panel
+% train5_line_summaries_panel
+train5_time_to_peak_plot
 
 
 %Tweak figure
@@ -117,22 +119,22 @@ fig_opts.FontSize = 10;
 standardFig(f_train,fig_opts);
 
 %Add labels
-plot_labels = repmat({[]},1,27);
-plot_labels{15} = 'a';
-plot_labels{8} = 'b';
-plot_labels{22} = 'c';
-plot_labels{24} = 'd';
-plot_labels{25} = 'e';
-plot_labels{26} = 'f';
-plot_labels{27} = 'h';
-plot_labels{28} = 'g';
+plot_labels = repmat({[]},1,31);
+plot_labels{17} = 'a';
+plot_labels{9} = 'b';
+plot_labels{27} = 'c';
+plot_labels{26} = 'd';
+plot_labels{28} = 'e';
+plot_labels{30} = 'f';
+plot_labels{31} = 'h';
+plot_labels{32} = 'g';
 
 [~,t_labels] = labelPlots(f_train,plot_labels);
 
-for ii = [2, 3, 5]
+for ii = [2, 4, 5]
     t_labels{ii}.Position(1) = t_labels{ii}.Position(1)-14;
 end
-for ii = [1,4]
+for ii = [1,3]
     t_labels{ii}.Position(1) = 0;
 end
 
@@ -144,7 +146,7 @@ for ii = 6:8
 end
 
 
-% exportgraphics(f_train,'pdf\240711_fig4.pdf','ContentType','vector')
+% exportgraphics(f_train,'pdf\240810_fig4.pdf','ContentType','vector')
 %% calculate correlation
 train5_HDvsHW_corr
 

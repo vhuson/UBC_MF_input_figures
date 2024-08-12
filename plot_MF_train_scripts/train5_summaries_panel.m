@@ -1,5 +1,5 @@
-f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
-    'Color','w');
+% f_train = figure('Position', [488 1.8000 680.3150 857.9636],...
+%     'Color','w');
 
 %Plot options
 peak_log = false;
@@ -14,12 +14,17 @@ bottom_margin = 0.1764;
 total_width = 0.8643;
 
 base_space = 0.12;
+extra_space = 0.04; %For legend
 
 graph_height = 0.1143;
 
-base_width = (total_width-base_space*num_cols) / (num_cols+1);
+base_width = (total_width-base_space*num_cols-extra_space) / (num_cols+1);
 
 all_left_edges = (base_width + base_space) .* (0:num_cols) + left_margin;
+
+%Add extra space after first plot
+all_left_edges(2:end) = all_left_edges(2:end) + extra_space;
+% all_left_edges(4) = all_left_edges(4) + extra_space;
 
 %remove extra panel for now
 all_left_edges(3) = [];
@@ -45,13 +50,13 @@ all_left_edges(3) = [];
 %                     all_n_spikes_stim,...
 %                     cellfun(@(x,y) {(x)./(x+y).*100},all_sum_spikes_stim,all_sum_spikes_post)};
 
-% all_plot_par = {all_n_spikes_stim,...
-%                 all_n_spikes_post,...                    
-%                     all_train_half_decay};
-
-all_plot_par = {specific_nspikes_base_corr{1},...
-                specific_nspikes_base_corr{2},...                    
+all_plot_par = {all_n_spikes_stim,...
+                all_n_spikes_post,...                    
                     all_train_half_decay};
+
+% all_plot_par = {specific_nspikes_base_corr{1},...
+%                 specific_nspikes_base_corr{2},...                    
+%                     all_train_half_decay};
 
 % all_plot_par = {specific_nspikes_global_basecorr{1},...
 %                 specific_nspikes_global_basecorr{2},...                    
@@ -70,13 +75,13 @@ all_plot_par = {specific_nspikes_base_corr{1},...
 %                 '\DeltaSpikes during step (n)',...
 %                 '\DeltaSpikes after step (n)'};
 
-% all_ylabels = {'\DeltaSpikes during step (n)',...
-%                 '\DeltaSpikes after step (n)',...
-%                 'Step half-decay (s)'};
-
-all_ylabels = {'\DeltaSpikes during step 0.9-1s (n)',...
-                '\DeltaSpikes after step 2-3s (n)',...
+all_ylabels = {'\DeltaSpikes during step (n)',...
+                '\DeltaSpikes after step (n)',...
                 'Step half-decay (s)'};
+
+% all_ylabels = {'\DeltaSpikes during step 0.9-1s (n)',...
+%                 '\DeltaSpikes after step 2-3s (n)',...
+%                 'Step half-decay (s)'};
 
 % all_ylabels = {'Peak (\Deltaspk/s)',...
 %                 '\DeltaSpikes during step (n)',...
@@ -152,20 +157,39 @@ for p_idx = 1:num_cols
     opts.XTick = opts.input_n;
     opts.XTickLabel = step_size(plot_steps);
 
-    if p_idx == 2
-        opts.bar = true;
-    else
-        opts.bar = false;
-    end
+    % if p_idx == 2
+    %     opts.bar = true;
+    % else
+    %     opts.bar = false;
+    % end
    
     [ax_train_par{p_idx},cb1] = UBC_par_line_plot2(...
         summary_on,summary_off,all_plot_par{p_idx}(plot_steps),f_train,pos_ax,opts);
     xlim([opts.input_n(1) opts.input_n(end)])
 
-    if p_idx == 2
-        cb1.Position = [0.7008 0.2090 0.0128 0.0695];
-    end
+    % if p_idx == 2
+    %     cb1.Position = [0.7111 0.1985 0.0128 0.0695];
+    % end
     
+    if p_idx == 1
+        % add legend line color bar
+        seed_colors = [1 0 0;
+            1 0.5 0.2;
+            0.4 1 0.4;
+            0.2 0.5 1;
+            0 0 1];
+
+        legend_colors = seed_map(seed_colors,numel(summary_on));
+        % legend_colors = legend_colors(1:(numel(ONidx)-numel(OFFidx)),:);
+
+        legend_pos = [pos_ax(1)+base_width+0.02 pos_ax(2)+0.02 0.0128 0.0695];
+
+        legend_opts = struct();
+        % legend_opts.n_shown = 5;
+        legend_opts.n_pos =[1 15 31];
+        [cl_ax] = colorline_legend(legend_colors,legend_pos,f_train,legend_opts);
+
+    end
     %Turn off OFF stuff
     % summary_off = [];
 

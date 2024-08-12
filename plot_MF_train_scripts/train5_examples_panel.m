@@ -8,7 +8,7 @@ select_cells = fltr_ONidx_t5;
 % [4,6,15,19,22] 
 % typ_cell_IDs = {'1754','1751','1750','1765','1753'};
 % [4,6,12,15,18,22] 
-typ_cell_IDs = {'1754','1751','1759','1750','1749','1753'};
+typ_cell_IDs = {'1754','1751','1759','1750','1749','1753','1834'};
 
 [typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_fltr_5),...
     typ_cell_IDs,select_cells);
@@ -63,7 +63,7 @@ select_cells = [1 typ_cell_idxs+1];
 %Set plot options
 stack_opts = struct();
 stack_opts.Visible = 'off';
-stack_opts.XLim = [0 36];
+stack_opts.XLim = [0.1 36];
 
 
 pos_ax = [pos_left  pos_bottom  full_width  pos_height];
@@ -88,15 +88,6 @@ train_stack_2{1}.Children(1).Color = input_color;
 train_stack_2{1}.Children(1).LineWidth = 1;
 cellfun(@add_zero_line, train_stack_2(2:end));
 
-%add stim onset line
-for ii = 2:numel(train_stack_2)
-    hold(train_stack_2{ii},'on')
-    line(train_stack_2{ii},repmat(train5_step_times(7),1,2),...
-        train_stack_2{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
-    line(train_stack_2{ii},repmat((train5_step_times(7)+1),1,2),...
-        train_stack_2{ii}.YLim,'Color',[1 0 0],'LineWidth',0.5,'LineStyle',':')
-    hold(train_stack_2{ii},'off')
-end
 
 %Add cell label
 if y_labels_on
@@ -113,18 +104,30 @@ end
 [all_graph_heights,all_bottoms] = axis_height_by_ylim(train_stack_1);
 
 for ii = 1:numel(train_stack_2)
+    train_stack_2{ii}.YLim = train_stack_1{ii}.YLim;
     train_stack_2{ii}.Position(2) = all_bottoms(ii);
     train_stack_2{ii}.Position(4) = all_graph_heights(ii);
 end
+
+%add stim onset line
+for ii = 2:numel(train_stack_2)
+    hold(train_stack_2{ii},'on')
+    line(train_stack_2{ii},repmat(train5_step_times(7),1,2),...
+        train_stack_2{ii}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
+    line(train_stack_2{ii},repmat((train5_step_times(7)+1),1,2),...
+        train_stack_2{ii}.YLim,'Color',[1 0 0],'LineWidth',1,'LineStyle',':')
+    hold(train_stack_2{ii},'off')
+end
+
 
 %Add scale bar
 scale_opts = struct();
 scale_opts.xlabel = 's';
 scale_opts.ylabel = 'spk/s';
-scale_opts.origin = [33,-25];
+scale_opts.origin = [33,-30];
 add_scale_bar(train_stack_1{end},[3 20],scale_opts);
 
-scale_opts.origin = [30.5,-25];
+scale_opts.origin = [30.5,-30];
 add_scale_bar(train_stack_2{end},[0.5 0],scale_opts);
 
 %Label train input
