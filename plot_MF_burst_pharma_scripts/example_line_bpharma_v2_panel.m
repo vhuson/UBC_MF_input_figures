@@ -158,20 +158,40 @@ end
 %     ax_pharm_typline{ii}.YTick(2:2:end) = [];
 % end
 
+% 
+% dummy_opts = struct();
+% dummy_opts.markerfacecolor = opts.markerfacecolor;
+% dummy_opts.markeredgecolor = opts.markeredgecolor;
+% dummy_ax = UBC_par_marker_plot([1 1 1 1],f_burst_pharma,[2 2 0.2 0.2],...
+%     dummy_opts);
+% 
+% legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
+%     'Orientation','horizontal',...
+%     'Box', 'off',...
+%     'NumColumns',2,...
+%     'Units','normalized',...
+%     'Position', [0.5647 0.9435 0.3319 0.0459])
 
-dummy_opts = struct();
-dummy_opts.markerfacecolor = opts.markerfacecolor;
-dummy_opts.markeredgecolor = opts.markeredgecolor;
-dummy_ax = UBC_par_marker_plot([1 1 1 1],f_burst_pharma,[2 2 0.2 0.2],...
-    dummy_opts);
+ax_pos = [0.5 0.9491 0.0182 0.0366];
 
-legend(flipud(dummy_ax.Children(1:end-1)),legend_labels,...
-    'Orientation','horizontal',...
-    'Box', 'off',...
-    'NumColumns',2,...
-    'Units','normalized',...
-    'Position', [0.5647 0.9435 0.3319 0.0459])
-
+ax_prot_markers = axes(f_burst_pharma,"Position",ax_pos);
+xtick_symbols = {"o","^","square","diamond"};
+seed_colors_pharma = [0 0 0;
+                1 0.6 0;
+                0.8 0 0;
+                0   0   1];
+prot_markeredgecolor = {[0 0 0], [1 0.6 0], [0.8 0 0], [ 0   0   1]};
+prot_markerfacecolor = cellfun(@(x) {(1-x)*0.8+x},opts.markeredgecolor);
+prot_marker_sizes = [6, 6, 7, 6];
+hold on
+for ii = 1:4
+plot(0,5-ii,...
+                xtick_symbols{ii},...
+                'MarkerEdgeColor',prot_markeredgecolor{ii},'MarkerFaceColor',prot_markerfacecolor{ii},...
+                'MarkerSize',prot_marker_sizes(ii));
+end
+hold off
+axis off
 
 %Change yticklabels
 for ii = 1:numel(curr_cells)

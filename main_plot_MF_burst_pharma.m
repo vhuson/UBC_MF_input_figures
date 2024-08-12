@@ -26,7 +26,7 @@ washin_fltr = ~isnan(all_mean_pharma_bursts3{end}(:,1));
 % all_starts = round(all_burst_durs*Fs);
 % all_ends = cellfun(@(x) size(x,2),all_mean_pharma_bursts1)-round(0.5*Fs);
 % all_peak_windows = arrayfun(@(x,y) {repmat({[x,y]},numel(allData(washin_fltr)),1)},all_starts,all_ends);
-burstpar_opts = struct();
+burstpar_opts = struct('post_stim_amp',true);
 % burstpar_opts.restrict_peaks = all_peak_windows;
 
 washin_state = [0 1 0 0 0];
@@ -263,7 +263,11 @@ fig_opts = struct();
 fig_opts.FontSize = 10;
 standardFig(f_burst_pharma,fig_opts);
 
+%avoid tweak on this
 washin_graphic_panel
+for ii = 1:4
+    t_ml{ii}.FontSize = 9;
+end
 
 %Add labels
 plot_labels = repmat({[]},1,106);
@@ -272,9 +276,9 @@ plot_labels{26} = 'b';
 plot_labels{52} = 'c';
 plot_labels{77} = 'd';
 plot_labels{97} = 'e';
-plot_labels{103} = 'f';
-plot_labels{105} = 'g';
-plot_labels{106} = 'h';
+plot_labels{104} = 'f';
+plot_labels{106} = 'g';
+plot_labels{107} = 'h';
 % plot_labels{82} = 'e';
 [~,t_labels] = labelPlots(f_burst_pharma,plot_labels);
 
@@ -290,7 +294,7 @@ for ii = [7,8]
     t_labels{ii}.Position(1:2) = [-71 81];
 end
 
-% exportgraphics(f_burst_pharma,'pdf\240726_fig3.pdf','ContentType','vector')
+% exportgraphics(f_burst_pharma,'pdf\240809_fig3.pdf','ContentType','vector')
 %% Supplement heatmap figure
 
 f_burst_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...

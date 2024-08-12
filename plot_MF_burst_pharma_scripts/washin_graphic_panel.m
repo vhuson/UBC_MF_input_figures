@@ -11,7 +11,7 @@ seed_colors_pharma = [0 0 0;
 
 
 all_colors_pharma = seed_map(seed_colors_pharma,4);
-legend_labels = {'Baseline','mGluR2/3 block','AMPAR block','mGluR1 block'};
+legend_labels = {'Baseline','mGluR2/3 block','+ AMPAR block','+ mGluR1 block'};
 
 
 %Make graphic
@@ -35,5 +35,8 @@ plot([3,4],[1,1],'Color',all_colors_pharma(4,:),"LineWidth",1.5)
 text(4.1,1,legend_labels{4},"FontSize",9,"FontName","Arial",...
     "HorizontalAlignment","left","VerticalAlignment","middle")
 hold off
-
 ax_prot.Visible = 'off';
+
+
+
+
