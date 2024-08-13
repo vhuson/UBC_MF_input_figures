@@ -3,14 +3,7 @@
 load_all_data = false; %if false just loads variables required for the figure
 
 %Set up path
-mfile_name          = mfilename('fullpath');
-[pathstr,name,ext]  = fileparts(mfile_name);
-if ~isempty(pathstr)
-    cd(pathstr);
-end
-
-addpath(genpath('functions'))
-addpath(genpath('plot_MF_burst_scripts'))
+run('load_data_scripts\setup_general_path.m')
 
 if load_all_data
     run('load_data_scripts\setup_workspace_alldata.m')
