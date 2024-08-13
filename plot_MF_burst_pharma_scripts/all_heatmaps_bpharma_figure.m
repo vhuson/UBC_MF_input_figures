@@ -1,7 +1,6 @@
 
-
-% f_burst_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...
-%     'Color','w');
+f_burst_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
 
 all_XLim = {[0.2 1.5],[0.2 1.5], [0.2 1.5], [0.2 1.5], [0.2 2.5]};
@@ -135,4 +134,16 @@ for ii = 1:num_rows
 end
 
 
+
+%Tweak figure
+fig_opts = struct();
+fig_opts.FontSize = 10;
+standardFig(f_burst_pharma_hmsupp,fig_opts);
+
+plot_labels = repmat({[]},1,20);
+plot_labels{1} = 'a';
+plot_labels{6} = 'b';
+plot_labels{11} = 'c';
+plot_labels{16} = 'd';
+labelPlots(f_burst_pharma_hmsupp,plot_labels);
 

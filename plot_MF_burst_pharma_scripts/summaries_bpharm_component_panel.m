@@ -330,7 +330,3 @@ end
 
 
 same_ylim({ax2_component,ax3_component});
-
-fig_opts = struct();
-fig_opts.FontSize = 10;
-standardFig(f_burst_pharma,fig_opts);

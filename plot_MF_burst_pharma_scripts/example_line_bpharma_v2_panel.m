@@ -203,8 +203,3 @@ end
 %Change ylabel postion
 ax_pharm_typline{3,1}.YLabel.Units = 'pixels';
 ax_pharm_typline{3,1}.YLabel.Position(1) = -30;
-
-%Tweak figure
-fig_opts = struct();
-fig_opts.FontSize = 10;
-standardFig(f_burst_pharma,fig_opts);
