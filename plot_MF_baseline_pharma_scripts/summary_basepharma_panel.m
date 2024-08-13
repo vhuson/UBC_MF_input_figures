@@ -28,7 +28,7 @@ base_n_spikes_ss_pharma_all = {base_n_spikes_ss_pharma1,...
 
 for ii = 1:numel(base_n_spikes_ss_pharma_all)
 
-    all_baseline_n_spikes = washin_base_rates{ii}(washin_fltr) .* (min_trace_leng_pharma_base1/Fs);
+    all_baseline_n_spikes = washin_base_rates{ii}(washin_fltr_base) .* (min_trace_leng_pharma_base1/Fs);
 
     base_n_spikes_ss_pharma_all{ii} = cellfun(@(x)...
         {x+all_baseline_n_spikes},base_n_spikes_ss_pharma_all{ii});
@@ -42,7 +42,7 @@ base_peak_ss_pharma_all = {base_amplitude_ss_pharma1,...
                             base_amplitude_ss_pharma4};
 for ii = 1:numel(base_peak_ss_pharma_all)
 
-    all_baseline_peak_rate = washin_base_rates{ii}(washin_fltr);
+    all_baseline_peak_rate = washin_base_rates{ii}(washin_fltr_base);
 
     base_peak_ss_pharma_all{ii} = cellfun(@(x)...
         {x+all_baseline_peak_rate},base_peak_ss_pharma_all{ii});

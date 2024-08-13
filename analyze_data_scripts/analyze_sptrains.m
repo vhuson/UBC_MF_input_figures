@@ -45,7 +45,7 @@ washin_state = [1 0 0 0 0];
 %Get UBC parameters
 [all_burst_slow_amp,all_burst_slow_HD,all_burst_pause,all_burst_n_spikes,...
     all_burst_fast_amp,all_burst_fast_HD,all_burst_baseline] = get_allburst_parameters(...
-    all_mean_bursts,all_baseline,Fs);
+    all_mean_bursts,all_baseline,Fs,struct('post_stim_amp',true));
 
 
 %Use baseline for NaNs

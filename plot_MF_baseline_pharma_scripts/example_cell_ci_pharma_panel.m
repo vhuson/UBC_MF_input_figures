@@ -4,7 +4,7 @@
 %Get right cell idxes
 % typ_cell_IDs = {'1701','1672'};
 typ_cell_IDs = {'1701','1807'};
-[typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx_baseline);
+[typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr_base),typ_cell_IDs,fltr_ONidx_baseline);
 
 % curr_cells = [1, 20];
 
