@@ -6,16 +6,16 @@ else %No workspace setup time to load
 %
 Fs = 20000;
 
-fileNames = dir('data_analyzed\MF_stim_prots_pharma_saved\*');
+fileNames = dir('..\data_analyzed\MF_stim_prots_pharma_saved\*');
 fileNames = fileNames(contains({fileNames(:).name},'.mat'));
 
-fileNames2 = dir('data_analyzed\MF_stim_prots_pharma_saved_noWashin\*');
+fileNames2 = dir('..\data_analyzed\MF_stim_prots_pharma_saved_noWashin\*');
 fileNames2 = fileNames2(contains({fileNames2(:).name},'.mat'));
 
-fileNames3 = dir('data_analyzed\MF_stim_train_saved\*');
+fileNames3 = dir('..\data_analyzed\MF_stim_train_saved\*');
 fileNames3 = fileNames3(contains({fileNames3(:).name},'.mat'));
 
-fileNames4 = dir('data_analyzed\MF_stim_train_pharma_saved\*');
+fileNames4 = dir('..\data_analyzed\MF_stim_train_pharma_saved\*');
 fileNames4 = fileNames4(contains({fileNames4(:).name},'.mat'));
 
 fileNames = [fileNames; fileNames2; fileNames3; fileNames4];

@@ -1,5 +1,6 @@
 %% Setup workspace
-load_all_data = false; %Takes a long time
+%Load raw data and reanalyze (takes a long time)
+load_all_data = false; %if false just loads variables required for the figure
 
 %Set up path
 run('load_data_scripts\setup_general_path.m')

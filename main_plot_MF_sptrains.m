@@ -1,5 +1,5 @@
 %% Get files, general means, and ONidx
-%Takes a long time
+%Load raw data and reanalyze (takes a long time)
 load_all_data = false; %if false just loads variables required for the figure
 
 %Set up path
