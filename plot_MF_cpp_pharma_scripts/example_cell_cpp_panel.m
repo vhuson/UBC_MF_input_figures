@@ -10,7 +10,7 @@
 % typ_cell_IDs = {'1854','1859'};
 % typ_cell_IDs = {'1862','1859'};
 typ_cell_IDs = {'1865','1859'};
-[typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
+[typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames_cpp(washin_fltr_cpp),typ_cell_IDs,fltr_ONidx_cpp);
 
 
 
@@ -53,7 +53,7 @@ all_bottom_edge = fliplr(all_bottom_edge);
 
 
 
-select_cells = fltr_ONidx;
+select_cells = fltr_ONidx_cpp;
 
 
 input_color = [0.2 0.7 0.2];

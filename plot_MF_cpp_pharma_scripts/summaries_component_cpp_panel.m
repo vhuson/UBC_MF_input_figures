@@ -78,7 +78,7 @@ all_pharma_currpar = {base_cpp_normalized_to_20base(:,1),nmdar_cpp_normalized_to
 
 for ii = 1:numel(all_pharma_currpar)
     % all_pharma_currpar{ii}(all_pharma_currpar{ii}>3) = 3;
-    all_pharma_currpar{ii} = all_pharma_currpar{ii}(fltr_ONidx);
+    all_pharma_currpar{ii} = all_pharma_currpar{ii}(fltr_ONidx_cpp);
     % if num_off > 0 
     %     all_pharma_currpar{ii}(end-num_minusend:end) = [];
     % end
@@ -98,7 +98,7 @@ ax_component1 = ephysBoxPlot(all_pharma_currpar,subgroups,settings);
 % fix_powered_ylabels(ax_component1);
 
 recolor_opts = struct();
-recolor_opts.cell_n = numel(fltr_ONidx);
+recolor_opts.cell_n = numel(fltr_ONidx_cpp);
 recolor_opts.cell_order = 1:numel(all_pharma_currpar{1});
 for ii = 1:numel(ax_component1.Children)
     if isa(ax_component1.Children(ii),'matlab.graphics.chart.primitive.Scatter')
@@ -190,13 +190,13 @@ seed_colors = [1 0 0;
                 0.2 0.5 1;
                 0 0 1];
 
-all_colors = seed_map(seed_colors,numel(fltr_ONidx));
+all_colors = seed_map(seed_colors,numel(fltr_ONidx_cpp));
 colormap(ax_component1,flipud(seed_map(seed_colors,256)))
 
 cb1 = colorbar(ax_component1);
 cb1.Ticks = [0 1];
 % cb1.TickLabels = {'Slow' 'Fast'};
-cb1.TickLabels = {num2str(numel(fltr_ONidx)) '1'};
+cb1.TickLabels = {num2str(numel(fltr_ONidx_cpp)) '1'};
 cb1.Label.String = 'Cell #';
 cb1.Label.Rotation = 270;
 cb1.Label.Units = 'normalized';

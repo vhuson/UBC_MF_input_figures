@@ -46,7 +46,7 @@ norm_on = max(medfilt1(curr_traces{1},Fs*0.16,[],2),[],2);
 
 %Same normalization for OFFs
 norm_off = [];
-norm_OFFidx = [];
+norm_OFFidx_cpp = [];
 
 
 all_row_labels = {'Baseline','−NMDAR'};
@@ -81,7 +81,7 @@ for ii = 1:num_rows
 
 
     %Normalize data
-    [norm_traces] = norm_UBC(curr_plot_data,norm_on,norm_off,norm_OFFidx);
+    [norm_traces] = norm_UBC(curr_plot_data,norm_on,norm_off,norm_OFFidx_cpp);
     norm_traces = norm_traces(select_cells,:);
 
     %Setup axis

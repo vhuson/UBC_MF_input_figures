@@ -19,15 +19,11 @@ f_burst_cpp = figure('Position', [488 1.8000 680.3150 857.9636],...
 
 example_cell_cpp_panel
 
-% example_line_bpharma_panel
-% example_line_bpharma_v2_panel
-% example_line_bpharma_nspikes_panel
 
 heatmap_cpp_panel
 
 % summaries_cpp_panel
 summaries_component_cpp_panel
-% summaries_bpharma_singlerow_panel
 
 %Tweak figure
 fig_opts = struct();

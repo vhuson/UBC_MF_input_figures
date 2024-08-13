@@ -11,7 +11,7 @@ select_cells = fltr_ONidx_tcpp;
 % typ_cell_IDs = {'1862','1859'};
 typ_cell_IDs = {'1865','1859'};
 
-[typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames(train_cpp_fltr),...
+[typ_cell_idxs,typ_cell_num] = UBC_cell_ID2idx(fileNames_cpp(train_cpp_fltr),...
     typ_cell_IDs,select_cells);
 
 

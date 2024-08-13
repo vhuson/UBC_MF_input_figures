@@ -51,7 +51,7 @@ end
 
 %Same normalization for OFFs
 norm_off = [];
-norm_OFFidx = [];
+norm_OFFidx_cpp = [];
 
 
 ax_cpp_hm = {};
@@ -96,8 +96,8 @@ for ii = 1:num_rows
             norm_on = all_norm_on{jj};
         end
 
-        [norm_traces] = norm_UBC(curr_mean_cpp_prot,norm_on,norm_off,norm_OFFidx);
-        norm_traces = norm_traces(fltr_ONidx,:);
+        [norm_traces] = norm_UBC(curr_mean_cpp_prot,norm_on,norm_off,norm_OFFidx_cpp);
+        norm_traces = norm_traces(fltr_ONidx_cpp,:);
 
         %Setup axis
         pos_ax = [all_left_edges(jj),   all_bottom_edges(ii),...

@@ -74,20 +74,20 @@ settings.ylabel = 'Response (norm.)';
 settings.violColor = ones(numel(plot_range)*2,3);
 settings.violBandwidth = 0.15;
 
-norm_60_base = all_sum_spikes_stim_pharma{1}{6}+all_sum_spikes_post_pharma{1}{6};
+norm_60_base = all_sum_spikes_stim_cpp{1}{6}+all_sum_spikes_post_cpp{1}{6};
 
 all_pharma_currpar = {};
 cnt = 1;
 for ii = plot_range
-    curr_base = all_sum_spikes_stim_pharma{1}{ii}+all_sum_spikes_post_pharma{1}{ii};
-    curr_mglur2 = all_sum_spikes_stim_pharma{2}{ii}+all_sum_spikes_post_pharma{2}{ii};
+    curr_base = all_sum_spikes_stim_cpp{1}{ii}+all_sum_spikes_post_cpp{1}{ii};
+    curr_mglur2 = all_sum_spikes_stim_cpp{2}{ii}+all_sum_spikes_post_cpp{2}{ii};
     
     all_pharma_currpar{cnt} = curr_base./norm_60_base;
     all_pharma_currpar{cnt+1} = curr_mglur2./norm_60_base;
 
     %Remove OFFs
-    all_pharma_currpar{cnt} = all_pharma_currpar{cnt}(fltr_ONidx);
-    all_pharma_currpar{cnt+1} = all_pharma_currpar{cnt+1}(fltr_ONidx);
+    all_pharma_currpar{cnt} = all_pharma_currpar{cnt}(fltr_ONidx_cpp);
+    all_pharma_currpar{cnt+1} = all_pharma_currpar{cnt+1}(fltr_ONidx_cpp);
 
     all_pharma_currpar{cnt}(end-num_minusend:end) = [];
     all_pharma_currpar{cnt+1}(end-num_minusend:end) = [];
@@ -106,7 +106,7 @@ ax_component1 = ephysBoxPlot(all_pharma_currpar,subgroups,settings);
 
 recolor_opts = struct();
 recolor_opts.cell_order = 1:numel(all_pharma_currpar{1});
-recolor_opts.cell_n = numel(fltr_ONidx);
+recolor_opts.cell_n = numel(fltr_ONidx_cpp);
 for ii = 1:numel(ax_component1.Children)
     if isa(ax_component1.Children(ii),'matlab.graphics.chart.primitive.Scatter')
         recolor_scatter(ax_component1.Children(ii))
@@ -195,13 +195,13 @@ seed_colors = [1 0 0;
                 0.2 0.5 1;
                 0 0 1];
 
-all_colors = seed_map(seed_colors,numel(fltr_ONidx));
+all_colors = seed_map(seed_colors,numel(fltr_ONidx_cpp));
 colormap(ax_component1,flipud(seed_map(seed_colors,256)))
 
 cb1 = colorbar(ax_component1);
 cb1.Ticks = [0 1];
 % cb1.TickLabels = {'Slow' 'Fast'};
-cb1.TickLabels = {num2str(numel(fltr_ONidx)) '1'};
+cb1.TickLabels = {num2str(numel(fltr_ONidx_cpp)) '1'};
 cb1.Label.String = 'Cell #';
 cb1.Label.Rotation = 270;
 cb1.Label.Units = 'normalized';
