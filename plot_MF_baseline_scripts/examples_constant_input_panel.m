@@ -188,9 +188,9 @@ scale_opts.ylabel = 'spk/s';
 scale_opts.xscale_factor = 1;
 scale_opts.label_fontsize = 10;
 scale_opts.origin = [10 -25];
-add_scale_bar(ax_burst_typ{end}{end},[1,20],scale_opts)
+add_scale_bar(ax_burst_typ{end}{end},[1,20],scale_opts);
 
 scale_opts.xlabel = 'ms';
 scale_opts.xscale_factor = 1000;
 scale_opts.origin = [0.1 -25];
-add_scale_bar(ax_burst_typ_avg{end}{end},[0.1,0],scale_opts)
+add_scale_bar(ax_burst_typ_avg{end}{end},[0.1,0],scale_opts);
