@@ -110,7 +110,7 @@ for ii = 1:num_rows
         end
 
         [norm_traces] = norm_UBC(curr_mean_pharma_prot,norm_on,norm_off,norm_OFFidx);
-        norm_traces = norm_traces(fltr_ONidx,:);
+        norm_traces = norm_traces(fltr_ONidx_baseline,:);
 
         %Setup axis
         pos_ax = [all_left_edges(jj),   all_bottom_edges(ii),...

@@ -4,7 +4,7 @@
 %Get right cell idxes
 % typ_cell_IDs = {'1701','1672'};
 typ_cell_IDs = {'1701','1807'};
-[typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx);
+[typ_cell_idxs,curr_cells] = UBC_cell_ID2idx(fileNames(washin_fltr),typ_cell_IDs,fltr_ONidx_baseline);
 
 % curr_cells = [1, 20];
 
@@ -104,7 +104,7 @@ for ii = 1:numel(curr_cells)
             %Plot
             [ax_basep_typ{row_idx,kk}] = plot_burst_traces_overlay(...
                 curr_prot_traces(kk),Fs,...
-                fltr_ONidx,curr_cell,all_colors(kk,:),1,...
+                fltr_ONidx_baseline,curr_cell,all_colors(kk,:),1,...
                 [],lim_x,f_base_pharma,pos_ax,opts);
 
             %Add 0 line

@@ -96,7 +96,7 @@ for ii = 1:num_panels
 
     %Plot
     [ax_basep_par{ii},cb1] = UBC_par_line_plot2(...
-            fltr_ONidx,[],all_pharma_currpar,f_base_pharma,pos_ax,...
+            fltr_ONidx_baseline,[],all_pharma_currpar,f_base_pharma,pos_ax,...
             opts);
 
     % if ii == 3
@@ -161,7 +161,7 @@ seed_colors = [1 0 0;
     0.2 0.5 1;
     0 0 1];
 
-legend_colors = seed_map(seed_colors,numel(select_cells));
+legend_colors = seed_map(seed_colors,numel(fltr_ONidx_baseline));
 % legend_colors = legend_colors(1:(numel(ONidx)-numel(OFFidx)),:);
 
 legend_pos = [0.8595 0.0479 0.0128 0.0695];

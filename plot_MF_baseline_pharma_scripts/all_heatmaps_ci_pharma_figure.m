@@ -1,7 +1,6 @@
+f_base_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...
+    'Color','w');
 
-
-% f_base_pharma_hmsupp = figure('Position', [488 1.8000 680.3150 857.9636],...
-%     'Color','w');
 
 
 all_XLim = {[0 11],[0 11],[0 11]};
@@ -106,7 +105,7 @@ for ii = 1:num_rows
         end
 
         [norm_traces] = norm_UBC(curr_mean_pharma_prot,norm_on,norm_off,norm_OFFidx);
-        norm_traces = norm_traces(fltr_ONidx,:);
+        norm_traces = norm_traces(fltr_ONidx_baseline,:);
 
         %Setup axis
         pos_ax = [all_left_edges(jj),   all_bottom_edges(ii),...
@@ -141,3 +140,15 @@ end
 
 
 
+
+%Tweak figure
+fig_opts = struct();
+fig_opts.FontSize = 10;
+standardFig(f_base_pharma_hmsupp,fig_opts);
+
+plot_labels = repmat({[]},1,20);
+plot_labels{1} = 'a';
+plot_labels{4} = 'b';
+plot_labels{7} = 'c';
+plot_labels{10} = 'd';
+labelPlots(f_base_pharma_hmsupp,plot_labels);
