@@ -1,13 +1,15 @@
 %% Setup workspace
 load_all_data = false; %Takes a long time
 
-if ~load_all_data
-    cpp_workspace = true;
-    cpp_data_analyzed = true;
+%Set up path
+run('load_data_scripts\setup_general_path.m')
+
+if load_all_data
+    run('load_data_scripts\setup_workspace_cpp.m')
+    run('analyze_data_scripts\analyze_cpp.m')
+else
     load('saved_workspaces\supp_plot_MF_cpp_workspace.mat')
 end
-run('load_data_scripts\setup_workspace_cpp.m')
-run('analyze_data_scripts\analyze_cpp.m')
 
 %% Main cpp burst figure
 f_burst_cpp = figure('Position', [488 1.8000 680.3150 857.9636],...

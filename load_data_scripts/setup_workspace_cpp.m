@@ -1,12 +1,3 @@
-%Set up path
-mfile_name          = mfilename('fullpath');
-[pathstr,name,ext]  = fileparts(mfile_name);
-cd(pathstr);
-cd('..')
-
-addpath(genpath('functions'))
-addpath(genpath('plot_MF_cpp_pharma_scripts'))
-
 if exist('cpp_workspace','var') && cpp_workspace
     %Preserve workspace for later?
     disp('CPP data already loaded in workspace')
